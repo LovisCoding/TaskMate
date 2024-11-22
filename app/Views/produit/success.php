@@ -1,0 +1,14 @@
+<table>
+  <tr>
+    <th>nom</th>
+    <th><?=$produit['nom']?></th>
+  </tr>
+  <tr>
+    <td>catégorie</td>
+    <td><?=$produit['categ']?></td>
+  </tr>
+  <tr>
+    <td>Prix</td>
+    <td><?=$produit['prix']?></td>
+  </tr>
+</table>
