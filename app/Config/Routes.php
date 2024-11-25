@@ -12,8 +12,9 @@ $routes->get('/auth/reset-password', 'ConnectionController::resetPassword');
 $routes->get('/home', 'Home::index');
 $routes->get('/profil', 'Profil::index');
 
-$routes->get('/forgot-password/sendResetLink', 'ConnectionController::sendResetLink');
+$routes->post('/forgot-password/sendResetLink', 'ConnectionController::sendResetLink');
 $routes->get('/forgot-password/reset-password/(:any)', 'ConnectionController::resetPassword/$1');  // $1 pour capturer le token
+$routes->post('/forgot-password/updatePassword','ConnectionController:updatePassword');
 
 // Routes pour l'envoi et la confirmation de l'email
 $routes->post('email/sendConfirmAccountMail', 'EmailController::sendConfirmAccountMail'); // Envoi de l'email de confirmation

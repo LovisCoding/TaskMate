@@ -37,13 +37,7 @@ class ConnectionController extends BaseController
 		echo view('pages/forgotPassword');
 	}
 
-	public function resetPassword()
-	{
-		helper(['form']);
-		$token = $this->request->getGet('token');
-		$data = ['token' => $token];
-		echo view('pages/resetPassword', $data);
-	}
+
 
 	public function connection()
 	{
@@ -116,10 +110,14 @@ class ConnectionController extends BaseController
 		}
 	}
 
-	// public function resetPassword($token) {
-	// 	echo "Donova: ".$token."\n";
+	public function resetPassword($token) {
+		echo "Donova: ".$token."\n";
 
-	// }
+		// check token
+
+		echo view('pages/resetPassword', ['token' => $token]);
+
+	}
 
 	public function updatePassword() {
 		$token = $this->request->getPost('token');

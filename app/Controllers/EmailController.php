@@ -50,11 +50,11 @@ class EmailController extends BaseController
     public function confirmAccount($token)
     {
         $registrationData = session()->get("registration_$token");
-    
+
         if (!$registrationData) {
             return redirect()->to('/auth/register')->with('error', 'Lien invalide ou expiré.');
         }
-    
+
         // Enregistrer les données dans la base de données
         $accountModel = new \App\Models\AccountModel();
         $accountModel->insert([
