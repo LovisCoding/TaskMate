@@ -10,7 +10,7 @@
 <body class="d-flex justify-content-center">
 	<div class="form-signin w-100 h-100">
 		<div class="content">
-			<?= form_open('auth/register'); ?>
+			<?= form_open('email/sendConfirmAccountMail'); ?>
 			<div class="mb-4 mt-4 d-flex flex-column align-items-center">
 			<img src="<?= base_url('assets/imgs/Logo_TaskMate.svg'); ?>" alt="Logo TaskMate" width="190" height="120">
 				<p class="mb-4 fw-normal">Inscrivez-vous</p>

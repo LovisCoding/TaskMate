@@ -17,6 +17,12 @@ class ConnectionController extends BaseController
 		echo view('pages/register');
 	}
 
+	public function forgotPassword()
+	{
+		helper(['form']);
+		echo view('pages/forgotPassword');
+	}
+
 	public function connection()
 	{
 		$session = session();
@@ -49,4 +55,43 @@ class ConnectionController extends BaseController
 	{
 
 	}
+
+	// TODO
+	public function sendResetLink()
+	{
+		$email = $this->request->getPost('email');
+		$userModel = new AccountModel();
+		$user = $userModel->where('email', $email)->first();
+
+		$email = $this->request->getPost('email');
+		echo 'Adresse e-mail soumise : ' . $email;
+		if ($user) {
+
+			$token = bin2hex(random_bytes(16));
+			$expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
+			$userModel->set('reset_token', $token)
+				->set('reset_token_expiration', $expiration)
+				->update($user['id']);
+
+			$resetLink = site_url("reset-password/$token");
+			$message = "Cliquez sur le lien suivant pour réinitialiser MDP: $resetLink";
+
+			$emailService = \Config\Services::email();
+
+			$from = 'mail.taskmate@gmail.com';
+
+			$emailService->setTo($email);
+			$emailService->setFrom($from);
+			$emailService->setSubject('Réinitialisation de mot de passe');
+			$emailService->setMessage($message);
+			if ($emailService->send()) {
+				echo ' E-mail envoyé avec succès.';
+			} else {
+				echo $emailService->printDebugger();
+			}
+		} else {
+			echo ' Adresse e-mail non valide.';
+		}
+	}
+
 }

@@ -37,6 +37,9 @@ class CreateTasksTable extends Migration
                 'type' => 'DATETIME',
                 'null' => true,
             ],
+            'deadline' => [
+                'type' => 'DATETIME',
+            ],
             'end_date' => [
                 'type' => 'DATETIME',
                 'null' => true,
