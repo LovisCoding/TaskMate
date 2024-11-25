@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,22 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="<?= base_url('assets/styles/connection.css'); ?>">
 </head>
+
 <body class="d-flex justify-content-center">
 	<div class="form-signin w-100 h-100">
 		<div class="content">
+			<?php if (isset($success)): ?>
+				<div class="alert alert-success" role="alert">
+					<?= $success; ?>
+				</div>
+			<?php elseif (isset($error)): ?>
+				<div class="alert alert-danger" role="alert">
+					<?= $error; ?>
+				</div>
+			<?php endif; ?>
 			<?= form_open('email/sendConfirmAccountMail'); ?>
 			<div class="mb-4 mt-4 d-flex flex-column align-items-center">
-			<img src="<?= base_url('assets/imgs/Logo_TaskMate.svg'); ?>" alt="Logo TaskMate" width="190" height="120">
+				<img src="<?= base_url('assets/imgs/Logo_TaskMate.svg'); ?>" alt="Logo TaskMate" width="190" height="120">
 				<p class="mb-4 fw-normal">Inscrivez-vous</p>
 			</div>
 			<div class="mb-3">
@@ -43,7 +54,7 @@
 			</div>
 			<button class="btn btn-primary w-100 btnValidate mt-4" type="submit">S'inscrire</button>
 			<p class="form-text mt-3">
-				Vous avez déjà un compte ? 
+				Vous avez déjà un compte ?
 				<a href="<?= base_url('/'); ?>">Se connecter</a>
 			</p>
 			<?= form_close(); ?>
@@ -55,4 +66,5 @@
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </body>
+
 </html>

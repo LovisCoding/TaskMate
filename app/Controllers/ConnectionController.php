@@ -8,14 +8,28 @@ class ConnectionController extends BaseController
 	public function index()
 	{
 		helper(['form']);
-		echo view('pages/connection');
+	
+		$data = [
+			'success' => session()->getFlashdata('success'),
+			'error' => session()->getFlashdata('error'),
+		];
+	
+		echo view('pages/connection', $data);
 	}
+	
 
 	public function register()
 	{
 		helper(['form']);
-		echo view('pages/register');
+		
+		$data = [
+			'success' => session()->getFlashdata('success'),
+			'error' => session()->getFlashdata('error'),
+		];
+	
+		echo view('pages/register', $data);
 	}
+	
 
 	public function forgotPassword()
 	{
@@ -73,7 +87,7 @@ class ConnectionController extends BaseController
 				->set('reset_token_expiration', $expiration)
 				->update($user['id']);
 
-			$resetLink = site_url("reset-password/$token");
+			$resetLink = site_url("/forgot-password/reset-password/$token");
 			$message = "Cliquez sur le lien suivant pour réinitialiser MDP: $resetLink";
 
 			$emailService = \Config\Services::email();
@@ -91,6 +105,39 @@ class ConnectionController extends BaseController
 			}
 		} else {
 			echo ' Adresse e-mail non valide.';
+		}
+	}
+
+	public function resetPassword($token) {
+		echo "Donova: ".$token."\n";
+
+	}
+
+	public function updatePassword() {
+		$token = $this->request->getPost('token');
+		$password = $this->request->getPost('password');
+		$confirmPassword = $this->request->getPost('confirm_password');
+
+		$userModel = new AccountModel();
+		$user = $userModel->where('reset_token', $token)
+			->where('reset_token_expiration >', date('Y-m-d H:i:s'))
+			->first();
+		if ($user && $password === $confirmPassword) {
+
+			$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+			$userModel->set('password', $hashedPassword)
+				->set('reset_token', null)
+				->set('reset_token_expiration', null)
+				->update($user['id']);
+
+			session()->setFlashdata('msg', [
+				'text' => 'Mot de passe réinitialisé avec succès.',
+				'class' => 'alert alert-success'
+			]);
+			return redirect()->to('/');
+		} else {
+			session()->setFlashdata('msg', 'Erreur lors de la réinitialisation du mot de passe.');
+			return redirect()->back();
 		}
 	}
 
