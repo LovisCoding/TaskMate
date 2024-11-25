@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class GroupModel extends Model
 {
-    protected $table = 'Group';
+    protected $table = 'group';
     protected $primaryKey = 'id';
 
     protected $allowedFields = ['name'];

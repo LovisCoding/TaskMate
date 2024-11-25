@@ -2,10 +2,30 @@
 
 namespace App\Controllers;
 
+use DateTime;
+
+
+use App\Models\AccountModel;
+
 class EmailController extends BaseController
 {
     public function sendConfirmAccountMail()
     {
+        // Définir les règles de validation
+        $rules = [
+            'name' => 'required|min_length[3]',
+            'email' => 'required|valid_email',
+            'password' => 'required|min_length[8]',
+            'confirm_password' => 'required|matches[password]',
+        ];
+
+        // Valider les données envoyées par le formulaire
+        if (!$this->validate($rules)) {
+            return redirect()->to('/auth/register')
+                ->withInput() // Pour conserver les valeurs déjà saisies
+                ->with('validation', $this->validator); // Passer les erreurs de validation
+        }
+
         $name = $this->request->getPost('name');
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
@@ -54,19 +74,100 @@ class EmailController extends BaseController
         if (!$registrationData) {
             return redirect()->to('/auth/register')->with('error', 'Lien invalide ou expiré.');
         }
-
         // Enregistrer les données dans la base de données
         $accountModel = new \App\Models\AccountModel();
-        $accountModel->insert([
-            'name' => $registrationData['name'],
-            'email' => $registrationData['email'],
-            'password' => $registrationData['password'],
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
-    
+        $accountModel->createAccount($registrationData);
+       
         session()->remove("registration_$token");
-    
+
         return redirect()->to('/')->with('success', 'Votre compte a bien été créé. Vous pouvez maintenant vous connecter.');
     }
-    
+
+
+
+    // TODO
+	public function sendResetLink()
+	{
+		$email = $this->request->getPost('email');
+		$userModel = new \App\Models\AccountModel();
+		$user = $userModel->getAccountByEmail($email);
+
+		$email = $this->request->getPost('email');
+		echo 'Adresse e-mail soumise : ' . $email;
+		if ($user) {
+
+			$token = bin2hex(random_bytes(16));
+			$expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
+			var_dump($user);
+
+            $user['reset_token'] = $token;
+            $user['reset_token_expiration'] = $expiration;
+            $userModel->save($user);
+
+            $userModel->setResetToken($email, $token, $expiration);
+
+            echo $userModel->getLastQuery();
+
+
+			$resetLink = site_url("/forgot-password/reset-password/$token");
+			$message = "Cliquez sur le lien suivant pour réinitialiser votre mot de passe: $resetLink";
+
+			$emailService = \Config\Services::email();
+
+			$from = 'mail.taskmate@gmail.com';
+
+			$emailService->setTo($email);
+			$emailService->setFrom($from);
+			$emailService->setSubject('Réinitialisation de mot de passe');
+			$emailService->setMessage($message);
+			if ($emailService->send()) {
+				echo ' E-mail envoyé avec succès.';
+			} else {
+				echo $emailService->printDebugger();
+			}
+		} else {
+			echo ' Adresse e-mail non valide.';
+		}
+	}
+
+	public function resetPassword($token) {
+		echo "Donova: ".$token."\n";
+
+		// check token
+
+		echo view('pages/resetPassword', ['token' => $token]);
+
+	}
+
+	public function updatePassword() {
+		$token = $this->request->getPost('token');
+		$password = $this->request->getPost('password');
+		$confirmPassword = $this->request->getPost('confirm_password');
+
+		$userModel = new AccountModel();
+		$user = $userModel->where('reset_token', $token)
+			->where('reset_token_expiration >', date('Y-m-d H:i:s'))
+			->first();
+		if ($user && $password === $confirmPassword) {
+
+			$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+			$userModel->set('password', $hashedPassword)
+				->set('reset_token', null)
+				->set('reset_token_expiration', null)
+				->update($user['id']);
+
+			session()->setFlashdata('msg', [
+				'text' => 'Mot de passe réinitialisé avec succès.',
+				'class' => 'alert alert-success'
+			]);
+			return redirect()->to('/');
+		} else {
+			session()->setFlashdata('msg', 'Erreur lors de la réinitialisation du mot de passe.');
+			return redirect()->back();
+		}
+	}
+
+
+
+
 }

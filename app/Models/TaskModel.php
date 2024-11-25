@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class TaskModel extends Model
 {
-    protected $table = 'Task';
+    protected $table = 'task';
     protected $primaryKey = 'id_task';
 
     protected $allowedFields = [

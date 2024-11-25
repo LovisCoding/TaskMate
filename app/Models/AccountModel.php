@@ -5,7 +5,7 @@ use CodeIgniter\Model;
 
 class AccountModel extends Model
 {
-	protected $table = 'Account';
+	protected $table = 'account';
 	protected $primaryKey = 'id';
 	protected $allowedFields = [
 		'name',
@@ -42,5 +42,13 @@ class AccountModel extends Model
 						->first();
 
 		return $account ? $account : null;
+	}
+
+	public function createAccount($registrationData)  
+	{
+		$query = "INSERT INTO account (name, email, password, created_at, reset_token, reset_token_expiration)
+        VALUES ('" . $registrationData['name'] . "', '" . $registrationData['email'] . "', '" . $registrationData['password'] . "', NOW(), NULL, NULL)";
+
+		$this->query($query);
 	}
 }
