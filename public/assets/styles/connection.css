@@ -95,3 +95,15 @@ body {
 #toggleConfirmPassword {
 	background: white;
 }
+
+/* Change la couleur de l'icône au survol */
+#togglePassword:hover i, 
+#toggleConfirmPassword:hover i {
+  color: #007bff;  /* Remplacez #007bff par la couleur que vous souhaitez */
+}
+
+/* Change la bordure du bouton au survol */
+#togglePassword:hover, 
+#toggleConfirmPassword:hover {
+  border-color: #007bff;  /* Remplacez #007bff par la couleur que vous souhaitez */
+}
