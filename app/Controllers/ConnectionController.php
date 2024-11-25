@@ -37,6 +37,14 @@ class ConnectionController extends BaseController
 		echo view('pages/forgotPassword');
 	}
 
+	public function resetPassword()
+	{
+		helper(['form']);
+		$token = $this->request->getGet('token');
+		$data = ['token' => $token];
+		echo view('pages/resetPassword', $data);
+	}
+
 	public function connection()
 	{
 		$session = session();
