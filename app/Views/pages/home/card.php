@@ -3,26 +3,21 @@
 		$statusClass = '';
 		$bubbleColor = '';
 
-		switch (strtolower($status)) {
-			case 'en retard':
-				$statusClass = 'text-black';
-				$bubbleColor = 'black';
-				break;
-			case 'en cours':
-				$statusClass = 'text-success';
-				$bubbleColor = 'green';
-				break;
-			case 'terminé':
-				$statusClass = 'text-dark';
-				$bubbleColor = 'darkgreen';
-				break;
-			case 'bloqué':
-				$statusClass = 'text-muted';
-				$bubbleColor = 'gray';
-				break;
-			default:
-				$statusClass = 'text-muted';
-				$bubbleColor = 'gray';
+		if (strpos(strtolower($status), 'en retard') !== false) {
+			$statusClass = 'text-black';
+			$bubbleColor = 'black';
+		} elseif (strpos(strtolower($status), 'en cours') !== false) {
+			$statusClass = 'text-success';
+			$bubbleColor = 'green';
+		} elseif (strpos(strtolower($status), 'terminé') !== false) {
+			$statusClass = 'text-dark';
+			$bubbleColor = 'darkgreen';
+		} elseif (strpos(strtolower($status), 'bloqué') !== false) {
+			$statusClass = 'text-muted';
+			$bubbleColor = 'gray';
+		} else {
+			$statusClass = 'text-muted';
+			$bubbleColor = 'gray';
 		}
 
 		$priorityIndicators = '';
