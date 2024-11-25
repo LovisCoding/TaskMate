@@ -16,30 +16,29 @@
 			</div>
 			<?php if (session()->getFlashdata('error')): ?>
 				<div class="alert alert-danger">
-					<?= session()->getFlashdata('error') ?>
+				<?= session()->getFlashdata('error') ?>
 				</div>
 			<?php endif; ?>
 			<?php if (session()->getFlashdata('success')): ?>
 				<div class="alert alert-success">
-					<?= session()->getFlashdata('success') ?>
+				<?= session()->getFlashdata('success') ?>
 				</div>
 			<?php endif; ?>
-			<?= form_open('forgot-password/sendResetLink'); ?>
-				<?= csrf_field(); ?>
-				<div class="form-group mb-3">
-					<label for="email" class="form-label">Adresse e-mail :</label>
-					<?= form_input([
-						'type' => 'email',
-						'class' => 'form-control',
-						'id' => 'email',
-						'name' => 'email',
-						'placeholder' => 'Entrez votre e-mail',
-						'required' => 'required'
-					]); ?>
+			<form action="/reset-password/updatePassword" method="post">
+				<?= csrf_field() ?>
+				<input type="hidden" name="token" value="<?= esc($token) ?>">
+
+				<div class="form-group">
+					<label for="password" class="form-label">Nouveau mot de passe :</label>
+					<input type="password" class="form-control" id="password" name="password" placeholder="Entrez un nouveau mot de passe" required>
 				</div>
 
-				<?= form_submit('submit', 'Envoyer le lien de réinitialisation', ['class' => 'btn btn-primary w-100 form-text']); ?>
-			<?= form_close(); ?>
+				<div class="form-group">
+					<label for="confirm_password" class="form-label">Confirmez le mot de passe :</label>
+					<input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirmez le mot de passe" required>
+				</div>
+				<button type="submit" class="btn btn-primary w-100 form-text mt-3">Confirmer</button>
+			</form>
 		</div>
 	</div>
 
