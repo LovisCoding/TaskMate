@@ -116,10 +116,10 @@ class ConnectionController extends BaseController
 		}
 	}
 
-	public function resetPassword($token) {
-		echo "Donova: ".$token."\n";
+	// public function resetPassword($token) {
+	// 	echo "Donova: ".$token."\n";
 
-	}
+	// }
 
 	public function updatePassword() {
 		$token = $this->request->getPost('token');
