@@ -1,0 +1,17 @@
+.tab-link {
+	color:black;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	text-decoration-color: black;
+	text-decoration-thickness: 3px ;
+}
+.active-tab {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	text-decoration-color: #0D6EFD;
+	text-decoration-thickness: 3px ;
+}
+.filter, .export{
+	text-decoration: unset;
+	color: #6C757D;
+}

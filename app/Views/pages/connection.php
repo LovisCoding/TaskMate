@@ -27,7 +27,7 @@
 			</div>
 			<button class="btn btn-primary w-100 btnValidate mt-4" type="submit">Se connecter</button>
 			<p class="form-text mt-3">Mot de passe oublié ?
-				<a href="<?= base_url('/'); ?>">Réinitialisation</a>
+				<a href="<?= base_url('/'); ?>">Réinitialiser</a>
 			</p>
 			<p class="form-text mt-3">Pas encore de compte ?
 				<a href="<?= base_url('auth/register'); ?>">S'inscrire</a>
