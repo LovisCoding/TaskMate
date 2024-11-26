@@ -14,9 +14,14 @@
 		<div class="content">
 
 			<!-- Vérifiez si un message flash est présent -->
-			<?php if (session()->getFlashdata('msg')): ?>
+			<?php if (session()->getFlashdata('error')): ?>
 				<div class="alert alert-danger" role="alert">
-					<?= session()->getFlashdata('msg'); ?>
+					<?= session()->getFlashdata('error'); ?>
+				</div>
+			<?php endif; ?>
+			<?php if (session()->getFlashdata('success')): ?>
+				<div class="alert alert-success">
+					<?= session()->getFlashdata('success') ?>
 				</div>
 			<?php endif; ?>
 

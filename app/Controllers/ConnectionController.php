@@ -62,11 +62,11 @@ class ConnectionController extends BaseController
 				$session->set($ses_data);
 				return redirect()->to('/home');
 			} else {
-				$session->setFlashdata('msg', 'Ce mot de passe est incorrect.');
+				$session->setFlashdata('error', 'Ce mot de passe est incorrect.');
 				return redirect()->to('/');
 			}
 		} else {
-			$session->setFlashdata('msg', 'Cet email n\'existe pas.');
+			$session->setFlashdata('error', 'Cet email n\'existe pas.');
 			return redirect()->to('/');
 		}
 	}

@@ -16,7 +16,7 @@ class AccountModel extends Model
 		'reset_token_expiration'
 	];
 
-	protected $useTimestamps = true;
+	protected $useTimestamps = false;
 	protected $createdField = 'created_at';
 	protected $updatedField = null;
 

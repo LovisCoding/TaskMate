@@ -77,7 +77,7 @@ class EmailController extends BaseController
         // Enregistrer les données dans la base de données
         $accountModel = new \App\Models\AccountModel();
         $accountModel->createAccount($registrationData);
-       
+
         session()->remove("registration_$token");
 
         return redirect()->to('/')->with('success', 'Votre compte a bien été créé. Vous pouvez maintenant vous connecter.');
@@ -86,88 +86,81 @@ class EmailController extends BaseController
 
 
     // TODO
-	public function sendResetLink()
-	{
-		$email = $this->request->getPost('email');
-		$userModel = new \App\Models\AccountModel();
-		$user = $userModel->getAccountByEmail($email);
+    public function sendResetLink()
+    {
+        $email = $this->request->getPost('email');
+        $userModel = new \App\Models\AccountModel();
+        $user = $userModel->getAccountByEmail($email);
 
-		$email = $this->request->getPost('email');
-		echo 'Adresse e-mail soumise : ' . $email;
-		if ($user) {
+        $email = $this->request->getPost('email');
+        if ($user) {
 
-			$token = bin2hex(random_bytes(16));
-			$expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
-			var_dump($user);
+            $token = bin2hex(random_bytes(16));
+            $expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
-            $user['reset_token'] = $token;
-            $user['reset_token_expiration'] = $expiration;
-            $userModel->save($user);
+            $userModel->set('reset_token', $token)
+                ->set('reset_token_expiration', $expiration)
+                ->update($user['id']);
 
-            $userModel->setResetToken($email, $token, $expiration);
+            $resetLink = site_url("/forgot-password/reset-password/$token");
+            $message = "Cliquez sur le lien suivant pour réinitialiser votre mot de passe: $resetLink";
 
-            echo $userModel->getLastQuery();
+            $emailService = \Config\Services::email();
 
+            $from = 'mail.taskmate@gmail.com';
 
-			$resetLink = site_url("/forgot-password/reset-password/$token");
-			$message = "Cliquez sur le lien suivant pour réinitialiser votre mot de passe: $resetLink";
+            $emailService->setTo($email);
+            $emailService->setFrom($from);
+            $emailService->setSubject('Réinitialisation de mot de passe');
+            $emailService->setMessage($message);
+            if ($emailService->send()) {
+                return redirect()->to('/')->with('success', 'Un mail vient de vous être envoyé. Veuillez accéder au lien fourni.');
+            } else {
+                return redirect()->to('/auth/forgot-password')->with('error', 'Échec de l\'envoi de l\'email. Veuillez réessayer.');
+            }
+        } else {
+            return redirect()->to('/auth/forgot-password')->with('error', 'L\'adresse email fournie est invalide.');
+        }
+    }
 
-			$emailService = \Config\Services::email();
-
-			$from = 'mail.taskmate@gmail.com';
-
-			$emailService->setTo($email);
-			$emailService->setFrom($from);
-			$emailService->setSubject('Réinitialisation de mot de passe');
-			$emailService->setMessage($message);
-			if ($emailService->send()) {
-				echo ' E-mail envoyé avec succès.';
-			} else {
-				echo $emailService->printDebugger();
-			}
-		} else {
-			echo ' Adresse e-mail non valide.';
-		}
-	}
-
-	public function resetPassword($token) {
-		echo "Donova: ".$token."\n";
-
-		// check token
-
-		echo view('pages/resetPassword', ['token' => $token]);
-
-	}
-
-	public function updatePassword() {
-		$token = $this->request->getPost('token');
-		$password = $this->request->getPost('password');
-		$confirmPassword = $this->request->getPost('confirm_password');
-
-		$userModel = new AccountModel();
-		$user = $userModel->where('reset_token', $token)
-			->where('reset_token_expiration >', date('Y-m-d H:i:s'))
-			->first();
-		if ($user && $password === $confirmPassword) {
-
-			$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-			$userModel->set('password', $hashedPassword)
-				->set('reset_token', null)
-				->set('reset_token_expiration', null)
-				->update($user['id']);
-
-			session()->setFlashdata('msg', [
-				'text' => 'Mot de passe réinitialisé avec succès.',
-				'class' => 'alert alert-success'
-			]);
-			return redirect()->to('/');
-		} else {
-			session()->setFlashdata('msg', 'Erreur lors de la réinitialisation du mot de passe.');
-			return redirect()->back();
-		}
-	}
+    public function resetPassword($token)
+    {
+        if (!session()->get("registration_$token")){
+            return redirect()->to('/')->with('error', '');
+        }
+        // check token
 
 
+        echo view('pages/resetPassword', ['token' => $token]);
+    }
 
+    public function updatePassword()
+    {
+        $token = $this->request->getPost('token');
+        $password = $this->request->getPost('password');
+        $confirmPassword = $this->request->getPost('confirm_password');
 
+        $userModel = new AccountModel();
+        $user = $userModel->where('reset_token', $token)
+            ->where('reset_token_expiration >', date('Y-m-d H:i:s'))
+            ->first();
+
+        if ($user && $password === $confirmPassword) {
+
+            echo $password;
+            echo $confirmPassword;
+            
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $userModel->set('password', $hashedPassword)
+                ->set('reset_token', null)
+                ->set('reset_token_expiration', null)
+                ->update($user['id']);
+
+            session()->setFlashdata('success', 'Mot de passe réinitialisé avec succès.');
+            return redirect()->to('/');
+        } else {
+            session()->setFlashdata('error', 'Erreur lors de la réinitialisation du mot de passe.');
+            return redirect()->back();
+        }
+    }
 }

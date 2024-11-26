@@ -15,7 +15,7 @@ $routes->get('/profil', 'Profil::index');
 
 $routes->post('/forgot-password/sendResetLink', 'EmailController::sendResetLink');
 $routes->get('/forgot-password/reset-password/(:any)', 'EmailController::resetPassword/$1');  // $1 pour capturer le token
-$routes->post('/forgot-password/updatePassword','EmailController:updatePassword');
+$routes->post('/forgot-password/updatePassword','EmailController::updatePassword');
 
 // Routes pour l'envoi et la confirmation de l'email
 $routes->post('email/sendConfirmAccountMail', 'EmailController::sendConfirmAccountMail'); // Envoi de l'email de confirmation
