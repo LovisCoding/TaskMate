@@ -19,7 +19,7 @@ class CreateGroupsTable extends Migration
             'name' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
-            ],
+            ]
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('id_account', 'Account', 'id', 'CASCADE', 'CASCADE');

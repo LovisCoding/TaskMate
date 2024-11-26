@@ -24,7 +24,7 @@
 				<?= session()->getFlashdata('success') ?>
 				</div>
 			<?php endif; ?>
-			<form action="/reset-password/updatePassword" method="post">
+			<form action="/forgot-password/updatePassword" method="post">
 				<?= csrf_field() ?>
 				<input type="hidden" name="token" value="<?= esc($token) ?>">
 

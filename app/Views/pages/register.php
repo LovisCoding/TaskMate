@@ -26,38 +26,86 @@
 				<img src="<?= base_url('assets/imgs/Logo_TaskMate.svg'); ?>" alt="Logo TaskMate" width="190" height="120">
 				<p class="mb-4 fw-normal">Inscrivez-vous</p>
 			</div>
+
 			<div class="mb-3">
 				<label class="form-label" for="name">Nom</label>
-				<input type="text" class="form-control" id="name" name="name" placeholder="Nom" required>
+				<input type="text"
+					class="form-control <?= session('validation') && session('validation')->hasError('name') ? 'is-invalid' : '' ?>"
+					id="name"
+					name="name"
+					placeholder="Nom"
+					value="<?= old('name') ?>"
+					required>
+				<?php if (session('validation') && session('validation')->hasError('name')): ?>
+					<div class="invalid-feedback">
+						<?= session('validation')->getError('name') ?>
+					</div>
+				<?php endif; ?>
 			</div>
+
 			<div class="mb-3">
 				<label class="form-label" for="email">Email</label>
-				<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+				<input type="email"
+					class="form-control <?= session('validation') && session('validation')->hasError('email') ? 'is-invalid' : '' ?>"
+					id="email"
+					name="email"
+					placeholder="Email"
+					value="<?= old('email') ?>"
+					required>
+				<?php if (session('validation') && session('validation')->hasError('email')): ?>
+					<div class="invalid-feedback">
+						<?= session('validation')->getError('email') ?>
+					</div>
+				<?php endif; ?>
 			</div>
+
 			<div class="mb-3">
 				<label class="form-label" for="password">Mot de passe</label>
 				<div class="input-group">
-					<input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required>
+					<input type="password"
+						class="form-control <?= session('validation') && session('validation')->hasError('password') ? 'is-invalid' : '' ?>"
+						id="password"
+						name="password"
+						placeholder="Mot de passe"
+						required>
 					<button type="button" class="btn btn-outline-secondary" id="togglePassword">
 						<i class="bi bi-eye-slash" id="passwordIcon"></i>
 					</button>
+					<?php if (session('validation') && session('validation')->hasError('password')): ?>
+						<div class="invalid-feedback">
+							<?= session('validation')->getError('password') ?>
+						</div>
+					<?php endif; ?>
 				</div>
 			</div>
+
 			<div class="mb-3">
 				<label class="form-label" for="confirm_password">Confirmation du mot de passe</label>
 				<div class="input-group">
-					<input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirmation du mot de passe" required>
+					<input type="password"
+						class="form-control <?= session('validation') && session('validation')->hasError('confirm_password') ? 'is-invalid' : '' ?>"
+						id="confirm_password"
+						name="confirm_password"
+						placeholder="Confirmation du mot de passe"
+						required>
 					<button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
 						<i class="bi bi-eye-slash" id="confirmPasswordIcon"></i>
 					</button>
+					<?php if (session('validation') && session('validation')->hasError('confirm_password')): ?>
+						<div class="invalid-feedback">
+							<?= session('validation')->getError('confirm_password') ?>
+						</div>
+					<?php endif; ?>
 				</div>
 			</div>
+
 			<button class="btn btn-primary w-100 btnValidate mt-4" type="submit">S'inscrire</button>
 			<p class="form-text mt-3">
 				Vous avez déjà un compte ?
 				<a href="<?= base_url('/'); ?>">Se connecter</a>
 			</p>
 			<?= form_close(); ?>
+
 		</div>
 	</div>
 

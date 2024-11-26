@@ -6,26 +6,28 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Connexion - TaskMate</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="./assets/styles/connection.css">
+	<link rel="stylesheet" href="<?= base_url('assets/styles/connection.css'); ?>">
 </head>
 
 <body class="d-flex justify-content-center">
 	<div class="form-signin w-100 h-100">
 		<div class="content">
 
-			<?php if (isset($success)): ?>
-				<div class="alert alert-success" role="alert">
-					<?= $success; ?>
-				</div>
-			<?php elseif (isset($error)): ?>
+			<!-- Vérifiez si un message flash est présent -->
+			<?php if (session()->getFlashdata('error')): ?>
 				<div class="alert alert-danger" role="alert">
-					<?= $error; ?>
+					<?= session()->getFlashdata('error'); ?>
+				</div>
+			<?php endif; ?>
+			<?php if (session()->getFlashdata('success')): ?>
+				<div class="alert alert-success">
+					<?= session()->getFlashdata('success') ?>
 				</div>
 			<?php endif; ?>
 
 			<?= form_open('auth/login'); ?>
 			<div class="mb-4 mt-4 d-flex flex-column align-items-center">
-				<img class="mb-4" src="./assets/imgs/Logo_TaskMate.svg" alt="Logo TaskMate" width="190" height="120">
+				<img src="<?= base_url('assets/imgs/Logo_TaskMate.svg'); ?>" alt="Logo TaskMate" width="190" height="120">
 				<p class="mb-4 fw-normal">Connectez-vous à votre compte</p>
 			</div>
 			<div class="mb-3">
@@ -39,12 +41,23 @@
 				<div id="pwError" class="invalid-feedback"></div>
 			</div>
 			<button class="btn btn-primary w-100 btnValidate mt-4" type="submit">Se connecter</button>
-			<p class="form-text mt-3">Mot de passe oublié ?
-				<a href="<?= base_url('/'); ?>">Réinitialiser</a>
+			<!-- Cookie si on a le temps
+			<div class="d-flex justify-content-center">
+			<div class="form-check mt-3" >
+				<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+				<label class="form-check-label" for="flexCheckDefault">
+					Se souvenir de moi
+				</label>
+			</div>
+			</div>-->
+			
+			<p class="form-text mt-3">
+				<a href="<?= base_url('/auth/forgot-password'); ?>">Mot de passe oublié ?</a>
 			</p>
 			<p class="form-text mt-3">Pas encore de compte ?
 				<a href="<?= base_url('auth/register'); ?>">S'inscrire</a>
-				<?= form_close(); ?>
+			</p>
+			<?= form_close(); ?>
 		</div>
 	</div>
 
