@@ -46,18 +46,16 @@ class ConnectionController extends BaseController
 		$email = $this->request->getVar('email');
 		$password = $this->request->getVar('password');
 		$data = $userModel->getAccountByEmail($email);
-		var_dump($data);
 		if ($data) {
 			$pass = $data['password'];
-			echo $pass;
-			echo $password;
 			$authenticatePassword = password_verify($password, $pass);
-			echo $authenticatePassword;
+
 			if ($authenticatePassword) {
 				$ses_data = [
 					'id' => $data['id'],
 					'name' => $data['name'],
 					'email' => $data['email'],
+					'isLoggedIn' => true,
 				];
 				$session->set($ses_data);
 				return redirect()->to('/home');
@@ -70,12 +68,6 @@ class ConnectionController extends BaseController
 			return redirect()->to('/');
 		}
 	}
-
-	public function deconnection()
-	{
-
-	}
-
 	
 
 }

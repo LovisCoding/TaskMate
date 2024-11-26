@@ -39,12 +39,25 @@ $taches = [
 ?>
 
 <div class="container mt-4">
-	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-<?= $nb ?> g-4">
-		<?php foreach ($taches as $tache): ?>
-			<div class="col">
-				<?=CalendarItemTitle()?>
-				<?=generateCard($tache[0], $tache[1], $tache[2], $tache[3]);?>
-			</div>
-		<?php endforeach; ?>
-	</div>
+    <div class="row">
+        <?php foreach ($tasks as $dateString => $taskes): ?>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                <?php
+                    $date = new DateTime($dateString);
+                ?>
+                <?= CalendarItemTitle($date) ?>
+
+                <?php foreach ($taskes as $task): ?>
+                    <div class="mb-3 mt-3">
+                        <?= generateCard(
+                            htmlspecialchars($task['name']),
+                            htmlspecialchars($task['description']),
+                            htmlspecialchars($task['priority']),
+                            htmlspecialchars($task['current_state'])
+                        ) ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
 </div>

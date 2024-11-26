@@ -43,6 +43,7 @@ class TaskModel extends Model
      */
     public function getTasksByDateRange($startDate, $days, $idAccount)
     {
+        $days = $days - 1;
         $endDate = date('Y-m-d', strtotime("$startDate +$days days")); // Calcul de la date de fin
 
         // Récupérer toutes les tâches dont les dates chevauchent la plage demandée

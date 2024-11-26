@@ -36,6 +36,11 @@ class ProfilController extends BaseController
 
     public function updateName()
     {
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/');
+        }
+
+
         helper(['form']);
         $session = session();
         $accountModel = new AccountModel();
@@ -50,6 +55,10 @@ class ProfilController extends BaseController
 
     public function resetPassword()
     {
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/');
+        }
+
         $id = session()->get("id");
         $accountModel = new AccountModel();
         $account = $accountModel->where("id", $id)->first();
@@ -88,6 +97,10 @@ class ProfilController extends BaseController
 
     public function logout()
     {
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/');
+        }
+
         $session = session();
         $session->destroy();
 
@@ -96,6 +109,10 @@ class ProfilController extends BaseController
 
     public function deleteAccount()
     {
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/');
+        }
+
         $session = session();
         $accountModel = new AccountModel();
 
@@ -104,6 +121,6 @@ class ProfilController extends BaseController
 
         $session->destroy();
 
-        return redirect()->to('/')->with('message', 'Votre compte a été supprimé.');
+        return redirect()->to('/')->with('success', 'Votre compte a été supprimé.');
     }
 }
