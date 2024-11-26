@@ -1,3 +1,6 @@
+<?php
+include __DIR__.'/../../components/Card.php'
+?>
 
 <div>
 	<div class="pt-4"></div>
@@ -13,35 +16,42 @@
 	</div>
 </div>
 
-<?php 
+<div class="container mt-4 justify-content-center">
+	<div class="d-flex flex-wrap align-items-start">
+		<?php 
+		$priorityColumns = [];
 
-if ( !isset($date) ){
-	$date = new DateTime();
-	$date->modify('-7 days');
-} 
+		foreach ($tasks as $dateString => $taskes) {
+			foreach ($taskes as $task) {
+				$priorityColumns[$task['priority']][] = $task;
+			}
+		}
 
-?>
+		krsort($priorityColumns); 
+		?>
 
-<div class="d-flex justify-content-center mt-4">
-	<?= view('components/CalendarRange', [ 'date' => $date, 'nb' => 3]) ?>
-</div>
-
-<div class="container mt-4">
-	<div class="d-flex justify-content-between">
-		<?php foreach ($tasks as $dateString => $taskes): ?>
-			<div>
-				<?php
-					$date = new DateTime($dateString);
-				?>
-				<?= view('components/CalendarItemTitle', [ 'date' => $date]) ?>
-				
-				<?php foreach ($taskes as $task): ?>
-					<div class="mb-3 mt-3">
+		<?php foreach ($priorityColumns as $priority => $tasksByPriority): ?>
+			<div class="d-flex flex-column me-4 mb-4 mt-5">
+				<div class="mb-3 text-center">
+					<?php 
+					$priorityIndicators = '';
+					for ($i = 0; $i < 4; $i++) {
+						$color = $i < $priority ? 'black' : 'gray';
+						$priorityIndicators .= "<span class=\"indicator $color\"></span>";
+					}
+					$priorityIndicators .= "<div class=\"line\"></div>";
+					?>
+					<div class="d-flex align-items-center justify-content-center mt-2">
+					<?= $priorityIndicators ?>
+					</div>
+				</div>
+				<?php foreach ($tasksByPriority as $task): ?>
+					<div class="mb-3">
 						<?= generateCard(
-							htmlspecialchars($task[0]),
-							htmlspecialchars($task[1]),
-							htmlspecialchars($task[2]),
-							htmlspecialchars($task[3])
+							htmlspecialchars($task['name']),
+							htmlspecialchars($task['description']),
+							htmlspecialchars($task['priority']),
+							htmlspecialchars($task['current_state'])
 						) ?>
 					</div>
 				<?php endforeach; ?>

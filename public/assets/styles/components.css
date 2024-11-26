@@ -136,3 +136,28 @@
 	aspect-ratio: 1.5;
 	flex: 1;
 }
+
+.border-text-warning {
+	border: 1px solid #FFC107;
+}
+
+.border-text-dark {
+	border: 1px solid #343A40;
+}
+
+.border-text-success {
+	border: 1px solid #28A745;
+}
+
+.border-text-danger {
+	border: 1px solid #DC3545;
+}
+
+.border-text-primary {
+	border: 1px solid #007BFF;
+}
+
+.card {
+	max-width: 100%;
+	box-sizing: border-box;
+}
