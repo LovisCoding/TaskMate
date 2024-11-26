@@ -3,6 +3,10 @@
 	--grey6-color: #DAE0E5;
 }
 
+body{
+	background-color: #F5F5F5;
+}
+
 .shape__list{
 	display: flex;
 	gap: 0.25rem;
@@ -13,6 +17,10 @@
 	height: 1rem;
 	background-color: var(--grey6-color);
 	border-radius: 0.20rem;
+}
+
+.icon{
+	width: 1rem;
 }
 
 .shape__active{
@@ -70,4 +78,24 @@
 	width: 48px;
 	background-color: var(--grey1-color);
 	border-radius: 3px;
+}
+
+.tag{
+	background-color: var(--grey6-color);
+	color: black;
+	padding: 0.25rem 0.75rem;
+	border-radius: 0.35rem;
+	font-size: 0.75rem;
+	width: fit-content;
+}
+
+.priority_shape{
+	background-color: black;
+	height: 1.5rem;
+	aspect-ratio: 1.5;
+	flex: 1;
+}
+
+.c-pointer{
+	cursor: pointer;
 }
