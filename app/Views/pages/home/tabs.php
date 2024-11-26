@@ -9,3 +9,4 @@ function tabs()
 <button class="btn btn-link tab-link"  id="tabRecap" >Récapitulatif</button>
 </div>';
 }
+ 

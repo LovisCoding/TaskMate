@@ -17,4 +17,5 @@ application/logs/*
 !application/logs/.htaccess
 /vendor/
 env
-writable/cache/*²
+writable/*
+!writable/cache/*

@@ -1,6 +1,9 @@
 .btn-grey {
 	background-color: #DAE0E5;
 }
+.btn-grey:hover {
+	background-color: #C8D0D8;
+}
 
 .btn-danger {
 	background-color: #795050;
@@ -105,3 +108,4 @@
 .commentaires {
 	width: 25rem;
 }
+

@@ -74,3 +74,4 @@ $taches = [
 		<?php endforeach; ?>
 	</div>
 </div>
+<?=view('pages/home/filterPanel')?>

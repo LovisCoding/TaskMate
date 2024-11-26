@@ -75,3 +75,20 @@
 .card {
 	width: 250px;
 }
+
+/** filter **/
+
+.checked {
+	color: #71903A
+}
+.container {
+	display: flex;
+	gap: 5px; /* Espace entre les carrés */
+  }
+
+  .square {
+	width: 12px; /* Largeur du carré */
+	height: 12px; /* Hauteur du carré */
+	background-color: black; /* Couleur de fond */
+	border-radius: 2px;
+  }
