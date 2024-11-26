@@ -2,9 +2,26 @@
 /**button **/
 .btn-grey {
 	background-color: #DAE0E5;
+	border-color: #DAE0E5;
+}
+.btn-grey:hover {
+	background-color: #C8D0D8;
+	border-color: #C8D0D8;
+}
+.btn-marron {
+	background-color: #795050;
+	border-color: #795050;
+	color: white;
+}
+.btn-marron:hover {
+	background-color: #7e4747;
+	border-color: #795050;
+	color: white;
 }
 .btn-danger {
-	background-color: #795050;
+	background-color: #ba2c2c;
+	border-color: #ba2c2c;
+	color: white;
 }
 
 
