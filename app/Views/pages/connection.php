@@ -41,6 +41,16 @@
 				<div id="pwError" class="invalid-feedback"></div>
 			</div>
 			<button class="btn btn-primary w-100 btnValidate mt-4" type="submit">Se connecter</button>
+			<!-- Cookie si on a le temps
+			<div class="d-flex justify-content-center">
+			<div class="form-check mt-3" >
+				<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+				<label class="form-check-label" for="flexCheckDefault">
+					Se souvenir de moi
+				</label>
+			</div>
+			</div>-->
+			
 			<p class="form-text mt-3">
 				<a href="<?= base_url('/auth/forgot-password'); ?>">Mot de passe oublié ?</a>
 			</p>
