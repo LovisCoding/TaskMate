@@ -24,3 +24,9 @@ $routes->post('email/sendConfirmAccountMail', 'EmailController::sendConfirmAccou
 $routes->get('email/confirmAccount/(:any)', 'EmailController::confirmAccount/$1'); // Confirmation de l'activation via le token
 
 
+// taches
+//getTaches
+//createTache
+
+
+// 
