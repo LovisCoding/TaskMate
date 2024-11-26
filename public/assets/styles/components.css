@@ -1,8 +1,7 @@
-
-/**button **/
 .btn-grey {
 	background-color: #DAE0E5;
 }
+
 .btn-danger {
 	background-color: #795050;
 }
@@ -36,6 +35,10 @@
 	height: 1rem;
 	background-color: var(--grey6-color);
 	border-radius: 0.20rem;
+}
+
+.icon{
+	width: 1rem;
 }
 
 .shape__active{

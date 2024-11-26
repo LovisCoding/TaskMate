@@ -1,23 +1,23 @@
 <?php
 	function generateCard($title, $text, $priority, $status) {
 		$statusClass = '';
-		$bubbleColor = '';
+		$bubbleClass = '';
 
 		if (strpos(strtolower($status), 'en retard') !== false) {
-			$statusClass = 'text-black';
-			$bubbleColor = 'black';
+			$statusClass = 'text-danger';
+			$bubbleClass = 'bg-danger';
 		} elseif (strpos(strtolower($status), 'en cours') !== false) {
+			$statusClass = 'text-warning';
+			$bubbleClass = 'bg-warning';
+		} elseif (strpos(strtolower($status), 'terminée') !== false) {
 			$statusClass = 'text-success';
-			$bubbleColor = 'green';
-		} elseif (strpos(strtolower($status), 'terminé') !== false) {
+			$bubbleClass = 'bg-success';
+		} elseif (strpos(strtolower($status), 'bloquée') !== false) {
+			$statusClass = 'text-primary';
+			$bubbleClass = 'bg-primary';
+		} elseif (strpos(strtolower($status), 'pas commencée') !== false) {
 			$statusClass = 'text-dark';
-			$bubbleColor = 'darkgreen';
-		} elseif (strpos(strtolower($status), 'bloqué') !== false) {
-			$statusClass = 'text-muted';
-			$bubbleColor = 'gray';
-		} else {
-			$statusClass = 'text-muted';
-			$bubbleColor = 'gray';
+			$bubbleClass = 'bg-secondary';
 		}
 
 		$priorityIndicators = '';
@@ -27,7 +27,7 @@
 		}
 
 		return <<<HTML
-	<div class="card p-3 shadow-sm rounded-3 h-100">
+	<div class="card p-3 shadow-sm rounded-3">
 		<h5 class="card-title mb-2">{$title}</h5>
 		<p class="card-text text-muted overflow-hidden card-text">{$text}</p>
 		<div class="d-flex align-items-center justify-content-between mt-2">
@@ -36,7 +36,7 @@
 			</div>
 			<div class="d-flex align-items-center text-end">
 				<span class="{$statusClass} small">{$status}</span>
-				<span class="indicator-circle" style="background-color: {$bubbleColor};"></span>
+				<span class="indicator-circle {$bubbleClass}"></span>
 			</div>
 		</div>
 	</div>

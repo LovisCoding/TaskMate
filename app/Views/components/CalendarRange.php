@@ -1,6 +1,4 @@
 <?php 
-
-
 function CalendarRange(DateTime $date, int $nb){
 
     $now = clone $date;
@@ -11,7 +9,8 @@ function CalendarRange(DateTime $date, int $nb){
     $nowPlus4 = clone $date;
     $nowPlus4->modify("+{$nb} days");
 
-    $nowView = $now->format('d/m/Y');
+    $nowView = $now->format('d/m/Y');  // Format pour la date actuelle
+    $nowPlus4View = $nowPlus4->format('d/m/Y');  // Format pour la date de fin
 
     return (
         '
@@ -28,7 +27,7 @@ function CalendarRange(DateTime $date, int $nb){
 
             <div class="title">
                 <span class="year">Année ' . $now->format('Y') . '</span>
-                <span class="range">' . $nowView . ' - ' . $nowPlus4->format('Y-m-d') . '</span>
+                <span class="range">' . $nowView . ' - ' . $nowPlus4View . '</span>
             </div>
 
             <form action="" method="get">
