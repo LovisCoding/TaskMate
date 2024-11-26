@@ -7,20 +7,17 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'ConnectionController::index');
 $routes->get('/home', 'HomeController::index');
+$routes->get('/viewTask', 'ViewTaskController::index');
 $routes->get('/auth/register', 'ConnectionController::register');
 $routes->post('/auth/login', 'ConnectionController::connection');
 $routes->get('/auth/forgot-password', 'ConnectionController::forgotPassword');
 $routes->get('/auth/reset-password', 'ConnectionController::resetPassword');
 $routes->get('/home', 'Home::index');
-$routes->get('/viewTask', 'ViewTaskController::index');
-
-
 $routes->get('profil', 'ProfilController::index');
 $routes->post('profil/updateName', 'ProfilController::updateName');
 $routes->get('profil/resetPassword', 'ProfilController::resetPassword');
 $routes->get('profil/logout', 'ProfilController::logout');
 $routes->get('profil/deleteAccount', 'ProfilController::deleteAccount');
-
 
 $routes->post('/forgot-password/sendResetLink', 'EmailController::sendResetLink');
 $routes->get('/forgot-password/reset-password/(:any)', 'EmailController::resetPassword/$1');  // $1 pour capturer le token

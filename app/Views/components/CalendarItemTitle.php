@@ -1,8 +1,6 @@
-<?php
+<?php 
 
-function CalendarItemTitle($date) {
-
-	$formatter = new IntlDateFormatter(
+$formatter = new IntlDateFormatter(
 		'fr_FR',
 		IntlDateFormatter::FULL,
 		IntlDateFormatter::NONE,
@@ -11,13 +9,9 @@ function CalendarItemTitle($date) {
 	);
 
 	$formattedDate = $formatter->format($date);
-	$formattedDate = ucfirst($formattedDate);
+	$formattedDate = ucfirst($formattedDate); ?>
 
-	return '
-		<div class="calendar_item_title">
-			<span class="title">' . $formattedDate . '</span>
-			<div class="line"></div>
-		</div>
-	';
-}
-?>
+<div class="calendar_item_title ">
+	<span class="title"><?= $formattedDate ?></span>
+	<div class="line"></div>
+</div>

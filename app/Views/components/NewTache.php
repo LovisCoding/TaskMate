@@ -1,8 +1,6 @@
-<?php
-include 'Button.php';
+<?= view('components/Button', [
+'svgName' => 'plus',
+'text' => 'Nouvelle tâche',
+'id' => 'btn-new-tache',
+'type' => 'basique' ]) ?>
 
-function newTache() {
-	return button('plus', 'Nouvelle tâche', 'btn-new-tache','basique', );
-}
-
-?>
