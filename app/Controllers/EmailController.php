@@ -95,6 +95,8 @@ class EmailController extends BaseController
         if ($user) {
 
             $token = bin2hex(random_bytes(16));
+            session()->set("updatePassword_$token", $token);
+
             $expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
             $userModel->set('reset_token', $token)
@@ -125,10 +127,12 @@ class EmailController extends BaseController
     public function resetPassword($token)
     {
         // check token
-        if (!session()->get("registration_$token")) {
+        if (!session()->get("updatePassword_$token")) {
             return redirect()->to('/');
         }
 
+        $session = session();
+        $session->destroy();
         echo view('pages/resetPassword', ['token' => $token]);
     }
 
@@ -161,4 +165,5 @@ class EmailController extends BaseController
             return redirect()->back();
         }
     }
+
 }
