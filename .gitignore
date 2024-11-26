@@ -16,7 +16,7 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 /vendor/
-env
+.env
 writable/cache/*²
 
 .DS_Store

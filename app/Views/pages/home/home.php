@@ -29,18 +29,18 @@ include __DIR__.'/../../components/Tabs.php';
 </div>
 
 <div class="container mt-4">
-	<div class="d-flex justify-content-between">
+	<div class="d-flex flex-wrap align-items-start justify-content-center">
 		<?php foreach ($tasks as $dateString => $taskes): ?>
-			<div>
+			<div class="d-flex flex-column me-4 mb-4">
 				<?php
 					$date = new DateTime($dateString);
 				?>
-				<?= CalendarItemTitle($date) ?>
-				
+				<div class="mb-3">
+					<?= CalendarItemTitle($date) ?>
+				</div>
 				<?php foreach ($taskes as $task): ?>
-					<div class="mb-3 mt-3">
+					<div class="mb-3">
 						<?= generateCard(
-							// prend les valeurs de name, description et date sans utiliser d'indices
 							htmlspecialchars($task['name']),
 							htmlspecialchars($task['description']),
 							htmlspecialchars($task['priority']),
