@@ -44,3 +44,4 @@ function CalendarRange(DateTime $date, int $nb){
         '
     );
 }
+?>

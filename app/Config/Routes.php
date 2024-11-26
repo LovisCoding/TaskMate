@@ -6,6 +6,8 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'ConnectionController::index');
+$routes->get('/home', 'HomeController::index');
+$routes->get('/profil', 'ProfilController::index');
 $routes->get('/auth/register', 'ConnectionController::register');
 $routes->post('/auth/login', 'ConnectionController::connection');
 $routes->get('/auth/forgot-password', 'ConnectionController::forgotPassword');

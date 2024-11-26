@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class Profil extends BaseController
+class ProfilController extends BaseController
 {
     public function index() : void
     {
