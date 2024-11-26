@@ -40,10 +40,11 @@ include __DIR__.'/../../components/Tabs.php';
 				<?php foreach ($taskes as $task): ?>
 					<div class="mb-3 mt-3">
 						<?= generateCard(
-							htmlspecialchars($task[0]),
-							htmlspecialchars($task[1]),
-							htmlspecialchars($task[2]),
-							htmlspecialchars($task[3])
+							// prend les valeurs de name, description et date sans utiliser d'indices
+							htmlspecialchars($task['name']),
+							htmlspecialchars($task['description']),
+							htmlspecialchars($task['priority']),
+							htmlspecialchars($task['current_state'])
 						) ?>
 					</div>
 				<?php endforeach; ?>
