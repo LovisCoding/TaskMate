@@ -17,3 +17,35 @@
 	text-decoration: unset;
 	color: #6C757D;
 }
+
+.indicator {
+	width: 12px;
+	height: 12px;
+	margin-right: 5px;
+	border-radius: 2px;
+}
+
+.indicator.black {
+	background-color: black;
+}
+
+.indicator.gray {
+	background-color: gray;
+}
+
+.indicator-circle {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: black;
+	margin-left: 0.8rem;
+}
+
+.card-text {
+	font-size: 0.85rem;
+	height: 2.5rem;
+}
+
+.card {
+	max-width: 18rem;
+}
