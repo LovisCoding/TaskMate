@@ -3673,3 +3673,660 @@ INFO - 2024-11-26 14:59:42 --> Session: Class initialized using 'CodeIgniter\Ses
 INFO - 2024-11-26 15:00:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 INFO - 2024-11-26 15:00:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 INFO - 2024-11-26 15:00:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:01:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:01:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:01:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:01:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:01:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:01:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:01:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:01:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:02:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:02:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:02:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:02:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:03:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:04:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:04:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:05:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:05:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:10:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2024-11-26 15:10:36 --> ErrorException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^ in /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/Postgre/Connection.php:204
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/Postgre/Connection.php(204): pg_query()
+#2 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+#3 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+#4 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+#5 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#6 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+#7 /home/etudiant/ld220835/TP/TaskMate/TaskMate/app/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+#8 /home/etudiant/ld220835/TP/TaskMate/TaskMate/app/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+#9 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(933): App\Controllers\HomeController->index()
+#10 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+#11 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+#12 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+#14 /home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php(56): CodeIgniter\Boot::bootWeb()
+#15 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/rewrite.php(44): require_once('...')
+#16 {main}
+CRITICAL - 2024-11-26 15:10:36 --> CodeIgniter\Database\Exceptions\DatabaseException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+[Method: GET, Route: home]
+in SYSTEMPATH/Database/BaseConnection.php on line 688.
+ 1 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 2 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 4 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+CRITICAL - 2024-11-26 15:10:36 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+in SYSTEMPATH/Database/Postgre/Connection.php on line 209.
+ 1 SYSTEMPATH/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+ 2 SYSTEMPATH/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 4 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 6 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+ 8 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 9 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+14 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+CRITICAL - 2024-11-26 15:10:36 --> [Caused by] ErrorException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+in SYSTEMPATH/Database/Postgre/Connection.php on line 204.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/Database/Postgre/Connection.php(204): pg_query()
+ 3 SYSTEMPATH/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+ 4 SYSTEMPATH/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 5 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 6 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 7 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 8 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 9 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+10 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+11 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+12 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+13 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+15 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+16 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+INFO - 2024-11-26 15:11:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2024-11-26 15:11:45 --> ErrorException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^ in /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/Postgre/Connection.php:204
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/Postgre/Connection.php(204): pg_query()
+#2 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+#3 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+#4 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+#5 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#6 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+#7 /home/etudiant/ld220835/TP/TaskMate/TaskMate/app/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+#8 /home/etudiant/ld220835/TP/TaskMate/TaskMate/app/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+#9 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(933): App\Controllers\HomeController->index()
+#10 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+#11 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+#12 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+#14 /home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php(56): CodeIgniter\Boot::bootWeb()
+#15 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/rewrite.php(44): require_once('...')
+#16 {main}
+CRITICAL - 2024-11-26 15:11:45 --> CodeIgniter\Database\Exceptions\DatabaseException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+[Method: GET, Route: home]
+in SYSTEMPATH/Database/BaseConnection.php on line 688.
+ 1 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 2 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 4 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+CRITICAL - 2024-11-26 15:11:45 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+in SYSTEMPATH/Database/Postgre/Connection.php on line 209.
+ 1 SYSTEMPATH/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+ 2 SYSTEMPATH/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 4 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 6 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+ 8 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 9 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+14 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+CRITICAL - 2024-11-26 15:11:45 --> [Caused by] ErrorException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+in SYSTEMPATH/Database/Postgre/Connection.php on line 204.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/Database/Postgre/Connection.php(204): pg_query()
+ 3 SYSTEMPATH/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+ 4 SYSTEMPATH/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 5 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 6 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 7 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 8 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 9 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+10 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+11 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+12 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+13 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+15 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+16 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+INFO - 2024-11-26 15:11:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2024-11-26 15:11:54 --> ErrorException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^ in /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/Postgre/Connection.php:204
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/Postgre/Connection.php(204): pg_query()
+#2 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+#3 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+#4 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+#5 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#6 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+#7 /home/etudiant/ld220835/TP/TaskMate/TaskMate/app/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+#8 /home/etudiant/ld220835/TP/TaskMate/TaskMate/app/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+#9 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(933): App\Controllers\HomeController->index()
+#10 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+#11 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+#12 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+#14 /home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php(56): CodeIgniter\Boot::bootWeb()
+#15 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/rewrite.php(44): require_once('...')
+#16 {main}
+CRITICAL - 2024-11-26 15:11:54 --> CodeIgniter\Database\Exceptions\DatabaseException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+[Method: GET, Route: home]
+in SYSTEMPATH/Database/BaseConnection.php on line 688.
+ 1 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 2 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 4 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+CRITICAL - 2024-11-26 15:11:54 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+in SYSTEMPATH/Database/Postgre/Connection.php on line 209.
+ 1 SYSTEMPATH/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+ 2 SYSTEMPATH/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 4 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 6 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+ 8 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 9 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+14 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+CRITICAL - 2024-11-26 15:11:54 --> [Caused by] ErrorException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+in SYSTEMPATH/Database/Postgre/Connection.php on line 204.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/Database/Postgre/Connection.php(204): pg_query()
+ 3 SYSTEMPATH/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+ 4 SYSTEMPATH/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 5 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 6 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 7 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 8 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 9 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+10 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+11 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+12 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+13 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+15 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+16 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+INFO - 2024-11-26 15:11:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2024-11-26 15:11:55 --> ErrorException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^ in /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/Postgre/Connection.php:204
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/Postgre/Connection.php(204): pg_query()
+#2 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+#3 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+#4 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+#5 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#6 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+#7 /home/etudiant/ld220835/TP/TaskMate/TaskMate/app/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+#8 /home/etudiant/ld220835/TP/TaskMate/TaskMate/app/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+#9 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(933): App\Controllers\HomeController->index()
+#10 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+#11 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+#12 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+#14 /home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php(56): CodeIgniter\Boot::bootWeb()
+#15 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/rewrite.php(44): require_once('...')
+#16 {main}
+CRITICAL - 2024-11-26 15:11:55 --> CodeIgniter\Database\Exceptions\DatabaseException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+[Method: GET, Route: home]
+in SYSTEMPATH/Database/BaseConnection.php on line 688.
+ 1 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 2 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 4 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+CRITICAL - 2024-11-26 15:11:55 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+in SYSTEMPATH/Database/Postgre/Connection.php on line 209.
+ 1 SYSTEMPATH/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+ 2 SYSTEMPATH/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 4 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 6 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+ 8 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 9 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+14 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+CRITICAL - 2024-11-26 15:11:55 --> [Caused by] ErrorException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+in SYSTEMPATH/Database/Postgre/Connection.php on line 204.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/Database/Postgre/Connection.php(204): pg_query()
+ 3 SYSTEMPATH/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+ 4 SYSTEMPATH/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 5 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 6 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 7 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 8 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 9 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+10 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+11 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+12 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+13 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+15 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+16 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+INFO - 2024-11-26 15:11:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2024-11-26 15:11:56 --> ErrorException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^ in /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/Postgre/Connection.php:204
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/Postgre/Connection.php(204): pg_query()
+#2 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+#3 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+#4 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+#5 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#6 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+#7 /home/etudiant/ld220835/TP/TaskMate/TaskMate/app/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+#8 /home/etudiant/ld220835/TP/TaskMate/TaskMate/app/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+#9 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(933): App\Controllers\HomeController->index()
+#10 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+#11 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+#12 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+#14 /home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php(56): CodeIgniter\Boot::bootWeb()
+#15 /home/etudiant/ld220835/TP/TaskMate/TaskMate/system/rewrite.php(44): require_once('...')
+#16 {main}
+CRITICAL - 2024-11-26 15:11:56 --> CodeIgniter\Database\Exceptions\DatabaseException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+[Method: GET, Route: home]
+in SYSTEMPATH/Database/BaseConnection.php on line 688.
+ 1 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 2 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 4 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+CRITICAL - 2024-11-26 15:11:56 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+in SYSTEMPATH/Database/Postgre/Connection.php on line 209.
+ 1 SYSTEMPATH/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+ 2 SYSTEMPATH/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 4 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 6 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+ 8 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 9 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+14 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+CRITICAL - 2024-11-26 15:11:56 --> [Caused by] ErrorException: pg_query(): Query failed: ERREUR:  la colonne « date_start » n'existe pas
+LINE 4: AND &quot;date_start&quot; &gt;= '2024-11-26'
+            ^
+in SYSTEMPATH/Database/Postgre/Connection.php on line 204.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/Database/Postgre/Connection.php(204): pg_query()
+ 3 SYSTEMPATH/Database/BaseConnection.php(734): CodeIgniter\Database\Postgre\Connection->execute()
+ 4 SYSTEMPATH/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 5 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query()
+ 6 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 7 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 8 APPPATH/Models/TaskModel.php(184): CodeIgniter\BaseModel->findAll()
+ 9 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getFilteredTasks()
+10 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+11 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+12 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+13 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+15 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+16 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+INFO - 2024-11-26 15:11:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:11:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:11:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:13:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:14:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:15:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:16:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:16:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:17:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:17:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:17:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:17:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:18:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:18:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:21:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:21:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:21:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:23:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:23:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-11-26 15:23:18 --> DateMalformedStringException: Failed to parse time string (2024-11-26=) at position 10 (=): Unexpected character
+[Method: GET, Route: home]
+in APPPATH/Models/TaskModel.php on line 168.
+ 1 APPPATH/Models/TaskModel.php(168): DateTime->__construct()
+ 2 APPPATH/Controllers/HomeController.php(45): App\Models\TaskModel->getFilteredTasks()
+ 3 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 4 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+INFO - 2024-11-26 15:23:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:23:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:25:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-11-26 15:25:45 --> Error: Call to a member function where() on array
+[Method: GET, Route: home]
+in APPPATH/Models/TaskModel.php on line 164.
+ 1 APPPATH/Controllers/HomeController.php(45): App\Models\TaskModel->getFilteredTasks()
+ 2 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 3 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+INFO - 2024-11-26 15:29:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:29:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:30:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:30:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:30:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:30:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-11-26 15:30:24 --> Error: Object of class App\Models\TaskModel could not be converted to string
+[Method: GET, Route: home]
+in APPPATH/Models/TaskModel.php on line 68.
+ 1 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getTasksByDateRange()
+ 2 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 3 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+INFO - 2024-11-26 15:30:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:31:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-11-26 15:31:05 --> ErrorException: Array to string conversion
+[Method: GET, Route: home]
+in APPPATH/Models/TaskModel.php on line 70.
+ 1 APPPATH/Models/TaskModel.php(70): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getTasksByDateRange()
+ 3 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 4 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+INFO - 2024-11-26 15:31:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:32:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:32:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:32:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:33:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:33:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:33:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:33:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:33:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:33:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:33:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:33:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:33:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:33:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:33:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:33:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:33:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:34:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:34:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:34:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:34:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:34:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:34:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:34:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:35:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:36:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:36:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:36:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:36:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:36:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-11-26 15:36:16 --> ErrorException: Array to string conversion
+[Method: GET, Route: home]
+in APPPATH/Models/TaskModel.php on line 72.
+ 1 APPPATH/Models/TaskModel.php(72): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/HomeController.php(43): App\Models\TaskModel->getTasksByDateRange()
+ 3 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\HomeController->index()
+ 4 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/ld220835/TP/TaskMate/TaskMate/public/index.php')
+INFO - 2024-11-26 15:36:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:37:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:37:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:37:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:38:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:39:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:40:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:40:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:40:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:40:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:42:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:42:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:42:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:42:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:42:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:42:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:42:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:42:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:43:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:46:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:46:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:47:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:47:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:47:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:48:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:48:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:48:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:49:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:50:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:50:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-26 15:50:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

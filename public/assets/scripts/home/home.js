@@ -19,7 +19,7 @@ document.getElementById('btn-filter').addEventListener('click', function () {
 }, false );
 
 //checkboxEtat.js
-const etats = ['inProgress', 'delayed', 'completed', 'blocked'];
+const etats = ['En retard', 'En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
 
 etats.forEach(function (etat) {
 	document.getElementById(etat).addEventListener('change', function () {
