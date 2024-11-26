@@ -85,7 +85,6 @@ class EmailController extends BaseController
 
 
 
-    // TODO
     public function sendResetLink()
     {
         $email = $this->request->getPost('email');
@@ -125,11 +124,10 @@ class EmailController extends BaseController
 
     public function resetPassword($token)
     {
-        if (!session()->get("registration_$token")){
-            return redirect()->to('/')->with('error', '');
-        }
         // check token
-
+        if (!session()->get("registration_$token")) {
+            return redirect()->to('/');
+        }
 
         echo view('pages/resetPassword', ['token' => $token]);
     }
