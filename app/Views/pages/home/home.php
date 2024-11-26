@@ -11,7 +11,9 @@ include __DIR__.'/../../components/CalendarRange.php';
 	<?=filter()?>
 </div>
 
-<?=CalendarRange()?>
+<div class="d-flex justify-content-center mt-4">
+	<?=CalendarRange()?>
+</div>
 <div>
 	<?=generateCard("Tâche 1", "Texte descriptif ici.", 3, "en retard");?>
 	<?=generateCard("Tâche 1", "Texte descriptif ici.", 4, "en cours");?>
