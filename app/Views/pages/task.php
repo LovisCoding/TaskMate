@@ -55,21 +55,32 @@
 	<?= form_close() ?>
 <?= view('components/CloseModal'); ?>
 
-<?= view('components/CalendarRange', [ 'date' => $date, 'nb' => 4]); ?>
 
 <?= form_open("/"); ?>
+
+<?php
+
+$arr = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit. In rhoncus, purus at fermentum pulvinar, dolor nibh auctor odio, vel consequat purus justo et dolor. Curabitur facilisis tortor velit, sit amet tempus augue mollis non. Suspendisse sollicitudin.', 
+'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In rhoncus, purus at fermentum pulvinar, dolor nibh auctor odio, vel consequat purus justo et dolor. Curabitur facilisis tortor velit, sit amet tempus augue mollis non. Suspendisse sollicitudin.', 
+'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In rhoncus, purus at fermentum pulvinar, dolor nibh auctor odio, vel consequat purus justo et dolor. Curabitur facilisis tortor velit, sit amet tempus augue mollis non. Suspendisse sollicitudin.'];
+?>
+
+
 
 <div class="container mt-5">
 	<div class="row">
 		<div class="col-6 p-5 bg-white rounded-2">
 			<h4>Task Name</h4>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, saepe repellendus. Quia, a voluptatibus cum asperiores saepe aperiam nemo sit voluptates nostrum vitae debitis aspernatur doloremque optio ratione consequuntur tempore.</p>
-			<button type="button">Ouvrir Modal</button>
-			<button type="button">Ouvrir Modal is blocked</button>
-
+			<hr style="visibility:hidden">
+			<?= view('pages/viewTask/commentaires', [ 'commentaires' => $arr ]) ?>
+			<div class="d-flex justify-content-between mt-5">
+				<?= view('components/Button', [ 'text' => "Supprimer", 'type' => 'danger' ]) ?>
+				<?= view('components/Button', [ 'text' => "Terminer la tâche", 'type' => null ]) ?>
+			</div>
 		</div>
 		<div class="col-2"></div>
-		<div class="col-4 p-5 bg-white rounded-2">
+		<div class="col-4 p-5 bg-white rounded-2" style="height: fit-content;">
 
 			<div class="d-flex flex-column gap-4">
 
@@ -80,9 +91,9 @@
 					</div>
 					<select class="form-select mb-2" name="" id="">
 						<option value="1">1</option>
-						<option value="1">2</option>
-						<option value="1">3</option>
-						<option value="1">4</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
 					</select>
 				</div>
 
