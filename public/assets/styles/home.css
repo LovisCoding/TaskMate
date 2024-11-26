@@ -6,6 +6,7 @@
 	text-decoration-thickness: 3px ;
 	font-weight: bold;
 }
+
 .active-tab {
 	text-decoration: underline;
 	text-underline-offset: 6px;
@@ -13,14 +14,19 @@
 	text-decoration-thickness: 3px ;
 	font-weight: bold;
 }
+
 .filter, .export{
 	text-decoration: unset;
 	color: #6C757D;
 }
 
+.export {
+	margin-left: 1rem;
+}
+
 .indicator {
-	width: 12px;
-	height: 12px;
+	width: 10px;
+	height: 10px;
 	margin-right: 5px;
 	border-radius: 2px;
 }
@@ -33,6 +39,26 @@
 	background-color: gray;
 }
 
+.indicator.red {
+	background-color: red;
+}
+
+.indicator.yellow {
+	background-color: #FFC107;
+}
+
+.indicator.green {
+	background-color: green;
+}
+
+.indicator.blue {
+	background-color: blue;
+}
+
+.indicator.darkgray {
+	background-color: darkgray;
+}
+
 .indicator-circle {
 	width: 10px;
 	height: 10px;
@@ -43,9 +69,26 @@
 
 .card-text {
 	font-size: 0.85rem;
-	height: 2.5rem;
+	height: 1rem;
 }
 
 .card {
-	max-width: 18rem;
+	width: 250px;
 }
+
+/** filter **/
+
+.checked {
+	color: #71903A
+}
+.container {
+	display: flex;
+	gap: 5px; /* Espace entre les carrés */
+  }
+
+  .square {
+	width: 12px; /* Largeur du carré */
+	height: 12px; /* Hauteur du carré */
+	background-color: black; /* Couleur de fond */
+	border-radius: 2px;
+  }

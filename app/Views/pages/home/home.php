@@ -1,42 +1,32 @@
 <?php
-include 'tabs.php';
-include 'filter.php';
-include 'export.php';
-include 'card.php';
+
+include __DIR__.'/../../components/Filter.php';
+include __DIR__.'/../../components/Export.php';
+include __DIR__.'/../../components/NewTache.php';
 include __DIR__.'/../../components/CalendarRange.php';
 include __DIR__.'/../../components/CalendarItemTitle.php';
-include 'newTache.php';
-?>
-<div class="pt-4"></div>
-<div class="d-flex justify-content-between mx-4" id="vues">
-	<div class="left d-flex">
-		<?= tabs() ?>
-		<?= export() ?>
-		<?= filter() ?>
-	</div>
-	<div class="right">
-	<?= newTache() ?>	
-	</div>	
-	
-</div>
-<div class="d-flex justify-content-center mt-4">
-	<?=CalendarRange(new DateTime(), 5)?>
-</div>
-<?php
-$_GET['date'] = '2021-01-01';
-$_GET['nb'] = 7;
+include __DIR__.'/../../components/Card.php';
+include __DIR__.'/../../components/Tabs.php';
 
-$nb = $_GET['nb'];
-$taches = [
-	["Tâche 1", "Texte descriptif ici.", 3, "en retard"],
-	["Tâche 2", "Texte descriptif ici.", 4, "en cours"],
-	["Tâche 3", "Texte descriptif ici.", 4, "terminé"],
-	["Tâche 4", "Lorem ipsum dolor sit", 4, "bloqué"],
-	["Tâche 5", "Description supplémentaire.", 2, "en attente"],
-	["Tâche 6", "Texte ici.", 5, "à valider"],
-	["Tâche 7", "Un autre texte descriptif.", 3, "prioritaire"]
-];
 ?>
+
+<div>
+	<div class="pt-4"></div>
+	<div class="d-flex justify-content-between mx-4" id="vues">
+		<div class="left d-flex">
+			<?= tabs() ?>
+			<?= export() ?>
+			<?= filter() ?>
+		</div>
+		<div class="right">
+			<?= newTache() ?>
+		</div>
+	</div>
+</div>
+
+<div class="d-flex justify-content-center mt-4">
+	<?= CalendarRange((new DateTime())->modify('-7 days'), 5) ?>
+</div>
 
 <div class="container mt-4">
     <div class="row">
@@ -61,3 +51,4 @@ $taches = [
         <?php endforeach; ?>
     </div>
 </div>
+<?=view('pages/home/filterPanel')?>

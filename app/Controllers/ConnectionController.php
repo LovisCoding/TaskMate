@@ -16,7 +16,6 @@ class ConnectionController extends BaseController
 	
 		echo view('pages/connection', $data);
 	}
-	
 
 	public function register()
 	{
@@ -29,15 +28,12 @@ class ConnectionController extends BaseController
 	
 		echo view('pages/register', $data);
 	}
-	
 
 	public function forgotPassword()
 	{
 		helper(['form']);
 		echo view('pages/forgotPassword');
 	}
-
-
 
 	public function connection()
 	{

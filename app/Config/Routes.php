@@ -12,6 +12,7 @@ $routes->post('/auth/login', 'ConnectionController::connection');
 $routes->get('/auth/forgot-password', 'ConnectionController::forgotPassword');
 $routes->get('/auth/reset-password', 'ConnectionController::resetPassword');
 $routes->get('/home', 'Home::index');
+$routes->get('/viewTask', 'ViewTaskController::index');
 
 
 $routes->get('profil', 'ProfilController::index');
