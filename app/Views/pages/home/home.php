@@ -1,31 +1,25 @@
-<?php
-
-include __DIR__.'/../../components/Filter.php';
-include __DIR__.'/../../components/Export.php';
-include __DIR__.'/../../components/NewTache.php';
-include __DIR__.'/../../components/CalendarRange.php';
-include __DIR__.'/../../components/CalendarItemTitle.php';
-include __DIR__.'/../../components/Card.php';
-include __DIR__.'/../../components/Tabs.php';
-
-?>
 
 <div>
 	<div class="pt-4"></div>
 	<div class="d-flex justify-content-between mx-4" id="vues">
 		<div class="left d-flex">
-			<?= tabs() ?>
-			<?= export() ?>
-			<?= filter() ?>
+			<?= view('components/Tabs') ?>
+			<?= view('components/Export') ?>
+			<?= view('components/Filter') ?>
 		</div>
 		<div class="right">
-			<?= newTache() ?>
+			<?= view('components/NewTache') ?>
 		</div>
 	</div>
 </div>
+<?php 
+
+$date = new DateTime($date);
+
+?>
 
 <div class="d-flex justify-content-center mt-4">
-	<?= CalendarRange((new DateTime())->modify('-7 days'), 5) ?>
+	<?= view('components/CalendarRange', [ 'date' => $date, 'nb' => $nb]) ?>
 </div>
 
 <div class="container mt-4">
@@ -36,7 +30,7 @@ include __DIR__.'/../../components/Tabs.php';
 					$date = new DateTime($dateString);
 				?>
 				<div class="mb-3">
-					<?= CalendarItemTitle($date) ?>
+					<?= view('components/CalendarItemTitle', [ 'date' => $date]) ?>
 				</div>
 				<?php foreach ($taskes as $task): ?>
 					<div class="mb-3">

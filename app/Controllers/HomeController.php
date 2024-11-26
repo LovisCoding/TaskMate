@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\TaskModel;
+use DateTime;
 
 class HomeController extends BaseController
 {
@@ -11,13 +12,13 @@ class HomeController extends BaseController
 		echo view('layout/header');
 		echo view('layout/navbar');
 
-		$dateStart = $this->request->getPost('dateStart') ?? '2024-11-27';
-		$days = $this->request->getPost('days') ?? 7;
+		$date = $this->request->getGet('date') ?? new DateTime();
+		$nb = $this->request->getGet('nb') ?? 4;
 
 		$session = session();
 		$id_account = $session->get("id");
 		$taskModel = new TaskModel();
-		$tasks = $taskModel->getTasksByDateRange($dateStart, $days, $id_account);
+		$tasks = $taskModel->getTasksByDateRange($date, $nb, $id_account);
 
 		// $tasks = $taskModel->getTasksByPriority($id_account);
 
@@ -27,7 +28,7 @@ class HomeController extends BaseController
 
 
 		//var_dump($tasks);
-		echo view('pages/home/home', ['tasks' => $tasks]);
+		echo view('pages/home/home', ['tasks' => $tasks, 'date' => $date, 'nb' => $nb]);
 		echo view('layout/footer') ;
 	}
 }

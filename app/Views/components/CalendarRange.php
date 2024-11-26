@@ -6,9 +6,11 @@
 	$nowMoins4->modify("-{$nb} days");
 
 	$nowPlus4 = clone $date;
+    $nb -= 1;
 	$nowPlus4->modify("+{$nb} days");
 
 	$nowView = $now->format('d/m/Y');
+    $nowPlus4View = $nowPlus4->format('d/m/Y');
 
 ?>
 
@@ -25,7 +27,7 @@
 
 	<div class="title">
 		<span class="year">Année <?= $now->format('Y') ?></span>
-		<span class="range"><?= $nowView ?> - <?= $nowPlus4->format('Y-m-d') ?></span>
+		<span class="range"><?= $nowView ?> - <?= $nowPlus4View ?></span>
 	</div>
 
 	<form action="" method="get">
