@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class CommentModel extends Model
 {
-    protected $table = 'Comment';
+    protected $table = 'comment';
     protected $primaryKey = 'id';
 
     protected $allowedFields = [

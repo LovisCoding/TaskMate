@@ -2,13 +2,13 @@
 
 namespace App\Controllers;
 
-class Home extends BaseController
+class ViewTaskController extends BaseController
 {
     public function index() : void
     {
         echo view('layout/header');
         echo view('layout/navbar');
-        echo view('pages/home'); 
+        echo view('pages/viewTask/viewTask');
         echo view('layout/footer') ;
     }
 }

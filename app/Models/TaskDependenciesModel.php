@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class TaskDependenciesModel extends Model
 {
-    protected $table = 'TaskDependencies';
+    protected $table = 'taskdependencies';
 
     protected $allowedFields = [
         'id_mother_task',

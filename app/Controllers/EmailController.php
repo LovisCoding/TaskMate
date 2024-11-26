@@ -2,71 +2,159 @@
 
 namespace App\Controllers;
 
+use DateTime;
+use App\Models\AccountModel;
+
 class EmailController extends BaseController
 {
-    public function sendConfirmAccountMail()
-    {
-        $name = $this->request->getPost('name');
-        $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
+	public function sendConfirmAccountMail()
+	{
+		// Définir les règles de validation
+		$rules = [
+			'name' => 'required|min_length[3]',
+			'email' => 'required|valid_email',
+			'password' => 'required|min_length[8]',
+			'confirm_password' => 'required|matches[password]',
+		];
 
-        // Générer un token unique
-        $token = bin2hex(random_bytes(16));
+		// Valider les données envoyées par le formulaire
+		if (!$this->validate($rules)) {
+			return redirect()->to('/auth/register')
+				->withInput() // Pour conserver les valeurs déjà saisies
+				->with('validation', $this->validator); // Passer les erreurs de validation
+		}
 
-        // Sauvegarder temporairement les données dans la session
-        session()->set("registration_$token", [
-            'name' => $name,
-            'email' => $email,
-            'password' => password_hash($password, PASSWORD_BCRYPT),
-        ]);
+		$name = $this->request->getPost('name');
+		$email = $this->request->getPost('email');
+		$password = $this->request->getPost('password');
 
-        // Préparer et envoyer l'email
-        $confirmAccountLink = site_url("email/confirmAccount/$token");
-        $emailService = \Config\Services::email();
-        $emailService->setTo($email);
-        $emailService->setFrom('mail.taskmate@gmail.com', 'TaskMate');
-        $emailService->setSubject('Création de votre compte TaskMate !');
-        $emailService->setMessage("
-        Bonjour $name,
-        
-        Merci de vous être inscrit à TaskMate.
-        Pour activer votre compte, cliquez sur le lien suivant :
-        $confirmAccountLink
-        
-        Si vous n'avez pas créé de compte, ignorez cet email.
-        
-        Cordialement,
-        L'équipe TaskMate
-    ");
+		// Générer un token unique
+		$token = bin2hex(random_bytes(16));
 
-        if ($emailService->send()) {
-            return redirect()->to('/auth/register')->with('success', 'Un email de confirmation a été envoyé. Veuillez vérifier votre boîte de réception.');
-        } else {
-            return redirect()->to('/auth/register')->with('error', 'Échec de l\'envoi de l\'email. Veuillez réessayer.');
-        }
-    }
+		// Sauvegarder temporairement les données dans la session
+		session()->set("registration_$token", [
+			'name' => $name,
+			'email' => $email,
+			'password' => password_hash($password, PASSWORD_BCRYPT),
+		]);
 
+		// Préparer et envoyer l'email
+		$confirmAccountLink = site_url("email/confirmAccount/$token");
+		$emailService = \Config\Services::email();
+		$emailService->setTo($email);
+		$emailService->setFrom('mail.taskmate@gmail.com', 'TaskMate');
+		$emailService->setSubject('Création de votre compte TaskMate !');
+		$emailService->setMessage("
+			Bonjour $name,
+			
+			Merci de vous être inscrit à TaskMate.
+			Pour activer votre compte, cliquez sur le lien suivant :
+			$confirmAccountLink
+			
+			Si vous n'avez pas créé de compte, ignorez cet email.
+			
+			Cordialement,
+			L'équipe TaskMate
+		");
 
-    public function confirmAccount($token)
-    {
-        $registrationData = session()->get("registration_$token");
+		if ($emailService->send()) {
+			return redirect()->to('/auth/register')->with('success', 'Un email de confirmation a été envoyé. Veuillez vérifier votre boîte de réception.');
+		} else {
+			return redirect()->to('/auth/register')->with('error', 'Échec de l\'envoi de l\'email. Veuillez réessayer.');
+		}
+	}
 
-        if (!$registrationData) {
-            return redirect()->to('/auth/register')->with('error', 'Lien invalide ou expiré.');
-        }
+	public function confirmAccount($token)
+	{
+		$registrationData = session()->get("registration_$token");
 
-        // Enregistrer les données dans la base de données
-        $accountModel = new \App\Models\AccountModel();
-        $accountModel->insert([
-            'name' => $registrationData['name'],
-            'email' => $registrationData['email'],
-            'password' => $registrationData['password'],
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
-    
-        session()->remove("registration_$token");
-    
-        return redirect()->to('/')->with('success', 'Votre compte a bien été créé. Vous pouvez maintenant vous connecter.');
-    }
-    
+		if (!$registrationData) {
+			return redirect()->to('/auth/register')->with('error', 'Lien invalide ou expiré.');
+		}
+
+		// Enregistrer les données dans la base de données
+		$accountModel = new \App\Models\AccountModel();
+		$accountModel->createAccount($registrationData);
+
+		session()->remove("registration_$token");
+
+		return redirect()->to('/')->with('success', 'Votre compte a bien été créé. Vous pouvez maintenant vous connecter.');
+	}
+
+	public function sendResetLink()
+	{
+		$email = $this->request->getPost('email');
+		$userModel = new \App\Models\AccountModel();
+		$user = $userModel->getAccountByEmail($email);
+		$email = $this->request->getPost('email');
+
+		if ($user) {
+			$token = bin2hex(random_bytes(16));
+			$expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+			$userModel->set('reset_token', $token)
+				->set('reset_token_expiration', $expiration)
+				->update($user['id']);
+
+			$resetLink = site_url("/forgot-password/reset-password/$token");
+			$message = "Cliquez sur le lien suivant pour réinitialiser votre mot de passe: $resetLink";
+
+			$emailService = \Config\Services::email();
+
+			$from = 'mail.taskmate@gmail.com';
+
+			$emailService->setTo($email);
+			$emailService->setFrom($from);
+			$emailService->setSubject('Réinitialisation de mot de passe');
+			$emailService->setMessage($message);
+
+			if ($emailService->send()) {
+				return redirect()->to('/')->with('success', 'Un mail vient de vous être envoyé. Veuillez accéder au lien fourni.');
+			} else {
+				return redirect()->to('/auth/forgot-password')->with('error', 'Échec de l\'envoi de l\'email. Veuillez réessayer.');
+			}
+		} else {
+			return redirect()->to('/auth/forgot-password')->with('error', 'L\'adresse email fournie est invalide.');
+		}
+	}
+
+	public function resetPassword($token)
+	{
+		// check token
+		if (!session()->get("registration_$token")) {
+			return redirect()->to('/');
+		}
+
+		echo view('pages/resetPassword', ['token' => $token]);
+	}
+
+	public function updatePassword()
+	{
+		$token = $this->request->getPost('token');
+		$password = $this->request->getPost('password');
+		$confirmPassword = $this->request->getPost('confirm_password');
+
+		$userModel = new AccountModel();
+		$user = $userModel->where('reset_token', $token)
+			->where('reset_token_expiration >', date('Y-m-d H:i:s'))
+			->first();
+
+		if ($user && $password === $confirmPassword) {
+
+			echo $password;
+			echo $confirmPassword;
+			
+			$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+			$userModel->set('password', $hashedPassword)
+				->set('reset_token', null)
+				->set('reset_token_expiration', null)
+				->update($user['id']);
+
+			session()->setFlashdata('success', 'Mot de passe réinitialisé avec succès.');
+			return redirect()->to('/');
+		} else {
+			session()->setFlashdata('error', 'Erreur lors de la réinitialisation du mot de passe.');
+			return redirect()->back();
+		}
+	}
 }
