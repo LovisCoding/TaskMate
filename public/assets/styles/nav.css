@@ -1,9 +1,5 @@
 .nav-selected {
 	text-decoration:  underline	;
 	text-underline-offset: 3px; 
-<<<<<<< HEAD
-	text-decoration-color:white;
-=======
 	text-decoration-color:rgb(66, 115, 99);
->>>>>>> origin/front
 }
