@@ -9,7 +9,7 @@ include 'newTache.php';
 	<div class="left d-flex">
 		<?= tabs() ?>
 		<?= export() ?>
-		<?= //filter()'' ?>
+		<?= filter() ?>
 	</div>
 	<div class="right">
 	<?= newTache() ?>	
