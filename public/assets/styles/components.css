@@ -22,6 +22,20 @@
 	border-color: #ba2c2c;
 	color: white;
 }
+#btn-commentaire {
+	background: transparent;
+	border: none;
+	display: flex;
+	align-items: center;
+	border-radius: 5px;
+	height: 30px;
+
+}
+#btn-commentaire:hover {
+	background: #C8D0D8;
+	
+}
+
 
 :root {
 	--grey1-color: #6C757D;
@@ -100,6 +114,14 @@
 	width: 48px;
 	background-color: var(--grey1-color);
 	border-radius: 3px;
+}
+/** commentaires **/
+
+.commentaire {
+	color:#6C757D;
+}
+.commentaires {
+	width: 25rem;
 }
 
 .tag {
