@@ -20,19 +20,12 @@ class HomeController extends BaseController
 
         // Récupérer les filtres de la requête (GET ou POST)
         $date = $this->request->getGet('start_date') ?? (new DateTime())->format('Y-m-d');
+        $nb = $this->request->getGet('nb') ?? 7;
         $endDate = $this->request->getGet('end_date');
         $taskGroups = $this->request->getGet('task_groups') ?? null;
         $priority = $this->request->getGet('priority') ?? null;
         $states = $this->request->getGet('states') ?? [];
 
-
-        // Gestion des états sous forme de tableau (plusieurs cases à cocher possibles)
-        $states = $this->request->getGet('states') ?? [];
-
-        // Nombre de jours pour les tâches (calculé à partir des dates si disponible)
-        $nb = $endDate 
-            ? (new DateTime($endDate))->diff(new DateTime($date))->days + 1 
-            : 7;
 
         // Récupération de l'ID de l'utilisateur connecté
         $session = session();
