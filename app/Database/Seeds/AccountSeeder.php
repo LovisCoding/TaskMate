@@ -16,7 +16,7 @@ class AccountSeeder extends Seeder
                 'password' => password_hash('password' . $i, PASSWORD_BCRYPT),
                 'created_at' => date('Y-m-d H:i:s'),
                 'reset_token' => null,
-                'reset_token_expiration' => null,
+                'reset_token_expiration' => null
             ];
         }
 

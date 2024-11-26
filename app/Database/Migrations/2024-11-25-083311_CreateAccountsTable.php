@@ -11,38 +11,35 @@ class CreateAccountsTable extends Migration
         $this->forge->addField([
             'id' => [
                 'type' => 'INT',
-                'auto_increment' => true,
+                'auto_increment' => true
             ],
             'name' => [
                 'type' => 'VARCHAR',
-                'constraint' => 255,
+                'constraint' => 255
             ],
             'email' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
-                'unique' => true,
+                'unique' => true
             ],
             'password' => [
                 'type' => 'VARCHAR',
-                'constraint' => 255,
+                'constraint' => 255
             ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,
+                'default' => date('Y-m-d H:i:s')
             ],
             'reset_token' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
-                'null' => true,
+                'null' => true
             ],
             'reset_token_expiration' => [
                 'type' => 'DATETIME',
-                'null' => true,
-            ],
-            'id_group' => [
-                'type' => 'INT',
-                'null' => true,
-            ],
+                'null' => true
+            ]
         ]);
         $this->forge->addKey('id', true);
         $this->forge->createTable('account');

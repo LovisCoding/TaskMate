@@ -8,7 +8,7 @@ class TaskSeeder extends Seeder
 {
     public function run()
     {
-        $states=['Terminé', 'En cours', 'Bloqué', 'Pas commencé', 'En retard'];
+        $states=['Terminée', 'En cours', 'Bloquée', 'Pas commencée', 'En retard'];
         $data = [];
         for ($i = 1; $i <= 20; $i++) {
             $data[] = [
