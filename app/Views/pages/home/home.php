@@ -7,9 +7,6 @@ include __DIR__.'/../../components/CalendarRange.php';
 include __DIR__.'/../../components/CalendarItemTitle.php';
 include 'newTache.php';
 
-$_GET['date'] = '2024-01-01';
-$_GET['nb'] = 5;
-
 $taches = [
 	"2024-01-01" => [
 		["Tâche 1", "Texte descriptif ici.", 3, "En retard"],
@@ -51,20 +48,20 @@ $taches = [
 </div>
 
 <div class="d-flex justify-content-center mt-4">
-	<?= CalendarRange(new DateTime(), 5) ?>
+	<?= CalendarRange((new DateTime())->modify('-7 days'), 5) ?>
 </div>
 
 <div class="container mt-4">
 	<div class="d-flex justify-content-between">
 		<?php foreach ($taches as $dateString => $tasks): ?>
 			<div>
-				<?php 
+				<?php
 					$date = new DateTime($dateString);
 				?>
 				<?= CalendarItemTitle($date) ?>
 				
 				<?php foreach ($tasks as $task): ?>
-					<div class="mb-3 mt-3"> <!-- Espacement entre les cards -->
+					<div class="mb-3 mt-3">
 						<?= generateCard(
 							htmlspecialchars($task[0]),
 							htmlspecialchars($task[1]),
