@@ -17,8 +17,8 @@ class HomeController extends BaseController
         echo view('layout/header');
         echo view('layout/navbar');
 
-        $dateStart = $this->request->getGet('next_date') ?? '2024-11-27';
-        $days = $this->request->getPost('days') ?? 7;
+        $date = $this->request->getGet('date') ?? (new DateTime())->format('Y-m-d');
+        $nb = $this->request->getGet('nb') ?? 7;
 
 		$session = session();
 		$id_account = $session->get("id");
@@ -31,11 +31,10 @@ class HomeController extends BaseController
 
 		// $tasks = $taskModel->getTasksByDeadline($dateStart, $days, $id_account);
 
-        $taskDependenciesModel = new TaskDependenciesModel();
-        $tasks = $taskDependenciesModel->getPossibleTasksToBeBlockedBy(6);
+        // $taskDependenciesModel = new TaskDependenciesModel();
+        // $tasks = $taskDependenciesModel->getPossibleTasksToBeBlockedBy(6);
 
-         var_dump($tasks);
-        // echo view('pages/home/home', ['tasks' => $tasks]);
-        // echo view('layout/footer') ;
+        echo view('pages/home/home', ['tasks' => $tasks, 'date' => $date, "nb" => $nb]);
+        echo view('layout/footer') ;
     }
 }

@@ -1,3 +1,6 @@
+<?php
+include __DIR__.'/../../components/Card.php'
+?>
 
 <div>
 	<div class="pt-4"></div>

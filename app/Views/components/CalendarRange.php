@@ -6,7 +6,6 @@
 	$nowMoins4->modify("-{$nb} days");
 
 	$nowPlus4 = clone $date;
-    $nb -= 1;
 	$nowPlus4->modify("+{$nb} days");
 
 	$nowView = $now->format('d/m/Y');
