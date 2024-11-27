@@ -67,6 +67,7 @@
 	height: 1rem;
 	background-color: var(--grey6-color);
 	border-radius: 0.20rem;
+	border: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
 }
 
 .shape__active {
