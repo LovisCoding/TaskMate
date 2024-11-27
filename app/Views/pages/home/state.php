@@ -1,13 +1,11 @@
-<?php 
-	$stateColumns = [];
+<?php
+$stateColumns = [];
 
-	foreach ($tasks as $dateString => $taskes) {
-		foreach ($taskes as $task) {
-			$stateColumns[$task['current_state']][] = $task;
-		}
+foreach ($tasks as $dateString => $taskes) {
+	foreach ($taskes as $task) {
+		$stateColumns[$task['current_state']][] = $task;
 	}
-
-	ksort($stateColumns);
+}
 ?>
 
 <div>
@@ -36,7 +34,7 @@
 						<?= view('components/Card', [
 							'title' => htmlspecialchars($task['name']),
 							'text' => htmlspecialchars($task['description']),
-							'priority' => (int)htmlspecialchars($task['priority']),
+							'priority' => (int) htmlspecialchars($task['priority']),
 							'status' => htmlspecialchars($task['current_state']),
 							'color' => true
 						]) ?>

@@ -1,11 +1,23 @@
-<?php 
-	$priorityColumns = [];
+<?php
+$priorityColumns = [];
+$priorityIndicators = '';
 
-	foreach ($tasks as $dateString => $taskes) {
-		foreach ($taskes as $task) {
-			$priorityColumns[$task['priority']][] = $task;
-		}
+foreach ($tasks as $dateString => $taskes) {
+	foreach ($taskes as $task) {
+		$priorityColumns[$task['priority']][] = $task;
 	}
+}
+
+function generatePriorityIndicators($priority)
+{
+	$priorityIndicators = '';
+	for ($i = 0; $i < 4; $i++) {
+		$color = $i < $priority ? 'black' : 'gray';
+		$priorityIndicators .= "<span class=\"indicator $color\"></span>";
+	}
+	$priorityIndicators .= "<div class=\"line\"></div>";
+	return $priorityIndicators;
+}
 ?>
 
 <div>
@@ -24,20 +36,11 @@
 
 <div class="container mt-4 justify-content-center">
 	<div class="d-flex flex-wrap align-items-start">
-
 		<?php foreach ($priorityColumns as $priority => $tasksByPriority): ?>
 			<div class="d-flex flex-column me-4 mb-4 mt-5">
 				<div class="mb-3 text-center">
-					<?php 
-					$priorityIndicators = '';
-					for ($i = 0; $i < 4; $i++) {
-						$color = $i < $priority ? 'black' : 'gray';
-						$priorityIndicators .= "<span class=\"indicator $color\"></span>";
-					}
-					$priorityIndicators .= "<div class=\"line\"></div>";
-					?>
 					<div class="d-flex align-items-center justify-content-center mt-2">
-					<?= $priorityIndicators ?>
+						<?= generatePriorityIndicators($priority) ?>
 					</div>
 				</div>
 				<?php foreach ($tasksByPriority as $task): ?>
