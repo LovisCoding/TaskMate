@@ -38,7 +38,7 @@
 	}
 ?>
 
-<div class="card p-3 shadow-sm rounded-3 <?= $borderClass ?>" id="<?= htmlspecialchars($id) ?>">
+<a href="/task/<?= htmlspecialchars($id) ?>" class="card p-3 shadow-sm rounded-3 text-decoration-none <?= $borderClass ?>" >
 	<h5 class="card-title mb-2"><?= htmlspecialchars($title) ?></h5>
 	<p class="card-text text-muted overflow-hidden"><?= htmlspecialchars($text) ?></p>
 	<div class="d-flex align-items-center justify-content-between mt-2">
@@ -50,4 +50,4 @@
 			<span class="indicator-circle <?= $bubbleClass ?>"></span>
 		</div>
 	</div>
-</div>
+</a>

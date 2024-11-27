@@ -33,7 +33,7 @@ function generatePriorityIndicators($priority)
 		</div>
 	</div>
 </div>
-
+<?= view('components/Pagination') ?>
 <div class="container mt-4">
 	<div class="row justify-content-center">
 		<?php foreach ($priorityColumns as $priority => $tasksByPriority): ?>
@@ -54,7 +54,8 @@ function generatePriorityIndicators($priority)
 										'text' => htmlspecialchars($task['description']),
 										'priority' => (int)htmlspecialchars($task['priority']),
 										'status' => htmlspecialchars($task['current_state']),
-										'color' => false
+										'color' => false,
+										'id'=> (int) htmlspecialchars($task['id_task'])
 									]) ?>
 								</div>
 							<?php endforeach; ?>
