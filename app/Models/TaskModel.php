@@ -160,7 +160,7 @@ class TaskModel extends Model
     public function getTasksByDeadline($startDate, $days, $idAccount, $priority = null, $states = [])
     {
         // Initialiser les dates dans le tableau associatif
-        for ($i = 0; $i <= $days; $i++) {
+        for ($i = 0; $i < $days; $i++) {
             $currentDate = date('Y-m-d', strtotime("$startDate +$i days"));
             $currentDateHour = date('Y-m-d H:i:s', strtotime("$startDate +$i days"));
 
