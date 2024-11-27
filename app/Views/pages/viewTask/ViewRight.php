@@ -1,4 +1,4 @@
-<div class="col-4">
+<div class="col-sm-12 col-lg-4">
 	<div class="p-5 pt-3 bg-white rounded-2" style="height: fit-content;">
 
 		<div class="d-flex flex-column gap-4">

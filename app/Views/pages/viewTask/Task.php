@@ -7,7 +7,7 @@
 
 
 		<?= view('pages/viewTask/ViewLeft', ['title'=>$title, 'commentaries'=>$commentaries] ) ?>
-		<div class="col-2"></div>
+		<div class="col-sm-12 col-lg-2"></div>
 		<?= view('pages/viewTask/ViewRight', ['priority'=>$priority, 'date'=>$date, 'isBlockedList'=>$isBlockedList, 'blockList'=>$blockList]) ?>
 
 
