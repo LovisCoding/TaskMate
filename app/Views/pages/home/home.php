@@ -24,6 +24,9 @@ $date = new DateTime($date);
 	<div class="d-flex flex-wrap align-items-start justify-content-center">
 		<?php foreach ($tasks as $dateString => $taskes): ?>
 			<div class="d-flex flex-column me-4 mb-4">
+			<?php
+$date = new DateTime($dateString);
+?>
 				<div class="mb-3">
 					<?= view('components/CalendarItemTitle', ['date' => $date]) ?>
 				</div>

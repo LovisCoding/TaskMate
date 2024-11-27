@@ -161,3 +161,17 @@
 .border-text-primary {
 	border: 1px solid #007BFF;
 }
+
+.line {
+	width: 22%;
+	height: 1px;
+	background-color: black;
+	margin-top: 8px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+.col-12 {
+	min-width: 250px;
+}
