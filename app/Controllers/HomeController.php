@@ -49,6 +49,8 @@ class HomeController extends BaseController
         $taskGroups = $existingParams['task_groups'] ?? null;
         $priority = $existingParams['priority'] ?? null;
         $states = $existingParams['states'] ?? [];
+        $sort = $existingParams['sort'] ?? 'deadline';
+        $sortOrder = $existingParams['sort_order'] ?? 'asc';
 
         $stateOptions = [
             'late' => 'En retard',
@@ -77,10 +79,10 @@ class HomeController extends BaseController
         $tasks = [];
 
         $tasks = match ($type) {
-            'priority' => $taskModel->getTasksByPriority($id_account, $priority, $translatedStates),
-            'state' => $taskModel->getTasksByCurrentState($id_account, $priority, $translatedStates),
-            'deadLine' => $taskModel->getTasksByDeadline($date, $nb, $id_account, $priority, $translatedStates),
-            default => $taskModel->getTasksByDateRange($date, $nb, $id_account, $priority, $translatedStates),
+            'priority' => $taskModel->getTasksByPriority($id_account, $priority, $translatedStates, $sort, $sortOrder),
+            'state' => $taskModel->getTasksByCurrentState($id_account, $priority, $translatedStates, $sort, $sortOrder),
+            'deadLine' => $taskModel->getTasksByDeadline($date, $nb, $id_account, $priority, $translatedStates, $sort, $sortOrder),
+            default => $taskModel->getTasksByDateRange($date, $nb, $id_account, $priority, $translatedStates, $sort, $sortOrder),
         };
 
         // Passer les données à la vue
@@ -95,7 +97,9 @@ class HomeController extends BaseController
                 'end_date' => $endDate,
                 'task_groups' => $taskGroups,
                 'priority' => $priority,
-                'states' => $states
+                'states' => $states,
+                'sort' => $sort,
+                'sortOrder' => $sortOrder
             ],
             'queryParams' => $existingParams
         ]);

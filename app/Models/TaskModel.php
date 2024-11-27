@@ -53,7 +53,7 @@ class TaskModel extends Model
 	 * @return array Tableau associatif avec la date en clé et les tâches en valeur.
 	 */
 
-	public function getTasksByDateRange($startDate, $days, $idAccount, $priority = null, $states = [])
+	public function getTasksByDateRange($startDate, $days, $idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc')
 	{
 		$days -= 1;
 		$endDate = date('Y-m-d', strtotime("$startDate +$days days")); // Calcul de la date de fin
@@ -77,7 +77,7 @@ class TaskModel extends Model
             ->groupEnd();
 
 
-		$tasks = $query->findAll();
+		$tasks = $query->orderBy($sort, $sortOrder)->findAll();
 
 		// Préparer le tableau associatif
 		$result = [];
@@ -112,7 +112,7 @@ class TaskModel extends Model
     /**
      * Récupère les tâches par priorité.
      */
-    public function getTasksByPriority($idAccount, $priority = null, $states = [])
+    public function getTasksByPriority($idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc')
     {
         $result = [];
 
@@ -120,7 +120,7 @@ class TaskModel extends Model
             $query = $this->getQueryFiltered($priority, $states);
             $tasks = $query->where("id_account", $idAccount)
                 ->where("priority", $i)
-                ->orderBy("deadline")
+                ->orderBy($sort, $sortOrder)
                 ->findAll();
             $result[$i] =  $tasks;
         }
@@ -133,7 +133,7 @@ class TaskModel extends Model
      *
      * @return array Tableau associatif avec les états comme clés et les tâches comme valeurs.
      */
-    public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [])
+    public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc')
     {
         $states = ['En retard', 'En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
 
@@ -141,7 +141,7 @@ class TaskModel extends Model
             $query = $this->getQueryFiltered($priority, $statesFilters);
             $tasks = $query->where("id_account", $idAccount)
                 ->where("current_state", $s)
-                ->orderBy("deadline")
+                ->orderBy($sort, $sortOrder)
                 ->findAll();
             $result[$s] =  $tasks;
         }
@@ -156,7 +156,7 @@ class TaskModel extends Model
      * @param int $days Le nombre de jours à partir de la date de début.
      * @return array Tableau associatif avec la date en clé et les tâches en valeur.
      */
-    public function getTasksByDeadline($startDate, $days, $idAccount, $priority = null, $states = [])
+    public function getTasksByDeadline($startDate, $days, $idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc')
     {
         // Initialiser les dates dans le tableau associatif
         for ($i = 0; $i < $days; $i++) {
@@ -166,7 +166,7 @@ class TaskModel extends Model
             $query = $this->getQueryFiltered($priority, $states);
             $tasks = $query->where("id_account", $idAccount)
                 ->where("deadline", $currentDateHour)
-                ->orderBy('priority', 'DESC')
+                ->orderBy($sort, $sortOrder)
                 ->findAll();
 
 			$result[$currentDate] = $tasks;

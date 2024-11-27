@@ -1,9 +1,10 @@
 export default function (id) {
-	console.log('icci');
 
 const checkbox = document.getElementById(id);
- const parent = checkbox.parentNode;
+const parent = checkbox.parentNode;
 const validate = parent.children[0];
+
+console.log(checkbox, parent, validate);
 
  if (checkbox.checked) {
 	 validate.classList.remove('d-none');

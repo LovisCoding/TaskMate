@@ -1,11 +1,8 @@
-import openTab from "./tabs.js";
+
 import exportCard from "./export.js";
 import filterCard from "./filter.js";
 import checkboxEtat from "./checkboxEtat.js";
-// tabs.js
-document.body.addEventListener('click', function (evt) {
-    if (evt.target.classList.contains('tab-link')) openTab(evt, evt.target.id);
-}, false);
+import sortOrder from "./sortOrder.js";
 
 //export.js
 document.getElementById('btn-export').addEventListener('click', function () {
@@ -27,12 +24,19 @@ etats.forEach(function (etat) {
 	});
 });
 
+// sortOrder.js
+document.getElementById('toggleSortOrder').addEventListener('click', function (button) {
+	sortOrder();
+}, false );
+
+
 
 // unselect radio button filter
 
 let lastSelected = null;
 
     document.querySelectorAll('input[name="priority"]').forEach(radio => {
+		if (radio.checked) lastSelected = radio;
         radio.addEventListener('click', function (event) {
             // Si ce bouton était déjà sélectionné
             if (lastSelected === this) {
@@ -43,3 +47,5 @@ let lastSelected = null;
             }
         });
     });
+	
+	
