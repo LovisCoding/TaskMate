@@ -17,8 +17,7 @@ class CreateCommentsTable extends Migration
                 'type' => 'TEXT',
             ],
             'id_task' => [
-                'type' => 'INT',
-                'null' => true,
+                'type' => 'INT'
             ],
         ]);
         $this->forge->addKey('id', true);

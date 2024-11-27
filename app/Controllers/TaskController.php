@@ -15,7 +15,7 @@ class TaskController extends BaseController
         $this->index(-1);
     }
 
-    public function index($idTask = -1): void
+    public function index($idTask = -1)
     {
         $date = null;
         $taskModel = new TaskModel();
@@ -30,6 +30,10 @@ class TaskController extends BaseController
         $isBlockedList = [];
 
         $task = $taskModel->where("id_task", $idTask)->first();
+
+        if ($idTask != -1 && !$task) {
+            return redirect()->to('/home/recap');
+        }
 
         if ($task) {
             $date = $task["deadline"];
@@ -124,7 +128,7 @@ class TaskController extends BaseController
         $action = $this->request->getPost('action');
         $taskModel = new TaskModel();
 
-        if ($action == "delete") {
+        if ($action && $action === "delete") {
             $taskModel->delete($id);
             return redirect()->to('/home/recap')->with('success', 'Tâche supprimée avec succès.');
         } else {
@@ -180,6 +184,7 @@ class TaskController extends BaseController
 
             // Gestion des commentaires, blockList, etc. (si nécessaires)
             $commentaries = $this->request->getPost('task_commentaries');
+            var_dump($commentaries);    
             if (!empty($commentaries)) {
                 $commentModel = new CommentModel();
                 foreach ($commentaries as $comment) {

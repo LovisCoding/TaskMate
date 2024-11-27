@@ -11,6 +11,8 @@
 	<link rel="stylesheet" href="<?= base_url('assets/styles/components.css'); ?>">
 	
 	<?=str_contains($_SERVER['REQUEST_URI'], '/home') ?  '<link href="'.base_url('assets/styles/home.css').'" rel="stylesheet"/>': '' ?>
+
+	<script src="/assets/scripts/Init.js"></script>
 	
 </head>
 <body class="bg-body-tertiary">
