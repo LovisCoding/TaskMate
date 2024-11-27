@@ -19,13 +19,12 @@ class HomeController extends BaseController
         echo view('layout/navbar');
 
         // Récupérer les filtres de la requête (GET ou POST)
-        $date = $this->request->getGet('start_date') ?? (new DateTime())->format('Y-m-d');
+        $date = $this->request->getGet('date') ?? (new DateTime())->format('Y-m-d');
         $nb = $this->request->getGet('nb') ?? 7;
         $endDate = $this->request->getGet('end_date');
         $taskGroups = $this->request->getGet('task_groups') ?? null;
         $priority = $this->request->getGet('priority') ?? null;
         $states = $this->request->getGet('states') ?? [];
-
 
         // Récupération de l'ID de l'utilisateur connecté
         $session = session();
