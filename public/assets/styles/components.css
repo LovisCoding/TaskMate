@@ -1,16 +1,24 @@
+:root {
+	--grey1-color: #6C757D;
+	--grey6-color: #DAE0E5;
+}
+
 .btn-grey {
 	background-color: #DAE0E5;
 	border-color: #DAE0E5;
 }
+
 .btn-grey:hover {
 	background-color: #C8D0D8;
 	border-color: #C8D0D8;
 }
+
 .btn-marron {
 	background-color: #795050;
 	border-color: #795050;
 	color: white;
 }
+
 .btn-marron:hover {
 	background-color: #7e4747;
 	border-color: #795050;
@@ -22,6 +30,7 @@
 	border-color: #ba2c2c;
 	color: white;
 }
+
 #btn-commentaire {
 	background: transparent;
 	border: none;
@@ -31,15 +40,9 @@
 	height: 30px;
 
 }
+
 #btn-commentaire:hover {
 	background: #C8D0D8;
-	
-}
-
-
-:root {
-	--grey1-color: #6C757D;
-	--grey6-color: #DAE0E5;
 }
 
 .shape__list {
@@ -95,7 +98,6 @@
 	gap: 5rem;
 }
 
-
 .calendar_item_title {
 	display: flex;
 	flex-direction: column;
@@ -115,7 +117,6 @@
 	background-color: var(--grey1-color);
 	border-radius: 3px;
 }
-/** commentaires **/
 
 .commentaire {
 	color:#6C757D;
@@ -144,19 +145,33 @@
 .border-text-warning {
 	border: 1px solid #FFC107;
 }
+
 .border-text-dark {
 	border: 1px solid #343A40;
 }
+
 .border-text-success {
 	border: 1px solid #28A745;
 }
+
 .border-text-danger {
 	border: 1px solid #DC3545;
 }
+
 .border-text-primary {
 	border: 1px solid #007BFF;
 }
-.card {
-	max-width: 100%;
-	box-sizing: border-box;
+
+.line {
+	width: 22%;
+	height: 1px;
+	background-color: black;
+	margin-top: 8px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+.col-12 {
+	min-width: 250px;
 }
