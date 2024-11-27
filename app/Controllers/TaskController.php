@@ -113,6 +113,24 @@ class TaskController extends BaseController
         $dateI = new DateTime($date);
         helper("form");
 
+        $pager = service('pager');
+
+        $db = db_connect();
+        $builder = $db->table('task');
+        $perPage = 10;
+        $currentPage = $this->request->getVar('page') ?? 1;
+        $total = $builder->countAllResults(false);
+
+        $items = $builder->limit($perPage, ($currentPage - 1) * $perPage)->get()->getResultArray();
+
+        $pager = service('pager');
+        $pager->makeLinks($currentPage, $perPage, $total);
+
+        $commentaries = [
+            'items' => $items,
+            'pager' => $pager,
+        ];
+
         $data = [
             'id' => $idTask,
             'title' => $title,
