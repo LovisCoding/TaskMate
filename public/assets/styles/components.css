@@ -69,10 +69,6 @@
 	border-radius: 0.20rem;
 }
 
-.icon {
-	width: 1rem;
-}
-
 .shape__active {
 	background-color: black;
 }
@@ -123,11 +119,15 @@
 	font-weight: 500;
 }
 
-.calendar_item_title > .line {
+.calendar_item_title > .line,
+.line {
 	height: 3px;
 	width: 48px;
 	background-color: var(--grey1-color);
 	border-radius: 3px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0.5rem;
 }
 
 .commentaire {
@@ -174,16 +174,24 @@
 	border: 1px solid #007BFF;
 }
 
-.line {
-	width: 22%;
-	height: 1px;
-	background-color: black;
-	margin-top: 8px;
-	margin-left: auto;
-	margin-right: auto;
-	display: block;
+.col-12,
+.col {
+	min-width: 275px;
 }
 
-.col-12 {
-	min-width: 250px;
+.icon {
+	width: 1rem;
+	stroke: #0D6EFD;
+}
+
+.titleProfil {
+	font-family: 'Caveat Brush', cursive; 
+	font-size: 2.5rem; 
+	font-weight: 600; 
+	letter-spacing: 1px;
+}
+
+.profil {
+	width: 350px;
+	background-color: #f8f9fa;
 }

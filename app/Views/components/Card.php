@@ -7,6 +7,7 @@
 	$statusClass = '';
 	$bubbleClass = '';
 	$borderClass = '';
+	$id = $id ?? '';
 
 	if (strpos(strtolower($status), 'en retard') !== false) {
 		$statusClass = 'text-danger';
@@ -37,7 +38,7 @@
 	}
 ?>
 
-<div class="card p-3 shadow-sm rounded-3 <?= $borderClass ?>">
+<div class="card p-3 shadow-sm rounded-3 <?= $borderClass ?>" id="<?= htmlspecialchars($id) ?>">
 	<h5 class="card-title mb-2"><?= htmlspecialchars($title) ?></h5>
 	<p class="card-text text-muted overflow-hidden"><?= htmlspecialchars($text) ?></p>
 	<div class="d-flex align-items-center justify-content-between mt-2">
