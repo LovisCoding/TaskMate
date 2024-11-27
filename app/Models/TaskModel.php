@@ -10,6 +10,7 @@ class TaskModel extends Model
 	protected $primaryKey = 'id_task';
 
 	protected $allowedFields = [
+        'id_account',
 		'name',
 		'description',
 		'current_state',
