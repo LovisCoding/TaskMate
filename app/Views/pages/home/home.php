@@ -39,7 +39,8 @@ $date = new DateTime($date);
 								'text' => htmlspecialchars($task['description']),
 								'priority' => (int) htmlspecialchars($task['priority']),
 								'status' => htmlspecialchars($task['current_state']),
-								'color' => false
+								'color' => false,
+								'id'=> (int) htmlspecialchars($task['id_task']),
 							]) ?>
 						</div>
 					<?php endforeach; ?>
