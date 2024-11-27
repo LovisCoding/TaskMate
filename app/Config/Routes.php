@@ -9,6 +9,7 @@ $routes->get('/', 'ConnectionController::index');
 $routes->get('/home', 'HomeController::index');
 $routes->get('/priority', 'HomeController::priority');
 $routes->get('/state', 'HomeController::state');
+$routes->get('/deadLine', 'HomeController::deadLine');
 $routes->get('/viewTask', 'ViewTaskController::index');
 $routes->get('/auth/register', 'ConnectionController::register');
 $routes->post('/auth/login', 'ConnectionController::connection');

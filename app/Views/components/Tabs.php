@@ -21,7 +21,7 @@
 			document.getElementById('tabRecap').classList.add('active-tab');
 		} else if (currentUrl === '/state') {
 			document.getElementById('tabEtat').classList.add('active-tab');
-		} else if (currentUrl === '/echeance') {
+		} else if (currentUrl === '/deadLine') {
 			document.getElementById('tabEcheance').classList.add('active-tab');
 		}
 	}
@@ -41,6 +41,6 @@
 	});
 
 	document.getElementById('tabEcheance').addEventListener('click', function() {
-		window.location.href = '/echeance';
+		window.location.href = '/deadLine';
 	});
 </script>
