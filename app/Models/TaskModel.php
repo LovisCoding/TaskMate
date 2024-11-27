@@ -10,7 +10,7 @@ class TaskModel extends Model
 	protected $primaryKey = 'id_task';
 
 	protected $allowedFields = [
-        'id_account',
+		'id_account',
 		'name',
 		'description',
 		'current_state',
@@ -32,19 +32,19 @@ class TaskModel extends Model
 			->join('Group', 'Task.id_group = Group.id', 'left')
 			->findAll();
 	}
-    public function getQueryFiltered($priority = null, $states = []) {
-        $query = $this;
-        if ($priority) {
-            $query->where('priority', $priority);
-        }
+	public function getQueryFiltered($priority = null, $states = []) {
+		$query = $this;
+		if ($priority) {
+			$query->where('priority', $priority);
+		}
 
-        if (!empty($states)) {
-            $query->whereIn('current_state', $states);
-        }
+		if (!empty($states)) {
+			$query->whereIn('current_state', $states);
+		}
 
-        return $query;
+		return $query;
 
-    }
+	}
 
 	/**
 	 * Récupère les tâches entre une plage de dates et les organise par jour.
@@ -59,23 +59,23 @@ class TaskModel extends Model
 		$days -= 1;
 		$endDate = date('Y-m-d', strtotime("$startDate +$days days")); // Calcul de la date de fin
 
-        $query = $this->where("id_account", $idAccount);
-        if ($priority) {
-            $query->where('priority', $priority);
-        }
+		$query = $this->where("id_account", $idAccount);
+		if ($priority) {
+			$query->where('priority', $priority);
+		}
 
-        if (!empty($states)) {
-            $query->whereIn('current_state', $states);
-        }
+		if (!empty($states)) {
+			$query->whereIn('current_state', $states);
+		}
 
-        // Récupérer toutes les tâches dont les dates chevauchent la plage demandée
-        $query->groupStart()
-            ->where("start_date <=", $endDate)
-            ->where("end_date >=", $startDate)
-            ->groupEnd()
-            ->orGroupStart()
-            ->where("end_date", null) // Date de fin non définie
-            ->groupEnd();
+		// Récupérer toutes les tâches dont les dates chevauchent la plage demandée
+		$query->groupStart()
+			->where("start_date <=", $endDate)
+			->where("end_date >=", $startDate)
+			->groupEnd()
+			->orGroupStart()
+			->where("end_date", null) // Date de fin non définie
+			->groupEnd();
 
 
 		$tasks = $query->orderBy($sort, $sortOrder)->findAll();
@@ -110,65 +110,65 @@ class TaskModel extends Model
 		return $result;
 	}
 
-    /**
-     * Récupère les tâches par priorité.
-     */
-    public function getTasksByPriority($idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc')
-    {
-        $result = [];
+	/**
+	 * Récupère les tâches par priorité.
+	 */
+	public function getTasksByPriority($idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc')
+	{
+		$result = [];
 
-        for ($i = 4; $i > 0; $i--) {
-            $query = $this->getQueryFiltered($priority, $states);
-            $tasks = $query->where("id_account", $idAccount)
-                ->where("priority", $i)
-                ->orderBy($sort, $sortOrder)
-                ->findAll();
-            $result[$i] =  $tasks;
-        }
-
-		return $result;
-	}
-
-    /**
-     * Récupère les tâches et les organise par état actuel (current_state).
-     *
-     * @return array Tableau associatif avec les états comme clés et les tâches comme valeurs.
-     */
-    public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc')
-    {
-        $states = ['En retard', 'En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
-
-        foreach ($states as $s) {
-            $query = $this->getQueryFiltered($priority, $statesFilters);
-            $tasks = $query->where("id_account", $idAccount)
-                ->where("current_state", $s)
-                ->orderBy($sort, $sortOrder)
-                ->findAll();
-            $result[$s] =  $tasks;
-        }
+		for ($i = 4; $i > 0; $i--) {
+			$query = $this->getQueryFiltered($priority, $states);
+			$tasks = $query->where("id_account", $idAccount)
+				->where("priority", $i)
+				->orderBy($sort, $sortOrder)
+				->findAll();
+			$result[$i] =  $tasks;
+		}
 
 		return $result;
 	}
 
-    /**
-     * Récupère les tâches entre une plage de dates et les organise par Deadline.
-     *
-     * @param string $startDate La date de début au format 'Y-m-d'.
-     * @param int $days Le nombre de jours à partir de la date de début.
-     * @return array Tableau associatif avec la date en clé et les tâches en valeur.
-     */
-    public function getTasksByDeadline($startDate, $days, $idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc')
-    {
-        // Initialiser les dates dans le tableau associatif
-        for ($i = 0; $i < $days; $i++) {
-            $currentDate = date('Y-m-d', strtotime("$startDate +$i days"));
-            $currentDateHour = date('Y-m-d H:i:s', strtotime("$startDate +$i days"));
+	/**
+	 * Récupère les tâches et les organise par état actuel (current_state).
+	 *
+	 * @return array Tableau associatif avec les états comme clés et les tâches comme valeurs.
+	 */
+	public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc')
+	{
+		$states = ['En retard', 'En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
 
-            $query = $this->getQueryFiltered($priority, $states);
-            $tasks = $query->where("id_account", $idAccount)
-                ->where("deadline", $currentDateHour)
-                ->orderBy($sort, $sortOrder)
-                ->findAll();
+		foreach ($states as $s) {
+			$query = $this->getQueryFiltered($priority, $statesFilters);
+			$tasks = $query->where("id_account", $idAccount)
+				->where("current_state", $s)
+				->orderBy($sort, $sortOrder)
+				->findAll();
+			$result[$s] =  $tasks;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Récupère les tâches entre une plage de dates et les organise par Deadline.
+	 *
+	 * @param string $startDate La date de début au format 'Y-m-d'.
+	 * @param int $days Le nombre de jours à partir de la date de début.
+	 * @return array Tableau associatif avec la date en clé et les tâches en valeur.
+	 */
+	public function getTasksByDeadline($startDate, $days, $idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc')
+	{
+		// Initialiser les dates dans le tableau associatif
+		for ($i = 0; $i < $days; $i++) {
+			$currentDate = date('Y-m-d', strtotime("$startDate +$i days"));
+			$currentDateHour = date('Y-m-d H:i:s', strtotime("$startDate +$i days"));
+
+			$query = $this->getQueryFiltered($priority, $states);
+			$tasks = $query->where("id_account", $idAccount)
+				->where("deadline", $currentDateHour)
+				->orderBy($sort, $sortOrder)
+				->findAll();
 
 			$result[$currentDate] = $tasks;
 		}
