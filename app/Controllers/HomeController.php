@@ -88,12 +88,12 @@ class HomeController extends BaseController
 			default => $taskModel->getTasksByDateRange($date, $nb, $id_account, $priority, $translatedStates, $sort, $sortOrder),
 		};
 
-		foreach ($tasks as $date => $subTasks) {
-			if (is_array($subTasks)) {
-				// Appliquer la pagination sur chaque sous-tableau de tâches
-				$tasks[$date] = array_slice($subTasks, ($page - 1) * $perPage, $perPage);
-			}
-		}
+		// foreach ($tasks as $date => $subTasks) {
+		// 	if (is_array($subTasks)) {
+		// 		// Appliquer la pagination sur chaque sous-tableau de tâches
+		// 		$tasks[$date] = array_slice($subTasks, ($page - 1) * $perPage, $perPage);
+		// 	}
+		// }
 
 		// Passer les données à la vue
 		echo view('layout/header');
