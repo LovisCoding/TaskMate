@@ -1,5 +1,11 @@
-<?php
-include __DIR__.'/../../components/Card.php'
+<?php 
+	$priorityColumns = [];
+
+	foreach ($tasks as $dateString => $taskes) {
+		foreach ($taskes as $task) {
+			$priorityColumns[$task['priority']][] = $task;
+		}
+	}
 ?>
 
 <div>
@@ -18,17 +24,6 @@ include __DIR__.'/../../components/Card.php'
 
 <div class="container mt-4 justify-content-center">
 	<div class="d-flex flex-wrap align-items-start">
-		<?php 
-		$priorityColumns = [];
-
-		foreach ($tasks as $dateString => $taskes) {
-			foreach ($taskes as $task) {
-				$priorityColumns[$task['priority']][] = $task;
-			}
-		}
-
-		krsort($priorityColumns); 
-		?>
 
 		<?php foreach ($priorityColumns as $priority => $tasksByPriority): ?>
 			<div class="d-flex flex-column me-4 mb-4 mt-5">
@@ -47,12 +42,13 @@ include __DIR__.'/../../components/Card.php'
 				</div>
 				<?php foreach ($tasksByPriority as $task): ?>
 					<div class="mb-3">
-						<?= generateCard(
-							htmlspecialchars($task['name']),
-							htmlspecialchars($task['description']),
-							htmlspecialchars($task['priority']),
-							htmlspecialchars($task['current_state'])
-						) ?>
+						<?= view('components/Card', [
+							'title' => htmlspecialchars($task['name']),
+							'text' => htmlspecialchars($task['description']),
+							'priority' => (int)htmlspecialchars($task['priority']),
+							'status' => htmlspecialchars($task['current_state']),
+							'color' => false
+						]) ?>
 					</div>
 				<?php endforeach; ?>
 			</div>

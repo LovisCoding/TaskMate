@@ -81,19 +81,19 @@ class EmailController extends BaseController
 		return redirect()->to('/')->with('success', 'Votre compte a bien été créé. Vous pouvez maintenant vous connecter.');
 	}
 
-    public function sendResetLink()
-    {
-        $email = $this->request->getPost('email');
-        $userModel = new \App\Models\AccountModel();
-        $user = $userModel->getAccountByEmail($email);
+	public function sendResetLink()
+	{
+		$email = $this->request->getPost('email');
+		$userModel = new \App\Models\AccountModel();
+		$user = $userModel->getAccountByEmail($email);
 
-        $email = $this->request->getPost('email');
-        if ($user) {
+		$email = $this->request->getPost('email');
+		if ($user) {
 
-            $token = bin2hex(random_bytes(16));
-            session()->set("updatePassword_$token", $token);
+			$token = bin2hex(random_bytes(16));
+			session()->set("updatePassword_$token", $token);
 
-            $expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
+			$expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
 			$userModel->set('reset_token', $token)
 				->set('reset_token_expiration', $expiration)
@@ -121,17 +121,17 @@ class EmailController extends BaseController
 		}
 	}
 
-    public function resetPassword($token)
-    {
-        // check token
-        if (!session()->get("updatePassword_$token")) {
-            return redirect()->to('/');
-        }
+	public function resetPassword($token)
+	{
+		// check token
+		if (!session()->get("updatePassword_$token")) {
+			return redirect()->to('/');
+		}
 
-        $session = session();
-        $session->destroy();
-        echo view('pages/resetPassword', ['token' => $token]);
-    }
+		$session = session();
+		$session->destroy();
+		echo view('pages/resetPassword', ['token' => $token]);
+	}
 
 	public function updatePassword()
 	{
@@ -155,12 +155,11 @@ class EmailController extends BaseController
 				->set('reset_token_expiration', null)
 				->update($user['id']);
 
-            session()->setFlashdata('success', 'Mot de passe réinitialisé avec succès.');
-            return redirect()->to('/');
-        } else {
-            session()->setFlashdata('error', 'Erreur lors de la réinitialisation du mot de passe.');
-            return redirect()->back();
-        }
-    }
-
+			session()->setFlashdata('success', 'Mot de passe réinitialisé avec succès.');
+			return redirect()->to('/');
+		} else {
+			session()->setFlashdata('error', 'Erreur lors de la réinitialisation du mot de passe.');
+			return redirect()->back();
+		}
+	}
 }

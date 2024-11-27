@@ -6,121 +6,120 @@ use App\Models\AccountModel;
 
 class ProfilController extends BaseController
 {
-    public function index()
-    {
-        if (!session()->get('isLoggedIn')) {
-            return redirect()->to('/');
-        }
+	public function index()
+	{
+		if (!session()->get('isLoggedIn')) {
+			return redirect()->to('/');
+		}
 
-        helper(['form']);
+		helper(['form']);
 
-        echo view('layout/header');
-        echo view('layout/navbar');
+		echo view('layout/header');
+		echo view('layout/navbar');
 
-        $session = session();
-        $accountModel = new AccountModel();
-        $account = $accountModel->where("id", $session->get("id"))->first();
-        $data = [];
+		$session = session();
+		$accountModel = new AccountModel();
+		$account = $accountModel->where("id", $session->get("id"))->first();
+		$data = [];
 
-        if ($account) {
-            $data = [
-                "name" => $account["name"],
-                "email" => $account["email"]
-            ];
-        }
+		if ($account) {
+			$data = [
+				"name" => $account["name"],
+				"email" => $account["email"]
+			];
+		}
 
+		echo view('pages/profil', $data);
+		echo view('layout/footer');
+	}
 
-        echo view('pages/profil', $data);
-        echo view('layout/footer');
-    }
+	public function updateName()
+	{
+		if (!session()->get('isLoggedIn')) {
+			return redirect()->to('/');
+		}
 
-    public function updateName()
-    {
-        if (!session()->get('isLoggedIn')) {
-            return redirect()->to('/');
-        }
+		helper(['form']);
+		$session = session();
+		$accountModel = new AccountModel();
 
+		$id = $session->get("id");
+		$name = $this->request->getPost('name');
 
-        helper(['form']);
-        $session = session();
-        $accountModel = new AccountModel();
+		$accountModel->update($id, ['name' => $name]);
 
-        $id = $session->get("id");
-        $name = $this->request->getPost('name');
+		return redirect()->to('/profil')->with('message', 'Les modifications ont été enregistrées.');
+	}
 
-        $accountModel->update($id, ['name' => $name]);
+	public function resetPassword()
+	{
+		if (!session()->get('isLoggedIn')) {
+			return redirect()->to('/');
+		}
 
-        return redirect()->to('/profil')->with('message', 'Les modifications ont été enregistrées.');
-    }
+		$id = session()->get("id");
+		$accountModel = new AccountModel();
+		$account = $accountModel->where("id", $id)->first();
 
-    public function resetPassword()
-    {
-        if (!session()->get('isLoggedIn')) {
-            return redirect()->to('/');
-        }
+		if ($account) {
 
-        $id = session()->get("id");
-        $accountModel = new AccountModel();
-        $account = $accountModel->where("id", $id)->first();
+			$token = bin2hex(random_bytes(16));
+			session()->set("updatePassword_$token", $token);
 
-        if ($account) {
+			$expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
-            $token = bin2hex(random_bytes(16));
-            session()->set("updatePassword_$token", $token);
+			$accountModel->set('reset_token', $token)
+				->set('reset_token_expiration', $expiration)
+				->update($account['id']);
 
-            $expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
+			$resetLink = site_url("/forgot-password/reset-password/$token");
+			$message = "Cliquez sur le lien suivant pour réinitialiser votre mot de passe: $resetLink";
 
-            $accountModel->set('reset_token', $token)
-                ->set('reset_token_expiration', $expiration)
-                ->update($account['id']);
+			$emailService = \Config\Services::email();
 
-            $resetLink = site_url("/forgot-password/reset-password/$token");
-            $message = "Cliquez sur le lien suivant pour réinitialiser votre mot de passe: $resetLink";
+			$from = 'mail.taskmate@gmail.com';
 
-            $emailService = \Config\Services::email();
+			$emailService->setTo($account["email"]);
+			$emailService->setFrom($from);
+			$emailService->setSubject('Réinitialisation de mot de passe');
+			$emailService->setMessage($message);
 
-            $from = 'mail.taskmate@gmail.com';
+			if ($emailService->send()) {
+				return redirect()->to('/profil')->with('success', 'Un mail vient de vous être envoyé. Veuillez accéder au lien fourni.');
+			} else {
+				return redirect()->to('/profil')->with('error', 'Échec de l\'envoi de l\'email. Veuillez réessayer.');
+			}
+		} else {
+			return redirect()->to('/profil')->with('error', 'L\'adresse email fournie est invalide.');
+		}
+	}
 
-            $emailService->setTo($account["email"]);
-            $emailService->setFrom($from);
-            $emailService->setSubject('Réinitialisation de mot de passe');
-            $emailService->setMessage($message);
-            if ($emailService->send()) {
-                return redirect()->to('/profil')->with('success', 'Un mail vient de vous être envoyé. Veuillez accéder au lien fourni.');
-            } else {
-                return redirect()->to('/profil')->with('error', 'Échec de l\'envoi de l\'email. Veuillez réessayer.');
-            }
-        } else {
-            return redirect()->to('/profil')->with('error', 'L\'adresse email fournie est invalide.');
-        }
-    }
+	public function logout()
+	{
+		if (!session()->get('isLoggedIn')) {
+			return redirect()->to('/');
+		}
 
-    public function logout()
-    {
-        if (!session()->get('isLoggedIn')) {
-            return redirect()->to('/');
-        }
+		$session = session();
+		$session->destroy();
 
-        $session = session();
-        $session->destroy();
+		return redirect()->to('/'); // Redirige vers la page d'accueil ou de connexion
+	}
 
-        return redirect()->to('/'); // Redirige vers la page d'accueil ou de connexion
-    }
+	public function deleteAccount()
+	{
+		if (!session()->get('isLoggedIn')) {
+			return redirect()->to('/');
+		}
 
-    public function deleteAccount()
-    {
-        if (!session()->get('isLoggedIn')) {
-            return redirect()->to('/');
-        }
+		$session = session();
+		$accountModel = new AccountModel();
 
-        $session = session();
-        $accountModel = new AccountModel();
+		$id = $session->get("id");
+		$accountModel->delete($id);
 
-        $id = $session->get("id");
-        $accountModel->delete($id);
+		$session->destroy();
 
-        $session->destroy();
-
-        return redirect()->to('/')->with('success', 'Votre compte a été supprimé.');
-    }
+		return redirect()->to('/')->with('success', 'Votre compte a été supprimé.');
+	}
 }

@@ -1,6 +1,6 @@
 <?php 
 
-$formatter = new IntlDateFormatter(
+	$formatter = new IntlDateFormatter(
 		'fr_FR',
 		IntlDateFormatter::FULL,
 		IntlDateFormatter::NONE,
@@ -9,9 +9,10 @@ $formatter = new IntlDateFormatter(
 	);
 
 	$formattedDate = $formatter->format($date);
-	$formattedDate = ucfirst($formattedDate); ?>
+	$formattedDate = ucfirst($formattedDate);
+?>
 
-<div class="calendar_item_title ">
+<div class="calendar_item_title">
 	<span class="title"><?= $formattedDate ?></span>
 	<div class="line"></div>
 </div>

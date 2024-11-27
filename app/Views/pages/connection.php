@@ -12,8 +12,6 @@
 <body class="d-flex justify-content-center">
 	<div class="form-signin w-100 h-100">
 		<div class="content">
-
-			<!-- Vérifiez si un message flash est présent -->
 			<?php if (session()->getFlashdata('error')): ?>
 				<div class="alert alert-danger" role="alert">
 					<?= session()->getFlashdata('error'); ?>

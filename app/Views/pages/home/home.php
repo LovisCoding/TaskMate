@@ -1,5 +1,5 @@
-<?php
-include __DIR__.'/../../components/Card.php'
+<?php 
+	$date = new DateTime($date);
 ?>
 
 <div>
@@ -15,11 +15,6 @@ include __DIR__.'/../../components/Card.php'
 		</div>
 	</div>
 </div>
-<?php 
-
-$date = new DateTime($date);
-
-?>
 
 <div class="d-flex justify-content-center mt-4">
 	<?= view('components/CalendarRange', [ 'date' => $date, 'nb' => $nb]) ?>
@@ -37,16 +32,18 @@ $date = new DateTime($date);
 				</div>
 				<?php foreach ($taskes as $task): ?>
 					<div class="mb-3">
-						<?= generateCard(
-							htmlspecialchars($task['name']),
-							htmlspecialchars($task['description']),
-							htmlspecialchars($task['priority']),
-							htmlspecialchars($task['current_state'])
-						) ?>
+						<?= view('components/Card', [
+							'title' => htmlspecialchars($task['name']),
+							'text' => htmlspecialchars($task['description']),
+							'priority' => (int)htmlspecialchars($task['priority']),
+							'status' => htmlspecialchars($task['current_state']),
+							'color' => false
+						]) ?>
 					</div>
 				<?php endforeach; ?>
 			</div>
 		<?php endforeach; ?>
 	</div>
 </div>
+
 <?=view('pages/home/filterPanel')?>
