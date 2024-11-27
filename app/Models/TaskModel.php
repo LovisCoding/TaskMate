@@ -108,13 +108,13 @@ class TaskModel extends Model
     /**
      * Récupère les tâches par priorité.
      */
-    public function getTasksByPriority($idAccount)
+    public function getTasksByPriority($idAccount, $priority = null, $states = [])
     {
         $result = [];
 
         for ($i = 4; $i > 0; $i--) {
-
-            $tasks = $this->where("id_account", $idAccount)
+            $query = $this->getQueryFiltered($priority, $states);
+            $tasks = $query->where("id_account", $idAccount)
                 ->where("priority", $i)
                 ->orderBy("deadline")
                 ->findAll();
@@ -130,12 +130,13 @@ class TaskModel extends Model
      *
      * @return array Tableau associatif avec les états comme clés et les tâches comme valeurs.
      */
-    public function getTasksByCurrentState($idAccount)
+    public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [])
     {
         $states = ['En retard', 'En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
 
         foreach ($states as $s) {
-            $tasks = $this->where("id_account", $idAccount)
+            $query = $this->getQueryFiltered($priority, $statesFilters);
+            $tasks = $query->where("id_account", $idAccount)
                 ->where("current_state", $s)
                 ->orderBy("deadline")
                 ->findAll();
@@ -154,14 +155,15 @@ class TaskModel extends Model
      * @param int $days Le nombre de jours à partir de la date de début.
      * @return array Tableau associatif avec la date en clé et les tâches en valeur.
      */
-    public function getTasksByDeadline($startDate, $days, $idAccount)
+    public function getTasksByDeadline($startDate, $days, $idAccount, $priority = null, $states = [])
     {
         // Initialiser les dates dans le tableau associatif
         for ($i = 0; $i <= $days; $i++) {
             $currentDate = date('Y-m-d', strtotime("$startDate +$i days"));
             $currentDateHour = date('Y-m-d H:i:s', strtotime("$startDate +$i days"));
 
-            $tasks = $this->where("id_account", $idAccount)
+            $query = $this->getQueryFiltered($priority, $states);
+            $tasks = $query->where("id_account", $idAccount)
                 ->where("deadline", $currentDateHour)
                 ->orderBy('priority', 'DESC')
                 ->findAll();

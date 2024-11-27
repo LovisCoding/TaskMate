@@ -27,3 +27,19 @@ etats.forEach(function (etat) {
 	});
 });
 
+
+// unselect radio button filter
+
+let lastSelected = null;
+
+    document.querySelectorAll('input[name="priority"]').forEach(radio => {
+        radio.addEventListener('click', function (event) {
+            // Si ce bouton était déjà sélectionné
+            if (lastSelected === this) {
+                this.checked = false; // Désélectionner
+                lastSelected = null; // Réinitialiser le dernier bouton sélectionné
+            } else {
+                lastSelected = this; // Mettre à jour le dernier bouton sélectionné
+            }
+        });
+    });
