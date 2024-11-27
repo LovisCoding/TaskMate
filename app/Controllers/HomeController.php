@@ -9,7 +9,11 @@ class HomeController extends BaseController
 {
     public function index()
     {
-       $this->getTasks("home");
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/');
+        }
+
+        $this->getTasks("home");
     }
 
     public function priority()
@@ -27,24 +31,24 @@ class HomeController extends BaseController
         $this->getTasks("deadLine");
     }
 
-    public function getTasks($type) 
+    public function getTasks($type)
     {
         if (!session()->get('isLoggedIn')) {
             return redirect()->to('/');
         }
 
-		helper('form');
+        helper('form');
 
-		echo view('layout/header');
-		echo view('layout/navbar');
+        // Récupérer tous les paramètres GET existants
+        $existingParams = $this->request->getGet();
 
-        // Récupérer les filtres de la requête (GET ou POST)
-        $date = $this->request->getGet('date') ?? (new DateTime())->modify('-7 days')->format('Y-m-d');
-        $nb = $this->request->getGet('nb') ?? 7;
-        $endDate = $this->request->getGet('end_date');
-        $taskGroups = $this->request->getGet('task_groups') ?? null;
-        $priority = $this->request->getGet('priority') ?? null;
-        $states = $this->request->getGet('states') ?? [];
+        // Paramètres par défaut ou nouveaux paramètres
+        $date = $existingParams['date'] ?? (new DateTime())->modify('-7 days')->format('Y-m-d');
+        $nb = $existingParams['nb'] ?? 7;
+        $endDate = $existingParams['end_date'] ?? null;
+        $taskGroups = $existingParams['task_groups'] ?? null;
+        $priority = $existingParams['priority'] ?? null;
+        $states = $existingParams['states'] ?? [];
 
         $stateOptions = [
             'late' => 'En retard',
@@ -72,23 +76,17 @@ class HomeController extends BaseController
         $taskModel = new TaskModel();
         $tasks = [];
 
-        if ($type === "home")
-            $tasks = $taskModel->getTasksByDateRange($date, $nb, $id_account, $priority, $translatedStates);
-
-        if ($type === "priority")
-            $tasks = $taskModel->getTasksByPriority($id_account, $priority, $translatedStates);
-
-        if ($type === "state")
-            $tasks = $taskModel->getTasksByCurrentState($id_account, $priority, $translatedStates);
-
-        if ($type === "deadLine")
-            $tasks = $taskModel->getTasksByDeadline($date, $nb,$id_account, $priority, $translatedStates);
-
-        if ($type == "deadLine")
-            $type = "home";
+        $tasks = match ($type) {
+            'priority' => $taskModel->getTasksByPriority($id_account, $priority, $translatedStates),
+            'state' => $taskModel->getTasksByCurrentState($id_account, $priority, $translatedStates),
+            'deadLine' => $taskModel->getTasksByDeadline($date, $nb, $id_account, $priority, $translatedStates),
+            default => $taskModel->getTasksByDateRange($date, $nb, $id_account, $priority, $translatedStates),
+        };
 
         // Passer les données à la vue
-        echo view('pages/home/'.$type, [
+        echo view('layout/header');
+        echo view('layout/navbar');
+        echo view('pages/home/' . ($type == 'deadLine' ? 'home' : $type), [
             'tasks' => $tasks,
             'date' => $date,
             'nb' => $nb,
@@ -98,7 +96,8 @@ class HomeController extends BaseController
                 'task_groups' => $taskGroups,
                 'priority' => $priority,
                 'states' => $states
-            ]
+            ],
+            'queryParams' => $existingParams
         ]);
         echo view('layout/footer');
     }

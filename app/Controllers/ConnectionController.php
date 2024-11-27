@@ -55,7 +55,7 @@ class ConnectionController extends BaseController
 					'isLoggedIn' => true,
 				];
 				$session->set($ses_data);
-				return redirect()->to('/home');
+				return redirect()->to('/home/recap');
 			} else {
 				$session->setFlashdata('error', 'Ce mot de passe est incorrect.');
 				return redirect()->to('/');

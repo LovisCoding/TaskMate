@@ -144,7 +144,6 @@ class TaskModel extends Model
                 ->orderBy("deadline")
                 ->findAll();
             $result[$s] =  $tasks;
-            echo count($tasks);
         }
 
 		return $result;
