@@ -41,22 +41,31 @@ class TaskModel extends Model
      * @param int $days Le nombre de jours à partir de la date de début.
      * @return array Tableau associatif avec la date en clé et les tâches en valeur.
      */
-    public function getTasksByDateRange($startDate, $days, $idAccount)
+    public function getTasksByDateRange($startDate, $days, $idAccount, $priority = null, $states = [])
     {
         $days -= 1;
         $endDate = date('Y-m-d', strtotime("$startDate +$days days")); // Calcul de la date de fin
 
+        $query = $this->where("id_account", $idAccount);
+        if ($priority) {
+            $query->where('priority', $priority);
+        }
+
+        if (!empty($states)) {
+            $query->whereIn('current_state', $states);
+        }
+
         // Récupérer toutes les tâches dont les dates chevauchent la plage demandée
-        $tasks = $this->where("id_account", $idAccount)
-            ->groupStart()
+        $query->groupStart()
             ->where("start_date <=", $endDate)
             ->where("end_date >=", $startDate)
             ->groupEnd()
             ->orGroupStart()
             ->where("end_date", null) // Date de fin non définie
-            ->where("current_state", 'in_progress') // Tâche en cours
-            ->groupEnd()
-            ->findAll();
+            ->groupEnd();
+
+
+        $tasks = $query->findAll();
 
         // Préparer le tableau associatif
         $result = [];
@@ -97,7 +106,7 @@ class TaskModel extends Model
         $result = [];
 
         for ($i = 4; $i > 0; $i--) {
-            
+
             $tasks = $this->where("id_account", $idAccount)
                 ->where("priority", $i)
                 ->orderBy("deadline")
@@ -116,13 +125,13 @@ class TaskModel extends Model
      */
     public function getTasksByCurrentState($idAccount)
     {
-        $states = ['En retard', 'En cours','Pas commencée', 'Terminée', 'Bloquée'];
+        $states = ['En retard', 'En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
 
-        foreach($states as $s) {
+        foreach ($states as $s) {
             $tasks = $this->where("id_account", $idAccount)
-            ->where("current_state", $s)
-            ->orderBy("deadline")
-            ->findAll();
+                ->where("current_state", $s)
+                ->orderBy("deadline")
+                ->findAll();
             $result[$s] =  $tasks;
             echo count($tasks);
         }
@@ -155,7 +164,4 @@ class TaskModel extends Model
 
         return $result;
     }
-
-
-
 }
