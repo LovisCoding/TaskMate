@@ -138,7 +138,8 @@ class TaskController extends BaseController
             'state' => $state,
             'commentaries' => $comments,
             'blockList' => $blockList,
-            'isBlockedList' => $isBlockedList
+            'isBlockedList' => $isBlockedList,
+            'pager' => $commentModel->getPaginatedByTask($perPage, $idTask)
         ];
 
         echo view('layout/header');
