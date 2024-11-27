@@ -19,7 +19,7 @@ document.getElementById('btn-filter').addEventListener('click', function () {
 }, false );
 
 //checkboxEtat.js
-const etats = ['En retard', 'En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
+const etats = ['late', 'inProgress', 'notStarted', 'finished', 'blocked'];
 
 etats.forEach(function (etat) {
 	document.getElementById(etat).addEventListener('change', function () {
@@ -27,17 +27,3 @@ etats.forEach(function (etat) {
 	});
 });
 
-// reset filter
-
-document.getElementById('resetFilters').addEventListener('click', function () {
-	// Récupérer le formulaire
-	const form = document.getElementById('filterForm');
-
-	// Réinitialiser tous les champs
-	form.reset();
-
-	// Réinitialiser les éléments personnalisés si nécessaire
-	document.querySelectorAll('.btn-check').forEach(el => el.checked = false);
-	document.querySelectorAll('.form-check-input').forEach(el => el.checked = false);
-
-});

@@ -32,22 +32,22 @@
             <?= form_label('Sélection des états', '', ['class' => 'form-label']) ?>
             <?php
             $stateOptions = [
-                'En retard' => 'En retard',
-                'En cours' => 'En cours',
-                'Pas commencée' => 'Pas commencée',
-                'Terminée' => 'Terminée',
-                'Bloquée' => 'Bloquée'
+                'late' => 'En retard',
+                'inProgress' => 'En cours',
+                'notStarted' => 'Pas commencée',
+                'finished' => 'Terminée',
+                'blocked' => 'Bloquée'
             ];
 
             foreach ($stateOptions as $key => $label): ?>
-                <div class="form-check d-flex">
-                    <div class="form-checked d-none">✓ </div>
+                <div class="form-check d-flex <?= in_array($key, $filters['states']) ? 'checked' : '' ?>">
+                    
+                    <div class="form-checked <?= !in_array($key, $filters['states']) ? 'd-none' : 'checked'?>">✓ </div>
                     <?= form_checkbox([
                         'name' => 'states[]',
                         'id' => $key,
                         'value' => $key,
-                        'class' => 'd-none pe-auto',
-                        'checked' => in_array($key, $filters['states'] ?? [])
+                        'class' => 'd-none pe-auto'
                     ]) ?>
                     <?= form_label($label, $key, ['class' => 'form-check-label']) ?>
                 </div>
@@ -78,8 +78,7 @@
         </div>
 
         <!-- Boutons -->
-        <div class="d-flex justify-content-between">
-            <?= form_reset('reset', 'Annuler', ['class' => 'btn btn-grey']) ?>
+        <div class="d-flex justify-content-center">
             <?= form_submit('', 'Confirmer', ['class' => 'btn btn-grey']) ?>
         </div>
 

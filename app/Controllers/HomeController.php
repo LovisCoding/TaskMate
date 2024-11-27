@@ -19,12 +19,35 @@ class HomeController extends BaseController
         echo view('layout/navbar');
 
         // Récupérer les filtres de la requête (GET ou POST)
-        $date = $this->request->getGet('date') ?? (new DateTime())->format('Y-m-d');
+        $date = $this->request->getGet('date') ?? (new DateTime())->modify('-7 days')->format('Y-m-d');
         $nb = $this->request->getGet('nb') ?? 7;
         $endDate = $this->request->getGet('end_date');
         $taskGroups = $this->request->getGet('task_groups') ?? null;
         $priority = $this->request->getGet('priority') ?? null;
         $states = $this->request->getGet('states') ?? [];
+
+        $stateOptions = [
+            'late' => 'En retard',
+            'inProgress' => 'En cours',
+            'notStarted' => 'Pas commencée',
+            'finished' => 'Terminée',
+            'blocked' => 'Bloquée'
+        ];
+
+        var_dump($states);
+
+
+        $statesFrench = array_filter(
+            $states,
+            fn($state) => isset($stateOptions[$state])
+        );
+
+        $translatedStates = array_map(
+            fn($state) => $stateOptions[$state],
+            $statesFrench
+        );
+
+        var_dump($statesFrench);
 
         // Récupération de l'ID de l'utilisateur connecté
         $session = session();
@@ -32,7 +55,7 @@ class HomeController extends BaseController
 
         // Récupération des tâches filtrées
         $taskModel = new TaskModel();
-        $tasks = $taskModel->getTasksByDateRange($date, $nb, $id_account, $priority, $states);
+        $tasks = $taskModel->getTasksByDateRange($date, $nb, $id_account, $priority, $translatedStates);
 
         // Passer les données à la vue
         echo view('pages/home/home', [
