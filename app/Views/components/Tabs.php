@@ -15,4 +15,3 @@ function setActiveTab($url)
 	<a href="/home/deadLine" class="btn btn-link tab-link <?= setActiveTab('/home/deadLine')?>" id="tabEcheance">Vue par échéance</a>
 	<a href="/home/recap" class="btn btn-link tab-link <?= setActiveTab('/home/recap')?>" id="tabRecap">Récapitulatif</a>
 </div>
-
