@@ -1,83 +1,150 @@
-<div class="d-flex justify-content-center mt-5">
-	<div class="d-flex flex-column align-items-center rounded shadow p-4 mt-5 profil">
-		<h2 class="mb-4 text-center titleProfil">Mon profil</h2>
+<div class="d-flex justify-content-center align-items-center mt-5">
+    <div class="rounded shadow p-4 profil mt-5">
+        <!-- Onglets -->
+        <ul class="nav nav-tabs" id="profilTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="profil-tab" data-bs-toggle="tab" data-bs-target="#profil" type="button" role="tab" aria-controls="profil" aria-selected="true">
+                    Profil
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="reglages-tab" data-bs-toggle="tab" data-bs-target="#reglages" type="button" role="tab" aria-controls="reglages" aria-selected="false">
+                    Réglages
+                </button>
+            </li>
+        </ul>
 
-		<div class="py-4 w-100">
-			<?php if (session()->getFlashdata('error')): ?>
-				<div class="alert alert-danger" role="alert">
-					<?= session()->getFlashdata('error'); ?>
-				</div>
-			<?php endif; ?>
-			<?php if (session()->getFlashdata('success')): ?>
-				<div class="alert alert-success" role="alert">
-					<?= session()->getFlashdata('success') ?>
-				</div>
-			<?php endif; ?>
+        <!-- Contenu des onglets -->
+        <div class="tab-content mt-4" id="profilTabsContent">
+            <!-- Onglet Profil -->
+            <div class="tab-pane fade show active" id="profil" role="tabpanel" aria-labelledby="profil-tab">
+                <h2 class="mb-4 text-center titleProfil">Mon profil</h2>
 
-			<?= form_open('profil/updateName') ?>
+                <div class="py-4">
+                    <!-- Messages flash -->
+                    <?php if (session()->getFlashdata('error')): ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?= session()->getFlashdata('error'); ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (session()->getFlashdata('success')): ?>
+                        <div class="alert alert-success" role="alert">
+                            <?= session()->getFlashdata('success') ?>
+                        </div>
+                    <?php endif; ?>
 
-			<!-- Champ Nom -->
-			<div class="mb-3">
-				<?= form_label('Nom', 'name', ['class' => 'form-label fw-bold text-secondary']) ?>
-				<div class="d-flex">
-					<?= form_input([
-						'name' => 'name',
-						'id' => 'name',
-						'type' => 'text',
-						'class' => 'form-control rounded',
-						'placeholder' => 'Votre nom',
-						'value' => isset($name) ? $name : set_value('name'),
-						'aria-label' => 'Nom'
-					]) ?>
-					<div class="ms-2">
-						<?= form_submit('submit', '✓', [
-							'class' => 'btn btn-success rounded-circle',
-							'style' => 'width: 40px; height: 40px;',
-							'aria-label' => 'Enregistrer'
-						]) ?>
-					</div>
-				</div>
-			</div>
-			<?= form_close() ?>
+                    <!-- Formulaire de mise à jour du nom -->
+                    <?= form_open('profil/updateName') ?>
+                    <div class="mb-3">
+                        <?= form_label('Nom', 'name', ['class' => 'form-label fw-bold text-secondary']) ?>
+                        <div class="d-flex">
+                            <?= form_input([
+                                'name' => 'name',
+                                'id' => 'name',
+                                'type' => 'text',
+                                'class' => 'form-control rounded',
+                                'placeholder' => 'Votre nom',
+                                'value' => isset($name) ? $name : set_value('name'),
+                                'aria-label' => 'Nom'
+                            ]) ?>
+                            <div class="ms-2">
+                                <?= form_submit('submit', '✓', [
+                                    'class' => 'btn btn-success rounded-circle',
+                                    'style' => 'width: 40px; height: 40px;',
+                                    'aria-label' => 'Enregistrer'
+                                ]) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?= form_close() ?>
 
-			<!-- Bouton Changer le mot de passe -->
-			<div class="mb-3">
-				<?= form_button([
-					'content' => '
-					<img src="' . base_url('assets/imgs/lock.svg') . '" alt="Mot de passe" class="me-2" style="width: 20px;">
-					Changer le mot de passe',
-					'class' => 'btn btn-outline-secondary w-100 d-flex justify-content-center align-items-center rounded-pill',
-					'type' => 'button',
-					'onclick' => "window.location.href='" . base_url('profil/resetPassword') . "'",
-					'aria-label' => 'Changer le mot de passe'
-				]) ?>
-			</div>
+                    <!-- Boutons -->
+                    <div class="mb-3">
+                        <?= form_button([
+                            'content' => '<img src="' . base_url('assets/imgs/lock.svg') . '" alt="Mot de passe" class="me-2" style="width: 20px;">Changer le mot de passe',
+                            'class' => 'btn btn-outline-secondary w-100 rounded-pill',
+                            'type' => 'button',
+                            'onclick' => "window.location.href='" . base_url('profil/resetPassword') . "'",
+                            'aria-label' => 'Changer le mot de passe'
+                        ]) ?>
+                    </div>
+                    <div class="mb-3">
+                        <?= form_button([
+                            'content' => '<img src="' . base_url('assets/imgs/disconnect.svg') . '" alt="Déconnexion" class="me-2" style="width: 20px;">Déconnexion',
+                            'class' => 'btn btn-primary w-100 rounded-pill',
+                            'type' => 'button',
+                            'onclick' => "window.location.href='" . base_url('profil/logout') . "'",
+                            'aria-label' => 'Déconnexion'
+                        ]) ?>
+                    </div>
+                    <div class="mb-3">
+                        <?= form_button([
+                            'content' => '<img src="' . base_url('assets/imgs/bin.svg') . '" alt="Supprimer" class="me-2" style="width: 20px;">Supprimer le compte',
+                            'class' => 'btn btn-danger w-100 rounded-pill',
+                            'type' => 'button',
+                            'onclick' => "if(confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')) window.location.href='" . base_url('profil/deleteAccount') . "'",
+                            'aria-label' => 'Supprimer le compte'
+                        ]) ?>
+                    </div>
+                </div>
+            </div>
 
-			<!-- Bouton Déconnexion -->
-			<div class="mb-3">
-				<?= form_button([
-					'content' => '
-					<img src="' . base_url('assets/imgs/disconnect.svg') . '" alt="Déconnexion" class="me-2" style="width: 20px;">
-					Déconnexion',
-					'class' => 'btn btn-primary w-100 rounded-pill',
-					'type' => 'button',
-					'onclick' => "window.location.href='" . base_url('profil/logout') . "'",
-					'aria-label' => 'Déconnexion'
-				]) ?>
-			</div>
+            <!-- Onglet Réglages -->
+            <div class="tab-pane fade" id="reglages" role="tabpanel" aria-labelledby="reglages-tab">
+                <h2 class="mb-4 text-center titleProfil">Réglages</h2>
 
-			<!-- Bouton Supprimer le compte -->
-			<div class="mb-3">
-				<?= form_button([
-					'content' => '
-					<img src="' . base_url('assets/imgs/bin.svg') . '" alt="Supprimer" class="me-2" style="width: 20px;">
-					Supprimer le compte',
-					'class' => 'btn btn-danger w-100 rounded-pill',
-					'type' => 'button',
-					'onclick' => "if(confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')) window.location.href='" . base_url('profil/deleteAccount') . "'",
-					'aria-label' => 'Supprimer le compte'
-				]) ?>
-			</div>
-		</div>
-	</div>
+                <?= form_open('profil/updateSettings', ['id' => 'settingsForm']) ?>
+                <div class="mb-3">
+                    <?= form_label('Nombre de jours avant le rappel échéance :', 'daysBeforeReminder', ['class' => 'form-label fw-bold text-secondary']) ?>
+                    <?= form_input([
+                        'name' => 'daysBeforeReminder',
+                        'id' => 'daysBeforeReminder',
+                        'type' => 'number',
+                        'class' => 'form-control rounded',
+                        'placeholder' => 'Entrez un nombre',
+                        'value' => set_value('daysBeforeReminder'),
+                        'min' => 2
+                    ]) ?>
+                </div>
+                <div class="mb-3">
+                    <?= form_label('Nombre d\'éléments par page :', 'itemsPerPage', ['class' => 'form-label fw-bold text-secondary']) ?>
+                    <?= form_input([
+                        'name' => 'itemsPerPage',
+                        'id' => 'itemsPerPage',
+                        'type' => 'number',
+                        'class' => 'form-control rounded',
+                        'placeholder' => 'Entrez un nombre',
+                        'value' => set_value('itemsPerPage'),
+                        'min' => 2
+                    ]) ?>
+                </div>
+                <div class="mb-3">
+                    <?= form_label('Nombre de pages affichées dans la pagination :', 'pagesDisplayed', ['class' => 'form-label fw-bold text-secondary']) ?>
+                    <?= form_input([
+                        'name' => 'pagesDisplayed',
+                        'id' => 'pagesDisplayed',
+                        'type' => 'number',
+                        'class' => 'form-control rounded',
+                        'placeholder' => 'Entrez un nombre',
+                        'value' => set_value('pagesDisplayed'),
+                        'min' => 2
+                    ]) ?>
+                </div>
+                <div class="mb-3">
+                    <?= form_label('Nombre de jours affichés dans le calendrier :', 'daysInCalendar', ['class' => 'form-label fw-bold text-secondary']) ?>
+                    <?= form_input([
+                        'name' => 'daysInCalendar',
+                        'id' => 'daysInCalendar',
+                        'type' => 'number',
+                        'class' => 'form-control rounded',
+                        'placeholder' => 'Entrez un nombre',
+                        'value' => set_value('daysInCalendar'),
+                        'min' => 2
+                    ]) ?>
+                </div>
+                <?= form_submit('submit', 'Enregistrer', ['class' => 'btn btn-success w-100 rounded-pill']) ?>
+                <?= form_close() ?>
+            </div>
+        </div>
+    </div>
 </div>
