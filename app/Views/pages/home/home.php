@@ -4,7 +4,7 @@ $date = new DateTime($date);
 
 <div>
 	<div class="pt-4"></div>
-	<div class="d-flex justify-content-between mx-4" id="vues">
+	<div class="d-flex justify-content-between mx-4 flex-wrap" id="vues">
 		<div class="left d-flex">
 			<?= view('components/Tabs') ?>
 			<?= view('components/Export') ?>
