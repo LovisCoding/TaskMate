@@ -11,23 +11,38 @@
 	<div class="">
 		<div class="pt-4"></div>
 	</div>
-<!-- 	<div id="ListCommentaries"></div>
-	<div id="Pagination"></div> -->
 
 	<div id="commentaryList">
-		<?php foreach ($commentaires as $commentaire) { ?>
-			<textarea class="form-control commentaire mb-3" rows="3" name="task_commentaries[]"><?= $commentaire ?></textarea>
+		<?php foreach ($commentaires['items'] as $commentaire) { ?>
+			<input type="hidden" name="task_commentaries_id[]" value="<?= $commentaire['id_task'] ?>">
+			<textarea class="form-control commentaire mb-3" rows="3" name="task_commentaries[]"><?= $commentaire['comment'] ?></textarea>
 		<?php } ?>
 	</div>
 
-<!-- 	<ul class="pagination" id="pagination">
-		<li style="cursor:pointer" class="page-item page-link" onClick="changePage('previous')" >Previous</li>
-		<li style="cursor:pointer" class="page-item page-link" onClick="changePage('previous')" >1</li>
-		<li style="cursor:pointer" class="page-item page-link" onClick="changePage('next')" >Next</li>
-	</ul> -->
+	<ul class="pagination" id="pagination">
+		<?php foreach ($pager->links() as $link){ ?>
+			<li class="<?= $link['active'] ? 'active' : '' ?>">
+                <a href="<?= $link['uri'] ?>"><?= $link['title'] ?></a>
+            </li>
+		<?php } ?>
+	</ul>
 
 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 	<div id="ListCommentaries"></div>
+	<div id="Pagination"></div> -->
 <!-- <script>
 
 

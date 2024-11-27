@@ -12,6 +12,24 @@ class TaskController extends BaseController
         $dateI = new DateTime($date);
         helper("form");
 
+        $pager = service('pager');
+
+        $db = db_connect();
+        $builder = $db->table('task');
+        $perPage = 10;
+        $currentPage = $this->request->getVar('page') ?? 1;
+        $total = $builder->countAllResults(false);
+
+        $items = $builder->limit($perPage, ($currentPage - 1) * $perPage)->get()->getResultArray();
+
+        $pager = service('pager');
+        $pager->makeLinks($currentPage, $perPage, $total);
+
+        $commentaries = [
+            'items' => $items,
+            'pager' => $pager,
+        ];
+
         $data = [
             'id' => 'ID0',
             'title' => 'Titre de la tâche',
@@ -19,11 +37,7 @@ class TaskController extends BaseController
             'priority' => 3,
             'date' => $dateI,
             'state' => 'En cours',
-            'commentaries' => [
-                'Commentaire 1',
-                'Commentaire 2',
-                'Commentaire 3',
-            ],
+            'commentaries' => $commentaries,
             'blockList' => [
                 [
                     'id' => 'ID1',
@@ -122,7 +136,7 @@ class TaskController extends BaseController
 
         echo view('layout/header');
         echo view('layout/navbar');
-        echo view('pages/viewTask/Task',  $data ); 
+        echo view('pages/viewTask/Task',  $data); 
         echo view('layout/footer') ;
     }
 
