@@ -78,7 +78,7 @@
 	gap: 1rem;
 }
 
-.calendar__date__range > .title {
+.calendar__date__range>.title {
 	display: flex;
 	flex-direction: column;
 	text-align: center;
@@ -96,7 +96,7 @@
 	font-weight: 400;
 }
 
-.calendar__date__range > svg {
+.calendar__date__range>svg {
 	width: 1rem;
 	color: var(--grey1-color);
 }
@@ -113,13 +113,13 @@
 	gap: 0.5rem;
 }
 
-.calendar_item_title > .title {
+.calendar_item_title>.title {
 	text-align: center;
 	font-size: 0.85rem;
 	font-weight: 500;
 }
 
-.calendar_item_title > .line,
+.calendar_item_title>.line,
 .line {
 	height: 3px;
 	width: 48px;
@@ -131,7 +131,7 @@
 }
 
 .commentaire {
-	color:#6C757D;
+	color: #6C757D;
 }
 
 .tag {
@@ -150,7 +150,7 @@
 	flex: 1;
 }
 
-.form-check-label{
+.form-check-label {
 	cursor: pointer;
 }
 
@@ -185,7 +185,7 @@
 }
 
 /** Pagination **/
-/* Container for pagination */
+
 .pagination {
 	display: flex;
 	list-style: none;
@@ -194,16 +194,14 @@
 	justify-content: center;
 	font-family: Arial, sans-serif;
 	font-size: 1rem;
-	color: #6c757d; /* Gris doux */
-  }
-  
-  /* Individual pagination item */
-  .page-item {
-	margin: 0 0.5rem; /* Espacement entre les items */
-  }
-  
-  /* Links inside pagination */
-  .page-link {
+	color: #6c757d;
+}
+
+.page-item {
+	margin: 0 0.5rem;
+}
+
+.page-link {
 	text-decoration: none;
 	color: inherit;
 	padding: 0;
@@ -211,46 +209,50 @@
 	transition: color 0.2s ease;
 	background-color: transparent;
 	border: none;
-  }
-  
-  /* Hover state for links */
-  .page-link:hover {
-	color: #000; /* Noir au survol */
-  }
-  
-  /* Active page */
-  .page-item.active .page-link {
+}
+
+.page-link:hover {
+	color: #000;
+}
+
+.page-item.active .page-link {
 	font-weight: bold;
-	color: #000; /* Noir pour la page active */
+	color: #000;
 	cursor: default;
-  }
-  
-  /* Disabled state */
-  .page-item.disabled .page-link {
-	color: #d6d6d6; /* Gris clair pour les liens désactivés */
+}
+
+.page-item.disabled .page-link {
+	color: #d6d6d6;
 	pointer-events: none;
 	cursor: not-allowed;
-  }
-  
-  .blue {
+}
+
+.blue {
 	color: 0D6EFD;
-  }
-  .page-item.page-active {
-	
+}
+
+.page-item.page-active {
 	text-decoration-line: underline !important;
 	text-decoration: solid;
 	text-decoration-color: #505050;
-
-  }
+}
 
 .titleProfil {
-	font-family: 'Caveat Brush', cursive; 
-	font-size: 2.5rem; 
-	font-weight: 600; 
+	font-family: 'Caveat Brush', cursive;
+	font-size: 2.5rem;
+	font-weight: 600;
 	letter-spacing: 1px;
 }
 
 .profil {
 	width: 550px;
 	background-color: #f8f9fa;
+}
+
+.nav-tabs .nav-link.active {
+	color: #007bff;
+}
+
+.nav-tabs .nav-link {
+	color: #000;
 }
