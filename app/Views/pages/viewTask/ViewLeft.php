@@ -12,16 +12,19 @@ $arr = [
 	<?= view('pages/viewTask/Commentaries', ['commentaires' => $commentaries]) ?>
 	<div class="d-flex justify-content-between mt-5">
 
-		<?php if ($id != -1) { ?>
-			<?= view('components/Button', ['text' => "Supprimer", 'type' => 'danger', 'name' => 'action', 'value' => 'delete']) ?>
-		<?php } ?>
+		
+			<?= view('components/Button', ['text' => "Supprimer", 'type' => 'danger', 'name' => 'action', 'value' => 'delete', 'disabled' => $id == -1]) ?>
+
 
 		<?php if ($state == "En cours") { ?>
-			<?= view('components/Button', ['text' => "Terminer la tâche", 'type' => null, 'name' => 'action', 'value' => 'complete']) ?>
+			<?= view('components/Button', ['text' => "Terminer la tâche", 'type' => null, 'name' => 'action', 'value' => 'complete', 'disabled' => false]) ?>
 		<?php } else { ?>
 			<?php if ($state !== "Terminée") { ?>
-				<?= view('components/Button', ['text' => "Commencer la tâche", 'type' => null, 'name' => 'action', 'value' => 'start']) ?>
+				<?= view('components/Button', ['text' => "Commencer la tâche", 'type' => null, 'name' => 'action', 'value' => 'start', 'disabled' => false] ) ?>
 			<?php } ?>
 		<?php } ?>
+		<div class="d-flex justify-content-center mb-3">
+					<?= view('components/Button', ['text' => "Enregistrer les modifications", 'type' => null, 'name' => 'action', 'value' => 'save', 'disabled' => false]) ?>
+				</div>
 	</div>
 </div>

@@ -47,4 +47,5 @@
 	const base_url_img = '<?=base_url('assets/imgs/')?>';
 </script>
 <?=str_contains($_SERVER['REQUEST_URI'], '/home') ? '<script type="module" src="/assets/scripts/home/home.js"></script>': '' ?>
+<?=str_contains($_SERVER['REQUEST_URI'], '/task') ? '<script type="module" src="/assets/scripts/home/PriorityBtn.js"></script>': '' ?>
 </html>
