@@ -184,6 +184,65 @@
 	stroke: #0D6EFD;
 }
 
+/** Pagination **/
+/* Container for pagination */
+.pagination {
+	display: flex;
+	list-style: none;
+	padding: 0;
+	margin: 1rem 0;
+	justify-content: center;
+	font-family: Arial, sans-serif;
+	font-size: 1rem;
+	color: #6c757d; /* Gris doux */
+  }
+  
+  /* Individual pagination item */
+  .page-item {
+	margin: 0 0.5rem; /* Espacement entre les items */
+  }
+  
+  /* Links inside pagination */
+  .page-link {
+	text-decoration: none;
+	color: inherit;
+	padding: 0;
+	cursor: pointer;
+	transition: color 0.2s ease;
+	background-color: transparent;
+	border: none;
+  }
+  
+  /* Hover state for links */
+  .page-link:hover {
+	color: #000; /* Noir au survol */
+  }
+  
+  /* Active page */
+  .page-item.active .page-link {
+	font-weight: bold;
+	color: #000; /* Noir pour la page active */
+	cursor: default;
+  }
+  
+  /* Disabled state */
+  .page-item.disabled .page-link {
+	color: #d6d6d6; /* Gris clair pour les liens désactivés */
+	pointer-events: none;
+	cursor: not-allowed;
+  }
+  
+  .blue {
+	color: 0D6EFD;
+  }
+  .page-item.page-active {
+	
+	text-decoration-line: underline !important;
+	text-decoration: solid;
+	text-decoration-color: #505050;
+
+  }
+
 .titleProfil {
 	font-family: 'Caveat Brush', cursive; 
 	font-size: 2.5rem; 

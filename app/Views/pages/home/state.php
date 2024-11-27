@@ -21,8 +21,8 @@ foreach ($tasks as $dateString => $taskes) {
 		</div>
 	</div>
 </div>
-
-<div class="container mt-5">
+<?= view('components/Pagination') ?>
+<div class="container">
 	<div class="row justify-content-center">
 		<?php foreach ($stateColumns as $state => $tasksByState): ?>
 			<div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2">
@@ -42,7 +42,8 @@ foreach ($tasks as $dateString => $taskes) {
 									'text' => htmlspecialchars($task['description']),
 									'priority' => (int) htmlspecialchars($task['priority']),
 									'status' => htmlspecialchars($task['current_state']),
-									'color' => true
+									'color' => true,
+									'id'=> (int) htmlspecialchars($task['id_task'])
 								]) ?>
 							</div>
 						<?php endforeach; ?>

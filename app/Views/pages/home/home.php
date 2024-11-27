@@ -40,7 +40,7 @@ $date = new DateTime($date);
 								'priority' => (int) htmlspecialchars($task['priority']),
 								'status' => htmlspecialchars($task['current_state']),
 								'color' => false,
-								'id'=> (int) htmlspecialchars($task['id_task']),
+								'id'=> (int) htmlspecialchars($task['id_task'])
 							]) ?>
 						</div>
 					<?php endforeach; ?>
@@ -49,5 +49,6 @@ $date = new DateTime($date);
 		</div>
 	</div>
 </div>
+<?= view('components/Pagination') ?>
 
 <?= view('pages/home/filterPanel') ?>
