@@ -22,6 +22,19 @@
 	border-color: #ba2c2c;
 	color: white;
 }
+
+.btn-blue {
+	background-color: #A2BFFE;
+	border-color: #A2BFFE;
+	color: white;
+}
+
+.btn-blue:hover {
+	background-color: #A2BFFE;
+	border-color: #A2BFFE;
+	color: white;
+}
+
 #btn-commentaire {
 	background: transparent;
 	border: none;

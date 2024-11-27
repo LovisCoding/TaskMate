@@ -10,7 +10,7 @@
 </div>
 
 <?php foreach ($commentaires as $commentaire) { ?>
-	<div class="commentaire"><?= $commentaire ?></div>
+	<textarea class="form-control commentaire" rows="3"><?= $commentaire ?></textarea>
 	<div>________</div>
 <?php } ?>
 </div>
