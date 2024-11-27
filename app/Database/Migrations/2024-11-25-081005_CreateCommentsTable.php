@@ -21,8 +21,9 @@ class CreateCommentsTable extends Migration
                 'null' => true,
             ],
         ]);
+        echo "exec: comment\n";
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('id_task', 'Task', 'id_task', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_task', 'task', 'id_task', 'CASCADE', 'CASCADE');
         $this->forge->createTable('comment');
     }
 

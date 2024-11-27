@@ -21,13 +21,14 @@ class CreateGroupsTable extends Migration
                 'constraint' => 255,
             ]
         ]);
+        echo "exec: group\n";
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('id_account', 'Account', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_account', 'account', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('group');
     }
 
     public function down()
     {
-        $this->forge->dropTable('group', true);
+        $this->forge->dropTable('"group"', true);
     }
 }

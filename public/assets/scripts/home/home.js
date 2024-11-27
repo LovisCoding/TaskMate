@@ -6,7 +6,8 @@ import sortOrder from "./sortOrder.js";
 
 //export.js
 document.getElementById('btn-export').addEventListener('click', function () {
-	exportCard();
+	// exportCard();
+    console.log("export");
 }, false);
 
 //filter.js

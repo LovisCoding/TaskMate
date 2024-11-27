@@ -49,9 +49,10 @@ class CreateTasksTable extends Migration
                 'null' => true,
             ],
         ]);
+        echo "exec: task\n";
         $this->forge->addKey('id_task', true);
-        $this->forge->addForeignKey('id_account', 'Account', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('id_group', 'Group', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_account', 'account', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_group', 'group', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('task');
     }
 
