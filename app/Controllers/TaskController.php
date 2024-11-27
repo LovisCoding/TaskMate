@@ -29,6 +29,12 @@ class TaskController extends BaseController
         $blockList = [];
         $isBlockedList = [];
 
+        $pager = service('pager');
+
+        $perPage = 3    ;
+        $currentPage = $this->request->getVar('page') ?? 1;
+        $total = count($commentaries);
+
         $task = $taskModel->where("id_task", $idTask)->first();
 
         if ($idTask != -1 && !$task) {
@@ -39,11 +45,23 @@ class TaskController extends BaseController
             $date = $task["deadline"];
             $commentModel = new CommentModel();
             $commentaries = $commentModel
-                ->select('comment')
+                ->select('id, comment')  // Ajoutez l'ID du commentaire ici
                 ->where("id_task", $idTask)
-                ->findAll();
+                ->limit($perPage, ($currentPage - 1) * $perPage)
+                ->get()
+                ->getResultArray();
 
-            $commentaries = array_column($commentaries, 'comment');
+            // Optionnel : Vous pouvez ajouter l'ID au tableau de commentaires
+            // Ici, vous ajoutez chaque commentaire avec son ID
+            $commentaries = array_map(function ($comment) {
+                return [
+                    'id' => $comment['id'],    // Ajoutez l'ID du commentaire
+                    'comment' => $comment['comment'] // Gardez le texte du commentaire
+                ];
+            }, $commentaries);
+
+
+
 
             $tasks = $taskModel->findAll();
             $taskDependenciesModel = new TaskDependenciesModel();
@@ -113,21 +131,10 @@ class TaskController extends BaseController
         $dateI = new DateTime($date);
         helper("form");
 
-        $pager = service('pager');
-
-        $db = db_connect();
-        $builder = $db->table('task');
-        $perPage = 10;
-        $currentPage = $this->request->getVar('page') ?? 1;
-        $total = $builder->countAllResults(false);
-
-        $items = $builder->limit($perPage, ($currentPage - 1) * $perPage)->get()->getResultArray();
-
-        $pager = service('pager');
         $pager->makeLinks($currentPage, $perPage, $total);
 
-        $commentaries = [
-            'items' => $items,
+        $comments = [
+            'items' => $commentaries,
             'pager' => $pager,
         ];
 
@@ -138,9 +145,10 @@ class TaskController extends BaseController
             'priority' => $priority,
             'date' => $dateI,
             'state' => $state,
-            'commentaries' => $commentaries,
+            'commentaries' => $comments,
             'blockList' => $blockList,
-            'isBlockedList' => $isBlockedList
+            'isBlockedList' => $isBlockedList,
+            'pager' => $pager
         ];
 
 

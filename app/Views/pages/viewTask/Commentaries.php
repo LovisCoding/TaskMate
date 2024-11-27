@@ -14,60 +14,13 @@
 
 	<div id="commentaryList">
 		<?php foreach ($commentaires['items'] as $commentaire) { ?>
-			<input type="hidden" name="task_commentaries_id[]" value="<?= $commentaire['id_task'] ?>">
+			<input type="hidden" name="task_commentaries_id[]" value="<?= $commentaire['id'] ?>">
 			<textarea class="form-control commentaire mb-3" rows="3" name="task_commentaries[]"><?= $commentaire['comment'] ?></textarea>
 		<?php } ?>
 	</div>
 
 	<ul class="pagination" id="pagination">
-		<?php foreach ($pager->links() as $link){ ?>
-			<li class="<?= $link['active'] ? 'active' : '' ?>">
-                <a href="<?= $link['uri'] ?>"><?= $link['title'] ?></a>
-            </li>
-		<?php } ?>
+		<?= $pager->links() ?>
 	</ul>
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 	<div id="ListCommentaries"></div>
-	<div id="Pagination"></div> -->
-<!-- <script>
-
-
-	<?php foreach ($commentaires as $commentaire) { ?>
-		
-		
-		(() => {
-			ObjCommentaries.push("<?= $commentaire ?>");
-/* 			let c = document.createElement('textarea');
-			c.name = "task_commentaries[]";
-			c.className = "form-control commentaire mb-3";
-			c.rows = 3;
-			c.textContent = "<?= $commentaire ?>";
-			pushCommentary(c); */
-		})();
-
-	<?php } ?>
-
-	ObjCommentaries.getPagination();
-	ObjCommentaries.getList();
-
-</script> -->
-
-
-<!-- 
-<script>
-	fetchCommentaryPage(nbPage,nbElement)
-</script> -->
