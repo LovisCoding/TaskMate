@@ -29,11 +29,8 @@ class TaskController extends BaseController
         $blockList = [];
         $isBlockedList = [];
 
-        $pager = service('pager');
-
         $perPage = 3    ;
         $currentPage = $this->request->getVar('page') ?? 1;
-        $total = count($commentaries);
 
         $task = $taskModel->where("id_task", $idTask)->first();
 
@@ -94,9 +91,6 @@ class TaskController extends BaseController
                     ];
                 }, $tasks);
             }
-
-
-
             $title = $task["name"];
             $description = $task["description"];
             $priority = $task["priority"];
@@ -127,15 +121,12 @@ class TaskController extends BaseController
             }, $tasks);
         }
 
-
         $dateI = new DateTime($date);
         helper("form");
 
-        $pager->makeLinks($currentPage, $perPage, $total);
-
         $comments = [
             'items' => $commentaries,
-            'pager' => $pager,
+            'pager' => $commentModel->getPaginatedByTask($perPage, $idTask),
         ];
 
         $data = [
@@ -147,12 +138,8 @@ class TaskController extends BaseController
             'state' => $state,
             'commentaries' => $comments,
             'blockList' => $blockList,
-            'isBlockedList' => $isBlockedList,
-            'pager' => $pager
+            'isBlockedList' => $isBlockedList
         ];
-
-
-
 
         echo view('layout/header');
         echo view('layout/navbar');
@@ -223,7 +210,7 @@ class TaskController extends BaseController
                 $taskModel->update($id, $taskData);
             }
 
-            // // Gestion des commentaires, blockList, etc. (si nécessaires)
+            // Gestion des commentaires, blockList, etc. (si nécessaires)
             // $commentaries = $this->request->getPost('task_commentaries');
             // var_dump($commentaries);    
             // if (!empty($commentaries)) {
@@ -237,7 +224,6 @@ class TaskController extends BaseController
             // }
 
             $blockList = $this->request->getPost("task_blockList");
-            var_dump($blockList);
             if (!empty($blockList)) {
                 $taskDependenciesModel = new TaskDependenciesModel();
                 foreach ($blockList as $taskBlockId) {

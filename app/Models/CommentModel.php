@@ -23,4 +23,10 @@ class CommentModel extends Model
 	{
 		return $this->where('id_task', $taskId)->findAll();
 	}
+
+	public function getPaginatedByTask($perPage, $taskId)
+	{
+		$query = $this->where('id_task', $taskId);
+		return $query->paginate($perPage);
+	}
 }
