@@ -227,10 +227,6 @@
 	cursor: not-allowed;
 }
 
-.blue {
-	color: 0D6EFD;
-}
-
 .page-item.page-active {
 	text-decoration-line: underline !important;
 	text-decoration: solid;
