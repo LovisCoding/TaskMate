@@ -82,8 +82,10 @@ class HomeController extends BaseController
             $tasks = $taskModel->getTasksByCurrentState($id_account, $priority, $translatedStates);
 
         if ($type === "deadLine")
-            $tasks = $taskModel->getTasksByPriority($id_account, $priority, $translatedStates);
+            $tasks = $taskModel->getTasksByDeadline($date, $nb,$id_account, $priority, $translatedStates);
 
+        if ($type == "deadLine")
+            $type = "home";
 
         // Passer les données à la vue
         echo view('pages/home/'.$type, [
