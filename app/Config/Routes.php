@@ -7,7 +7,6 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'ConnectionController::index');
 $routes->get('/home', 'HomeController::index');
-$routes->get('/viewTask', 'ViewTaskController::index');
 $routes->get('/auth/register', 'ConnectionController::register');
 $routes->post('/auth/login', 'ConnectionController::connection');
 $routes->get('/auth/forgot-password', 'ConnectionController::forgotPassword');
@@ -27,8 +26,8 @@ $routes->post('/forgot-password/updatePassword','EmailController::updatePassword
 $routes->post('email/sendConfirmAccountMail', 'EmailController::sendConfirmAccountMail'); // Envoi de l'email de confirmation
 $routes->get('email/confirmAccount/(:any)', 'EmailController::confirmAccount/$1'); // Confirmation de l'activation via le token
 
-$routes->get('task', 'Task::index'); // Confirmation de l'activation via le token
-
+$routes->get('task/(:any)', 'TaskController::index'); // Confirmation de l'activation via le token
+$routes->post('task/validate/(:any)','TaskController::validateTask/$1');
 
 // taches
 //getTaches
