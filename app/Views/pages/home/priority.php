@@ -13,7 +13,7 @@ function generatePriorityIndicators($priority)
 	$priorityIndicators = '';
 	for ($i = 0; $i < 4; $i++) {
 		$color = $i < $priority ? 'black' : 'gray';
-		$priorityIndicators .= "<span class=\"indicator $color\"></span>";
+		$priorityIndicators .= "<span style=\"".($i == 3 ? 'margin-right: 0;' : '')."\" class=\"indicator  $color \"></span>";
 	}
 
 	return $priorityIndicators;
