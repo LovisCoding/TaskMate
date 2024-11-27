@@ -7,13 +7,15 @@ use CodeIgniter\Model;
 class TaskDependenciesModel extends Model
 {
 	protected $table = 'taskdependencies';
+	protected $primaryKey = ['id_mother_task', 'id_child_task'];
+	protected $useAutoIncrement = false;
 
 	protected $allowedFields = [
 		'id_mother_task',
 		'id_child_task',
 	];
 
-	protected $useTimestamps = false;
+	protected $useTimestamps = true;
 
 	/**
 	 * Récupère toutes les tâches parentes d'une tâche spécifique.

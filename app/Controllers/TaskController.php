@@ -237,29 +237,29 @@ class TaskController extends BaseController
             // }
 
             $blockList = $this->request->getPost("task_blockList");
-            var_dump($blockList);
             if (!empty($blockList)) {
+                $newId = $taskId ?? $id;
+
                 $taskDependenciesModel = new TaskDependenciesModel();
+
+                // $taskDependenciesModel->where("id_mother_task", $newId)->delete();
+
                 foreach ($blockList as $taskBlockId) {
-                    $newId = $taskId ?? $id;
-                    $exists = $taskDependenciesModel
-                        ->where("id_child_task", $taskBlockId)
-                        ->where("id_mother_task", $newId)
-                        ->first();
 
-
-                    if ($exists == null && $newId && $taskBlockId) {
-                        $taskDependenciesModel->insert([
-                            'id_mother_task' => (int) $newId,
-                            'id_child_task' => (int) $taskBlockId
-                        ]);
+                    if ($newId && $taskBlockId) {
+                        $data = [
+                            'id_mother_task' => $newId,
+                            'id_child_task' => $taskBlockId
+                        ];
+                        var_dump($data);
+                        $taskDependenciesModel->insert($data);
                     };
                 }
             }
 
 
             // Redirection après insertion/mise à jour
-            return redirect()->to('/task/' . $newId)->with('success', 'Tâche sauvegardée avec succès.');
+            // return redirect()->to('/task/' . $newId)->with('success', 'Tâche sauvegardée avec succès.');
         }
     }
 }
