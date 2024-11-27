@@ -5,7 +5,7 @@
 
 			<div>
 				<div class="d-flex justify-content-center mb-3">
-					<?= view('components/Button', ['text' => "Enregistrer les modifications"]) ?>
+					<?= view('components/Button', ['text' => "Enregistrer les modifications", 'type' => null]) ?>
 				</div>
 				<div class="d-flex justify-content-between align-items-center">
 					<label class="fs-5 mb-2" for="">Priorité</label>
