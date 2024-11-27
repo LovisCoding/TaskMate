@@ -32,5 +32,16 @@ $routes->post('/forgot-password/sendResetLink', 'EmailController::sendResetLink'
 $routes->get('/forgot-password/reset-password/(:any)', 'EmailController::resetPassword/$1');
 $routes->post('/forgot-password/updatePassword','EmailController::updatePassword');
 
-$routes->post('/email/sendConfirmAccountMail', 'EmailController::sendConfirmAccountMail');
-$routes->get('/email/confirmAccount/(:any)', 'EmailController::confirmAccount/$1');
+// Routes pour l'envoi et la confirmation de l'email
+$routes->post('email/sendConfirmAccountMail', 'EmailController::sendConfirmAccountMail'); // Envoi de l'email de confirmation
+$routes->get('email/confirmAccount/(:any)', 'EmailController::confirmAccount/$1'); // Confirmation de l'activation via le token
+
+$routes->get('task/(:any)', 'TaskController::index'); // Confirmation de l'activation via le token
+$routes->post('task/validate/(:any)','TaskController::validateTask/$1');
+
+// taches
+//getTaches
+//createTache
+
+
+// 

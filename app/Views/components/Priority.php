@@ -1,4 +1,4 @@
-<div class="shape__list">
+<div class="shape__list" id="priorityShape">
 	<?php for ($i=0; $i < $nb; $i++) {  ?>
 		<div class="shape shape__active"></div>
 	<?php } ?>
