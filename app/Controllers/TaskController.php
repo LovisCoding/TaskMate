@@ -87,9 +87,8 @@ class TaskController extends BaseController
             $date = $this->request->getGet('date');
         }
 
-        if (!$blockList && !$isBlockedList) {
+        if (!$blockList) {
             $tasks = $taskModel->findAll();
-
             $blockList = array_map(function ($task) {
                 return [
                     'id' => $task['id_task'], // Remplacez 'id_task' par la clé réelle correspondant à l'identifiant dans votre base de données
@@ -97,9 +96,19 @@ class TaskController extends BaseController
                     'isChecked' => false
                 ];
             }, $tasks);
-
-            $isBlockedList = $blockList;
         }
+
+        if (!$isBlockedList) {
+            $tasks = $taskModel->findAll();
+            $isBlockedList = array_map(function ($task) {
+                return [
+                    'id' => $task['id_task'], // Remplacez 'id_task' par la clé réelle correspondant à l'identifiant dans votre base de données
+                    'name' => $task['name'],  // Remplacez 'name' par la clé réelle correspondant au nom de la tâche
+                    'isChecked' => false
+                ];
+            }, $tasks);
+        }
+
 
         $dateI = new DateTime($date);
         helper("form");
@@ -117,6 +126,8 @@ class TaskController extends BaseController
         ];
 
 
+
+
         echo view('layout/header');
         echo view('layout/navbar');
         echo view('pages/viewTask/Task',  $data);
@@ -125,6 +136,7 @@ class TaskController extends BaseController
 
     public function validateTask($id)
     {
+
         $action = $this->request->getPost('action');
         $taskModel = new TaskModel();
 
@@ -147,7 +159,7 @@ class TaskController extends BaseController
                 $end_date = $now;
                 $state = "Terminée";
             }
-        
+
             if ($action == "start") {
                 $start_date = $now;
                 $state = "En cours";
@@ -175,29 +187,53 @@ class TaskController extends BaseController
             // Insertion ou mise à jour
             if ($id == -1) {
                 // Cas d'une nouvelle tâche
-                $taskModel->insert($taskData);
-                $taskId = $taskModel->getInsertID(); // Récupérer l'ID inséré (si besoin)
+                if ($taskModel->insert($taskData)) {
+                    $taskId = $taskModel->getInsertID(); // Récupérer l'ID inséré
+                } else {
+                    return redirect()->back()->with('error', 'Erreur lors de l\'ajout de la tâche.');
+                }
             } else {
                 // Cas d'une mise à jour
                 $taskModel->update($id, $taskData);
             }
 
-            // Gestion des commentaires, blockList, etc. (si nécessaires)
-            $commentaries = $this->request->getPost('task_commentaries');
-            var_dump($commentaries);    
-            if (!empty($commentaries)) {
-                $commentModel = new CommentModel();
-                foreach ($commentaries as $comment) {
-                    $commentModel->insert([
-                        'id_task' => $taskId ?? $id,
-                        'comment' => $comment
-                    ]);
+            // // Gestion des commentaires, blockList, etc. (si nécessaires)
+            // $commentaries = $this->request->getPost('task_commentaries');
+            // var_dump($commentaries);    
+            // if (!empty($commentaries)) {
+            //     $commentModel = new CommentModel();
+            //     foreach ($commentaries as $comment) {
+            //         $commentModel->insert([
+            //             'id_task' => $taskId ?? $id,
+            //             'comment' => $comment
+            //         ]);
+            //     }
+            // }
+
+            $blockList = $this->request->getPost("task_blockList");
+            var_dump($blockList);
+            if (!empty($blockList)) {
+                $taskDependenciesModel = new TaskDependenciesModel();
+                foreach ($blockList as $taskBlockId) {
+                    $newId = $taskId ?? $id;
+                    $exists = $taskDependenciesModel
+                        ->where("id_child_task", $taskBlockId)
+                        ->where("id_mother_task", $newId)
+                        ->first();
+
+
+                    if ($exists == null && $newId && $taskBlockId) {
+                        $taskDependenciesModel->insert([
+                            'id_mother_task' => (int) $newId,
+                            'id_child_task' => (int) $taskBlockId
+                        ]);
+                    };
                 }
             }
 
 
             // Redirection après insertion/mise à jour
-            return redirect()->to('/task/' . ($taskId ?? $id))->with('success', 'Tâche sauvegardée avec succès.');
+            return redirect()->to('/task/' . $newId)->with('success', 'Tâche sauvegardée avec succès.');
         }
     }
 }
