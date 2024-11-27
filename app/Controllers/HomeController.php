@@ -72,4 +72,61 @@ class HomeController extends BaseController
         ]);
         echo view('layout/footer');
     }
+
+    public function priority() {
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/');
+        }
+        helper('form');
+        echo view('layout/header');
+        echo view('layout/navbar');
+
+        $date = $this->request->getGet('date') ?? (new DateTime())->format('Y-m-d');
+        $nb = $this->request->getGet('nb') ?? 7;
+        $session = session();
+		$id_account = $session->get("id");
+		$taskModel = new TaskModel();
+		$tasks = $taskModel->getTasksByDateRange($date, $nb, $id_account);
+
+        echo view('pages/home/priority', ['tasks' => $tasks, 'date' => $date, "nb" => $nb]);
+        echo view('layout/footer') ;
+    }
+
+    public function state() {
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/');
+        }
+        helper('form');
+        echo view('layout/header');
+        echo view('layout/navbar');
+
+        $date = $this->request->getGet('date') ?? (new DateTime())->format('Y-m-d');
+        $nb = $this->request->getGet('nb') ?? 7;
+        $session = session();
+		$id_account = $session->get("id");
+		$taskModel = new TaskModel();
+		$tasks = $taskModel->getTasksByDateRange($date, $nb, $id_account);
+
+        echo view('pages/home/state', ['tasks' => $tasks, 'date' => $date, "nb" => $nb]);
+        echo view('layout/footer') ;
+    }
+
+    public function deadLine() {
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/');
+        }
+        helper('form');
+        echo view('layout/header');
+        echo view('layout/navbar');
+
+        $date = $this->request->getGet('date') ?? (new DateTime())->format('Y-m-d');
+        $nb = $this->request->getGet('nb') ?? 7;
+        $session = session();
+        $id_account = $session->get("id");
+        $taskModel = new TaskModel();
+        $tasks = $taskModel->getTasksByDateRange($date, $nb, $id_account);
+        
+        echo view('pages/home/deadLine', ['tasks' => $tasks, 'date' => $date, "nb" => $nb]);
+        echo view('layout/footer') ;
+    }
 }

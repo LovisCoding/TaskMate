@@ -1,7 +1,8 @@
 <?php
-	function generateCard($title, $text, $priority, $status) {
+	function generateCard($title, $text, $priority, $status, $color = false) {
 		$statusClass = '';
 		$bubbleClass = '';
+		$borderClass = '';
 
 		if (strpos(strtolower($status), 'en retard') !== false) {
 			$statusClass = 'text-danger';
@@ -20,6 +21,10 @@
 			$bubbleClass = 'bg-secondary';
 		}
 
+		if ($color) {
+			$borderClass = 'border-' . $statusClass;
+		}
+
 		$priorityIndicators = '';
 		for ($i = 0; $i < 4; $i++) {
 			$color = $i < $priority ? 'black' : 'gray';
@@ -27,7 +32,7 @@
 		}
 
 		return <<<HTML
-	<div class="card p-3 shadow-sm rounded-3">
+	<div class="card p-3 shadow-sm rounded-3 {$borderClass}">
 		<h5 class="card-title mb-2">{$title}</h5>
 		<p class="card-text text-muted overflow-hidden card-text">{$text}</p>
 		<div class="d-flex align-items-center justify-content-between mt-2">
