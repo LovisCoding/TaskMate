@@ -20,29 +20,33 @@ $date = new DateTime($date);
 	<?= view('components/CalendarRange', ['date' => $date, 'nb' => $nb]) ?>
 </div>
 
+<!-- Conteneur défilant horizontal -->
 <div class="container mt-4">
-	<div class="d-flex flex-wrap align-items-start justify-content-center">
-		<?php foreach ($tasks as $dateString => $taskes): ?>
-			<div class="d-flex flex-column me-4 mb-4">
-			<?php
-$date = new DateTime($dateString);
-?>
-				<div class="mb-3">
-					<?= view('components/CalendarItemTitle', ['date' => $date]) ?>
-				</div>
-				<?php foreach ($taskes as $task): ?>
+	<div class="overflow-auto">
+		<div class="d-flex flex-nowrap align-items-start">
+			<?php foreach ($tasks as $dateString => $taskes): ?>
+				<div class="d-flex flex-column me-4 mb-4 col">
+					<?php
+					$date = new DateTime($dateString);
+					?>
 					<div class="mb-3">
-						<?= view('components/Card', [
-							'title' => htmlspecialchars($task['name']),
-							'text' => htmlspecialchars($task['description']),
-							'priority' => (int) htmlspecialchars($task['priority']),
-							'status' => htmlspecialchars($task['current_state']),
-							'color' => false
-						]) ?>
+						<?= view('components/CalendarItemTitle', ['date' => $date]) ?>
 					</div>
-				<?php endforeach; ?>
-			</div>
-		<?php endforeach; ?>
+					<?php foreach ($taskes as $task): ?>
+						<div class="mb-3">
+							<?= view('components/Card', [
+								'title' => htmlspecialchars($task['name']),
+								'text' => htmlspecialchars($task['description']),
+								'priority' => (int) htmlspecialchars($task['priority']),
+								'status' => htmlspecialchars($task['current_state']),
+								'color' => false
+							]) ?>
+						</div>
+					<?php endforeach; ?>
+				</div>
+			<?php endforeach; ?>
+		</div>
 	</div>
 </div>
 
+<?= view('pages/home/filterPanel') ?>
