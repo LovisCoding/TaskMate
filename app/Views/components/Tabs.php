@@ -15,13 +15,13 @@
 			tab.classList.remove('active-tab');
 		});
 
-		if (currentUrl === '/priority') {
+		if (currentUrl === '/home/priority') {
 			document.getElementById('tabPriorite').classList.add('active-tab');
-		} else if (currentUrl === '/home') {
+		} else if (currentUrl === '/home/recap') {
 			document.getElementById('tabRecap').classList.add('active-tab');
-		} else if (currentUrl === '/state') {
+		} else if (currentUrl === '/home/state') {
 			document.getElementById('tabEtat').classList.add('active-tab');
-		} else if (currentUrl === '/deadLine') {
+		} else if (currentUrl === '/home/deadLine') {
 			document.getElementById('tabEcheance').classList.add('active-tab');
 		}
 	}
@@ -29,18 +29,18 @@
 	window.addEventListener('load', setActiveTab);
 
 	document.getElementById('tabPriorite').addEventListener('click', function() {
-		window.location.href = '/priority';
+		window.location.href = '/home/priority';
 	});
 
 	document.getElementById('tabRecap').addEventListener('click', function() {
-		window.location.href = '/home';
+		window.location.href = '/home/recap';
 	});
 
 	document.getElementById('tabEtat').addEventListener('click', function() {
-		window.location.href = '/state';
+		window.location.href = '/home/state';
 	});
 
 	document.getElementById('tabEcheance').addEventListener('click', function() {
-		window.location.href = '/deadLine';
+		window.location.href = '/home/deadLine';
 	});
 </script>

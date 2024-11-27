@@ -8,24 +8,24 @@ class ConnectionController extends BaseController
 	public function index()
 	{
 		helper(['form']);
-	
+
 		$data = [
 			'success' => session()->getFlashdata('success'),
 			'error' => session()->getFlashdata('error'),
 		];
-	
+
 		echo view('pages/connection', $data);
 	}
 
 	public function register()
 	{
 		helper(['form']);
-		
+
 		$data = [
 			'success' => session()->getFlashdata('success'),
 			'error' => session()->getFlashdata('error'),
 		];
-	
+
 		echo view('pages/register', $data);
 	}
 
@@ -42,6 +42,7 @@ class ConnectionController extends BaseController
 		$email = $this->request->getVar('email');
 		$password = $this->request->getVar('password');
 		$data = $userModel->getAccountByEmail($email);
+
 		if ($data) {
 			$pass = $data['password'];
 			$authenticatePassword = password_verify($password, $pass);
@@ -64,6 +65,4 @@ class ConnectionController extends BaseController
 			return redirect()->to('/');
 		}
 	}
-	
-
 }

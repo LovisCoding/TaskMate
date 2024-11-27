@@ -33,10 +33,10 @@ class HomeController extends BaseController
             return redirect()->to('/');
         }
 
-        helper('form');
+		helper('form');
 
-        echo view('layout/header');
-        echo view('layout/navbar');
+		echo view('layout/header');
+		echo view('layout/navbar');
 
         // Récupérer les filtres de la requête (GET ou POST)
         $date = $this->request->getGet('date') ?? (new DateTime())->modify('-7 days')->format('Y-m-d');
