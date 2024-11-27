@@ -31,6 +31,19 @@ class TaskModel extends Model
 			->join('Group', 'Task.id_group = Group.id', 'left')
 			->findAll();
 	}
+    public function getQueryFiltered($priority = null, $states = []) {
+        $query = $this;
+        if ($priority) {
+            $query->where('priority', $priority);
+        }
+
+        if (!empty($states)) {
+            $query->whereIn('current_state', $states);
+        }
+
+        return $query;
+
+    }
 
 	/**
 	 * Récupère les tâches entre une plage de dates et les organise par jour.
@@ -45,23 +58,23 @@ class TaskModel extends Model
 		$days -= 1;
 		$endDate = date('Y-m-d', strtotime("$startDate +$days days")); // Calcul de la date de fin
 
-		$query = $this->where("id_account", $idAccount);
-		if ($priority) {
-			$query->where('priority', $priority);
-		}
+        $query = $this->where("id_account", $idAccount);
+        if ($priority) {
+            $query->where('priority', $priority);
+        }
 
-		if (!empty($states)) {
-			$query->whereIn('current_state', $states);
-		}
+        if (!empty($states)) {
+            $query->whereIn('current_state', $states);
+        }
 
-		// Récupérer toutes les tâches dont les dates chevauchent la plage demandée
-		$query->groupStart()
-			->where("start_date <=", $endDate)
-			->where("end_date >=", $startDate)
-			->groupEnd()
-			->orGroupStart()
-			->where("end_date", null) // Date de fin non définie
-			->groupEnd();
+        // Récupérer toutes les tâches dont les dates chevauchent la plage demandée
+        $query->groupStart()
+            ->where("start_date <=", $endDate)
+            ->where("end_date >=", $startDate)
+            ->groupEnd()
+            ->orGroupStart()
+            ->where("end_date", null) // Date de fin non définie
+            ->groupEnd();
 
 
 		$tasks = $query->findAll();

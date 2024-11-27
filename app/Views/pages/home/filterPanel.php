@@ -27,32 +27,32 @@
 			]) ?>
 		</div>
 
-		<!-- États -->
-		<div class="mb-3">
-			<?= form_label('Sélection des états', '', ['class' => 'form-label']) ?>
-			<?php
-			$stateOptions = [
-				'En retard' => 'En retard',
-				'En cours' => 'En cours',
-				'Pas commencée' => 'Pas commencée',
-				'Terminée' => 'Terminée',
-				'Bloquée' => 'Bloquée'
-			];
+        <!-- États -->
+        <div class="mb-3">
+            <?= form_label('Sélection des états', '', ['class' => 'form-label']) ?>
+            <?php
+            $stateOptions = [
+                'late' => 'En retard',
+                'inProgress' => 'En cours',
+                'notStarted' => 'Pas commencée',
+                'finished' => 'Terminée',
+                'blocked' => 'Bloquée'
+            ];
 
-			foreach ($stateOptions as $key => $label): ?>
-				<div class="form-check d-flex">
-					<div class="form-checked d-none">✓ </div>
-					<?= form_checkbox([
-						'name' => 'states[]',
-						'id' => $key,
-						'value' => $key,
-						'class' => 'd-none pe-auto',
-						'checked' => in_array($key, $filters['states'] ?? [])
-					]) ?>
-					<?= form_label($label, $key, ['class' => 'form-check-label']) ?>
-				</div>
-			<?php endforeach; ?>
-		</div>
+            foreach ($stateOptions as $key => $label): ?>
+                <div class="form-check d-flex <?= in_array($key, $filters['states']) ? 'checked' : '' ?>">
+                    
+                    <div class="form-checked <?= !in_array($key, $filters['states']) ? 'd-none' : 'checked'?>">✓ </div>
+                    <?= form_checkbox([
+                        'name' => 'states[]',
+                        'id' => $key,
+                        'value' => $key,
+                        'class' => 'd-none pe-auto'
+                    ]) ?>
+                    <?= form_label($label, $key, ['class' => 'form-check-label']) ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
 
 		<!-- Priorités -->
 		<div class="mb-3">
@@ -77,11 +77,10 @@
 			</div>
 		</div>
 
-		<!-- Boutons -->
-		<div class="d-flex justify-content-between">
-			<?= form_reset('reset', 'Annuler', ['class' => 'btn btn-grey']) ?>
-			<?= form_submit('', 'Confirmer', ['class' => 'btn btn-grey']) ?>
-		</div>
+        <!-- Boutons -->
+        <div class="d-flex justify-content-center">
+            <?= form_submit('', 'Confirmer', ['class' => 'btn btn-grey']) ?>
+        </div>
 
 		<?= form_close() ?>
 
