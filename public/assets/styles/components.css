@@ -69,10 +69,6 @@
 	border-radius: 0.20rem;
 }
 
-.icon {
-	width: 1rem;
-}
-
 .shape__active {
 	background-color: black;
 }
@@ -184,5 +180,18 @@
 }
 
 .icon {
+	width: 1rem;
 	stroke: #0D6EFD;
+}
+
+.titleProfil {
+	font-family: 'Caveat Brush', cursive; 
+	font-size: 2.5rem; 
+	font-weight: 600; 
+	letter-spacing: 1px;
+}
+
+.profil {
+	width: 350px;
+	background-color: #f8f9fa;
 }
