@@ -49,6 +49,5 @@ $date = new DateTime($date);
 		</div>
 	</div>
 </div>
-<?= view('components/Pagination') ?>
 
 <?= view('pages/home/filterPanel') ?>
