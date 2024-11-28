@@ -13,6 +13,7 @@
         "php": "^8.1",
         "ext-intl": "*",
         "ext-mbstring": "*",
+        "codeigniter4/tasks": "dev-develop",
         "laminas/laminas-escaper": "^2.13",
         "phpoffice/phpspreadsheet": "^3.5",
         "psr/log": "^3.0"
@@ -63,5 +64,7 @@
     },
     "scripts": {
         "test": "phpunit"
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

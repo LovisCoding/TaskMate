@@ -10,6 +10,9 @@
 	$borderClass = '';
 	$id = $id ?? '';
 
+	$date = new DateTime($date);
+	$date->format("j F Y");
+
 	if (strpos(strtolower($status), 'en retard') !== false) {
 		$statusClass = 'text-danger';
 		$bubbleClass = 'bg-danger';
