@@ -31,7 +31,7 @@
 	</div>
 
 	<form action="" method="get">
-		<input type="hidden" name="date" value="<?= $nowPlus4->format('Y-m-d') ?>">
+		<input type="hidden" name="date" value="<?= $nowPlus4->modify("+1	 days")->format('Y-m-d') ?>">
 		<input type="hidden" name="nb" value="<?= $nb ?>">
 		<button class="btn h-100" type="submit">
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 icon">
