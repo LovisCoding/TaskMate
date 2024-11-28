@@ -37,8 +37,9 @@ $routes->post('/forgot-password/updatePassword','EmailController::updatePassword
 $routes->post('email/sendConfirmAccountMail', 'EmailController::sendConfirmAccountMail'); // Envoi de l'email de confirmation
 $routes->get('email/confirmAccount/(:any)', 'EmailController::confirmAccount/$1'); // Confirmation de l'activation via le token
 
-$routes->get('task/(:any)', 'TaskController::index'); // Confirmation de l'activation via le token
-$routes->post('task/validate/(:any)','TaskController::validateTask/$1');
+$routes->get('/task/insert', 'TaskController::index'); // Sans paramètre
+$routes->get('/task/(:any)', 'TaskController::index/$1'); // Avec paramètre
+$routes->post('/task/validate/(:any)','TaskController::validateTask/$1');
 
 // taches
 //getTaches

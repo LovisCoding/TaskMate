@@ -3,15 +3,25 @@
 
 <script>
 
-	let commentaryTemplate = `<textarea name="task_commentaries[]" class="form-control commentaire mb-3" rows="3"></textarea>`;
+/* 	let commentaryTemplate = `<textarea name="task_commentaries[]" onChange="onChangeTextArea(this)" class="form-control commentaire mb-3" rows="3"></textarea>`;
 	let btnAddCommentary = document.getElementById('btn-commentaire');
-	let commentaryList = document.getElementById('commentaryList');
+	commentaryList = document.getElementById('commentaryList'); */
 	let selectPriority = document.getElementById('priority');
 	let prioritiesShapes = document.getElementById('priorityShape');
 
-	btnAddCommentary.addEventListener('click', () => {
-		commentaryList.innerHTML += commentaryTemplate;
-	})
+
+
+
+/* 	btnAddCommentary.addEventListener('click', () => {
+		let c = document.createElement('textarea');
+		c.name = "task_commentaries[]";
+		c.className = "form-control commentaire mb-3";
+		c.rows = 3;
+		c.textContent = "";
+		pushCommentary(c);
+		nbPage = 0;
+		fetchCommentaryPage(nbPage,nbElement);
+	}) */
 
 	selectPriority.addEventListener('change', (event) => {
 		let a = `<div class="shape shape__active"></div>`;
@@ -25,9 +35,10 @@
 		}
 	})
 
-	function onChangeTextArea(elem){
-		elem.textContent = elem.value
-	}
+/* 	function onChangeTextArea(elem){
+		if (elem.value == '') commentariesNodes.delete(elem);
+		else elem.textContent = elem.value
+	} */
 
 
 </script>
@@ -36,4 +47,5 @@
 	const base_url_img = '<?=base_url('assets/imgs/')?>';
 </script>
 <?=str_contains($_SERVER['REQUEST_URI'], '/home') ? '<script type="module" src="/assets/scripts/home/home.js"></script>': '' ?>
+<?=str_contains($_SERVER['REQUEST_URI'], '/task') ? '<script type="module" src="/assets/scripts/home/PriorityBtn.js"></script>': '' ?>
 </html>

@@ -13,7 +13,7 @@ function generatePriorityIndicators($priority)
 	$priorityIndicators = '';
 	for ($i = 0; $i < 4; $i++) {
 		$color = $i < $priority ? 'black' : 'gray';
-		$priorityIndicators .= "<span class=\"indicator $color\"></span>";
+		$priorityIndicators .= "<span style=\"".($i == 3 ? 'margin-right: 0;' : '')."\" class=\"indicator  $color \"></span>";
 	}
 
 	return $priorityIndicators;
@@ -33,7 +33,7 @@ function generatePriorityIndicators($priority)
 		</div>
 	</div>
 </div>
-
+<?= view('components/Pagination') ?>
 <div class="container mt-4">
 	<div class="row justify-content-center">
 		<?php foreach ($priorityColumns as $priority => $tasksByPriority): ?>
@@ -54,7 +54,8 @@ function generatePriorityIndicators($priority)
 										'text' => htmlspecialchars($task['description']),
 										'priority' => (int)htmlspecialchars($task['priority']),
 										'status' => htmlspecialchars($task['current_state']),
-										'color' => false
+										'color' => false,
+										'id'=> (int) htmlspecialchars($task['id_task'])
 									]) ?>
 								</div>
 							<?php endforeach; ?>

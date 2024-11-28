@@ -14,7 +14,7 @@ document.getElementById('btn-export').addEventListener('click', function () {
 
 document.getElementById('btn-filter').addEventListener('click', function () {
 	filterCard();
-}, false );
+}, false);
 
 //checkboxEtat.js
 const etats = ['late', 'inProgress', 'notStarted', 'finished', 'blocked'];
@@ -28,7 +28,7 @@ etats.forEach(function (etat) {
 // sortOrder.js
 document.getElementById('toggleSortOrder').addEventListener('click', function (button) {
 	sortOrder();
-}, false );
+}, false);
 
 
 
@@ -36,17 +36,22 @@ document.getElementById('toggleSortOrder').addEventListener('click', function (b
 
 let lastSelected = null;
 
-    document.querySelectorAll('input[name="priority"]').forEach(radio => {
-		if (radio.checked) lastSelected = radio;
-        radio.addEventListener('click', function (event) {
-            // Si ce bouton était déjà sélectionné
-            if (lastSelected === this) {
-                this.checked = false; // Désélectionner
-                lastSelected = null; // Réinitialiser le dernier bouton sélectionné
-            } else {
-                lastSelected = this; // Mettre à jour le dernier bouton sélectionné
-            }
-        });
-    });
-	
-	
+document.querySelectorAll('input[name="priority"]').forEach(radio => {
+	if (radio.checked) lastSelected = radio;
+	radio.addEventListener('click', function (event) {
+		// Si ce bouton était déjà sélectionné
+		if (lastSelected === this) {
+			this.checked = false; // Désélectionner
+			lastSelected = null; // Réinitialiser le dernier bouton sélectionné
+		} else {
+			lastSelected = this; // Mettre à jour le dernier bouton sélectionné
+		}
+	});
+});
+
+
+// button new tache
+
+document.getElementById('btn-new-tache').addEventListener('click', function () {
+	window.location.href = '/task/insert/';
+}, false);
