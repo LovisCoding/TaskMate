@@ -5,7 +5,7 @@
 
             <div>
                 <div class="d-flex justify-content-between align-items-center">
-                    <label class="fs-5 mb-2" for="">Priorité</label>
+                    <label class="fs-5 mb-2 fw-bold" for="">Priorité</label>
                     <?= view('components/PriorityBtn', ['nb' => $priority]) ?>
                 </div>
                 <select id="priority" class="form-select mb-2 d-none" name="task_priority">
@@ -20,18 +20,19 @@
                 'name' => 'task_date',
                 'type' => 'date',
                 'label' => 'Date d\'échéance :',
-                'value' => $date->format('Y-m-d')
+                'value' => $date->format('Y-m-d'),
+                'labelClass' => 'fw-bold'
             ]) ?>
 
             <div>
-                <label for="taskGroup" class="fs-5 mb-2">Groupe de tâches :</label>
+                <label for="taskGroup" class="fs-5 mb-2 fw-bold">Groupe de tâches :</label>
                 <select id="taskGroup" name="task_group" class="form-select">
                     <option value="" selected disabled>-- Sélectionnez un groupe --</option>
                 </select>
             </div>
 
             <div class="d-flex flex-column">
-                <span class="mb-2 fs-5">Dépend de :</span>
+                <span class="mb-2 fs-5 fw-bold">Dépend de :</span>
                 <?= view('pages/viewTask/TaskCheckboxes', [
                     'name' => 'task_isBlockedList[]',
                     'taskList' => $isBlockedList
@@ -39,7 +40,7 @@
             </div>
 
             <div class="d-flex flex-column">
-                <span class="mb-2 fs-5">Sont dépendantes :</span>
+                <span class="mb-2 fs-5 fw-bold">Sont dépendantes :</span>
                 <?= view('pages/viewTask/TaskCheckboxes', [
                     'name' => 'task_blockList[]',
                     'taskList' => $blockList

@@ -1,7 +1,7 @@
 <?= form_open("/task/validate/$id") ?>
 
 <div class="container mt-3">
-	<div class="d-flex justify-content-start mb-3 button-container">
+	<div class="d-flex justify-content-start mb-5 button-container mt-5">
 		<?= view('components/Button', ['text' => "<strong>Supprimer</strong>", 'type' => 'danger', 'name' => 'action', 'value' => 'delete', 'disabled' => $id == -1, 'class' => 'me-2 fw-bold', 'svgName' => 'delete']) ?>
 		
 		<?php if ($state == "En cours") { ?>
