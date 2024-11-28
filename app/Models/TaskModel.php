@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use DateTime;
 
 class TaskModel extends Model
 {
@@ -69,13 +70,15 @@ class TaskModel extends Model
 	}
 
 
-	public function getTasksWhichAreNotTerminated($idAccount)
+	public function getTasksWhichAreNotTerminated($idAccount, $nbDays)
 	{
+		$date = new DateTime();
+		$date->modify("-$nbDays days");
 		$query = $this
-			->where('deadline >', date('Y-m-d H:i:s'))
+			->where('deadline >', $date->format('Y-m-d H:i:s'))
 			->where('current_state !=', 'Terminée')
 			->where('id_account', $idAccount);
-		$tasks = $query->findAll();
+		$tasks = $query->orderBy('deadline', 'asc')->findAll();
 		return $tasks;
 	}
 
