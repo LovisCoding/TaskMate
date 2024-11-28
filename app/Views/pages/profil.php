@@ -107,7 +107,7 @@
 					]) ?>
 				</div>
 				<div class="mb-3">
-					<?= form_label('Nombre d\'éléments par page :', 'rows_per_page', ['class' => 'form-label fw-bold text-secondary']) ?>
+					<?= form_label('Nombre de lignes par page :', 'rows_per_page', ['class' => 'form-label fw-bold text-secondary']) ?>
 					<?= form_input([
 						'name' => 'rows_per_page',
 						'id' => 'rows_per_page',
@@ -119,7 +119,7 @@
 					]) ?>
 				</div>
 				<div class="mb-3">
-					<?= form_label('Nombre de pages affichées dans la pagination :', 'pagination_pages', ['class' => 'form-label fw-bold text-secondary']) ?>
+					<?= form_label('Intervalle de pagination :', 'pagination_pages', ['class' => 'form-label fw-bold text-secondary']) ?>
 					<?= form_input([
 						'name' => 'pagination_pages',
 						'id' => 'pagination_pages',

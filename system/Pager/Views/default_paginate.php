@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\PreferencesModel;
 /**
  * Ce fichier fait partie du framework CodeIgniter 4.
  *
@@ -13,10 +14,13 @@ use CodeIgniter\Pager\PagerRenderer;
 
 /**
  * @var PagerRenderer $pager
- */
-
+ */	
+$session = session();
+$id_account = $session->get('id');
+$preferencesModel = new PreferencesModel();
+$preferences = $preferencesModel->getPreferencesByIdAccount($id_account);
 // Personnalisation du rendu de la pagination
-$pager->setSurroundCount(3); // Nombre de pages à afficher autour de la page active
+$pager->setSurroundCount($preferences['pagination_pages']); // Nombre de pages à afficher autour de la page active
 
 // Affichage du lien "Précédent"
 if ($pager->hasPrevious()) {
