@@ -41,6 +41,7 @@ class CreateAccountsTable extends Migration
                 'null' => true
             ]
         ]);
+        echo "exec: account\n";
         $this->forge->addKey('id', true);
         $this->forge->createTable('account');
     }

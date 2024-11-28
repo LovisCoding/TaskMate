@@ -13,7 +13,7 @@ foreach ($tasks as $dateString => $taskes) {
 	<div class="d-flex justify-content-between mx-4" id="vues">
 		<div class="left d-flex">
 			<?= view('components/Tabs') ?>
-			<?= view('components/Export') ?>
+			<?= view('components/Export', ['redirect'=>'/home', 'tasks' => $tasks, 'currentPage' => $_SERVER['PHP_SELF']]) ?>
 			<?= view('components/Filter') ?>
 		</div>
 		<div class="right">

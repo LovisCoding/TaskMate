@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateCommentsTable extends Migration
+class CreateGroupsTable extends Migration
 {
     public function up()
     {
@@ -13,20 +13,22 @@ class CreateCommentsTable extends Migration
                 'type' => 'INT',
                 'auto_increment' => true,
             ],
-            'comment' => [
-                'type' => 'TEXT',
-            ],
-            'id_task' => [
+            'id_account' => [
                 'type' => 'INT'
             ],
+            'name' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+            ]
         ]);
+        echo "exec: group\n";
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('id_task', 'Task', 'id_task', 'CASCADE', 'CASCADE');
-        $this->forge->createTable('comment');
+        $this->forge->addForeignKey('id_account', 'account', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('group');
     }
 
     public function down()
     {
-        $this->forge->dropTable('comment', true);
+        $this->forge->dropTable('"group"', true);
     }
 }
