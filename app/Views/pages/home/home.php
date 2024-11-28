@@ -35,12 +35,14 @@ $date = new DateTime($date);
 					<?php foreach ($taskes as $task): ?>
 						<div class="mb-3">
 							<?= view('components/Card', [
+								'date' => $task['deadline'],
 								'title' => htmlspecialchars($task['name']),
 								'text' => htmlspecialchars($task['description']),
 								'priority' => (int) htmlspecialchars($task['priority']),
 								'status' => htmlspecialchars($task['current_state']),
 								'color' => false,
-								'id'=> (int) htmlspecialchars($task['id_task'])
+								'id'=> (int) htmlspecialchars($task['id_task']),
+								'retard' => htmlspecialchars($task['retard'])
 							]) ?>
 						</div>
 					<?php endforeach; ?>
