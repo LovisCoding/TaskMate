@@ -10,10 +10,11 @@
 ?>
 
 <div class="button">
-    <button type="submit" name="<?= isset($name) ? $name : 'action' ?>" value="<?= isset($value) ? $value : '' ?>" class="btn d-flex align-items-center w-100 justify-content-center <?= $color ?>" id="<?= $id ?>" <?=$disabled ? 'disabled' : ''?>
-        <span> <?= $text ?> </span>
-        <?php if (isset($svgName)) { ?>
+    <button type="submit" name="<?= isset($name) ? $name : 'action' ?>" value="<?= isset($value) ? $value : '' ?>" class="btn d-flex align-items-center w-100 justify-content-center <?= $color ?>" id="<?= $id ?>" <?=$disabled ? 'disabled' : ''?>>
+	<?php if (isset($svgName)) { ?>
             <img class="mx-2" src="/assets/imgs/<?= $svgName ?>.svg" alt="<?= $svgName ?>" width="20px" height="20px">
         <?php } ?>
+	<span> <?= $text ?> </span>
+        
     </button>
 </div>
