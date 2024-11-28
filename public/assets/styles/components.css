@@ -253,3 +253,9 @@
 .nav-tabs .nav-link {
 	color: #000;
 }
+
+.container {
+	max-width: 100% !important;
+	padding-left: 2% !important;
+	padding-right: 2% !important;
+}
