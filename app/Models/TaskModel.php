@@ -47,7 +47,6 @@ class TaskModel extends Model
 		return $query;
 	}
 
-<<<<<<< HEAD
 	public function createRetardTasks($tasks)
 	{
 
@@ -71,13 +70,10 @@ class TaskModel extends Model
 	}
 
 
-	public function getTasksWhichAreNotTerminated($idAccount)
+	public function getTasksWhichAreNotTerminated($idAccount, $nbDays)
 	{
-=======
-	public function getTasksWhichAreNotTerminatedAndStartDays($idAccount, $nbDays){
 		$date = new DateTime();
 		$date->modify("-$nbDays days");
->>>>>>> origin/TaskPage-Matt
 		$query = $this
 			->where('deadline >', $date->format('Y-m-d H:i:s'))
 			->where('current_state !=', 'Terminée')
