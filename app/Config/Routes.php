@@ -40,6 +40,8 @@ $routes->get('/task/insert', 'TaskController::index'); // Sans paramètre
 $routes->get('/task/(:any)', 'TaskController::index/$1'); // Avec paramètre
 $routes->post('/task/validate/(:any)','TaskController::validateTask/$1');
 
+$routes->post('/cronjob/notification','NotificationController::index');
+
 // taches
 //getTaches
 //createTache

@@ -32,6 +32,8 @@ class TaskModel extends Model
 			->join('Group', 'Task.id_group = Group.id', 'left')
 			->findAll();
 	}
+
+
 	public function getQueryFiltered($priority = null, $states = []) {
 		$query = $this;
 		if ($priority) {
@@ -44,6 +46,15 @@ class TaskModel extends Model
 
 		return $query;
 
+	}
+
+	public function getTasksWhichAreNotTerminated($idAccount){
+		$query = $this
+			->where('deadline >', date('Y-m-d H:i:s'))
+			->where('current_state !=', 'Terminée')
+			->where('id_account', $idAccount);
+		$tasks = $query->findAll();
+		return $tasks;
 	}
 
 	/**
