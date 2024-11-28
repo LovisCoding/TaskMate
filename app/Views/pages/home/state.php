@@ -44,7 +44,8 @@ foreach ($tasks as $dateString => $taskes) {
 									'priority' => (int) htmlspecialchars($task['priority']),
 									'status' => htmlspecialchars($task['current_state']),
 									'color' => true,
-									'id'=> (int) htmlspecialchars($task['id_task'])
+									'id'=> (int) htmlspecialchars($task['id_task']),
+									'retard' => htmlspecialchars($task['retard'])
 								]) ?>
 							</div>
 						<?php endforeach; ?>

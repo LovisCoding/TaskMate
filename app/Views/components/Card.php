@@ -58,6 +58,6 @@
 			<span class="indicator-circle <?= $bubbleClass ?>"></span>
 			<span class="<?= $statusClass ?> small"><?= htmlspecialchars($status) ?></span>
 		</div>
-		<span class="text-warning small">en retard</span>
+		<span class="text-danger small"><?= htmlspecialchars($retard) ?></span>
 	</div>
 </a>
