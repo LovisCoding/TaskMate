@@ -38,9 +38,10 @@ class TaskController extends BaseController
             return redirect()->to('/home/recap');
         }
 
+        $commentModel = new CommentModel();
+
         if ($task) {
             $date = $task["deadline"];
-            $commentModel = new CommentModel();
             $commentaries = $commentModel
                 ->select('id, comment')  // Ajoutez l'ID du commentaire ici
                 ->where("id_task", $idTask)
@@ -240,14 +241,14 @@ class TaskController extends BaseController
                             'id_child_task' => $taskBlockId
                         ];
                         var_dump($data);
-                        $taskDependenciesModel->insert($data);
+                        $taskDependenciesModel->addDependency($newId, $taskBlockId);
                     };
                 }
             }
 
 
             // Redirection après insertion/mise à jour
-            // return redirect()->to('/task/' . $newId)->with('success', 'Tâche sauvegardée avec succès.');
+            return redirect()->to('/task/' . $newId)->with('success', 'Tâche sauvegardée avec succès.');
         }
     }
 }
