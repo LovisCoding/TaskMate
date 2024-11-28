@@ -20,8 +20,7 @@ $date = new DateTime($date);
 	<?= view('components/CalendarRange', ['date' => $date, 'nb' => $nb]) ?>
 </div>
 
-<!-- Conteneur défilant horizontal -->
-<div class="container mt-4">
+<div class="container mt-4 justify-content-center">
 	<div class="overflow-auto">
 		<div class="d-flex flex-nowrap align-items-start">
 			<?php foreach ($tasks as $dateString => $taskes): ?>

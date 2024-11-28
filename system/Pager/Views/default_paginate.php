@@ -1,13 +1,26 @@
 <?php
+
+use App\Models\PreferencesModel;
+/**
+ * Ce fichier fait partie du framework CodeIgniter 4.
+ *
+ * (c) Fondation CodeIgniter <admin@codeigniter.com>
+ *
+ * Pour plus d'informations sur le copyright et les licences, consultez
+ * le fichier LICENSE qui a été distribué avec cette source.
+ */
+
 use CodeIgniter\Pager\PagerRenderer;
 
 /**
  * @var PagerRenderer $pager
- */
-$pager->setSurroundCount(1);
-
-echo '<nav class="my-4 text-center" aria-label="Page navigation example">
-		<ul class="pagination justify-content-center">';
+ */	
+$session = session();
+$id_account = $session->get('id');
+$preferencesModel = new PreferencesModel();
+$preferences = $preferencesModel->getPreferencesByIdAccount($id_account);
+// Personnalisation du rendu de la pagination
+$pager->setSurroundCount($preferences['pagination_pages']); // Nombre de pages à afficher autour de la page active
 
 if ($pager->hasPrevious()) {
 	echo '<li class="page-item">
