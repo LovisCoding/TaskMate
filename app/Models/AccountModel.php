@@ -44,6 +44,10 @@ class AccountModel extends Model
 		return $account ? $account : null;
 	}
 
+	public function getAllAccounts(){
+		return $this->findAll();
+	}
+
 	public function createAccount($registrationData)
 	{
 		$query = "INSERT INTO account (name, email, password, created_at, reset_token, reset_token_expiration)

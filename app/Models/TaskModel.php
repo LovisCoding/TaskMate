@@ -68,6 +68,17 @@ class TaskModel extends Model
 		return $tasks;
 	}
 
+
+	public function getTasksWhichAreNotTerminated($idAccount)
+	{
+		$query = $this
+			->where('deadline >', date('Y-m-d H:i:s'))
+			->where('current_state !=', 'Terminée')
+			->where('id_account', $idAccount);
+		$tasks = $query->findAll();
+		return $tasks;
+	}
+
 	/**
 	 * Récupère les tâches entre une plage de dates et les organise par jour.
 	 *
@@ -134,31 +145,92 @@ class TaskModel extends Model
 		return $result;
 	}
 
+
+			/**
+	 * Récupère les tâches et les organise par état actuel (current_state).
+	 *
+	 * @return array Tableau associatif avec les états comme clés et les tâches comme valeurs.
+	 */
+	public function getCountByPriority($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc')
+	{
+		$result = [];
+
+		for ($i = 1; $i <= 4; $i++) {
+
+			$query = $this->getQueryFiltered($priority, $statesFilters)
+				->where("id_account", $idAccount)
+				->where("priority", $i)
+				->orderBy($sort, $sortOrder);
+
+			$result[$i] = $query->countAllResults();
+		}
+
+		asort($result);
+
+		return $result;
+	}
+	
 	/**
 	 * Récupère les tâches par priorité.
 	 */
 	public function getTasksByPriority($idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
 	{
+		// Récupérer les priorités triées par nombre de résultats
+		$priorities = array_keys($this->getCountByPriority($idAccount, $priority, $states, $sort, $sortOrder));
+	
 		$result = [];
-		$taskMax = [];
-
-		for ($i = 4; $i > 0; $i--) {
-
+	
+		// Boucle sur chaque priorité triée
+		foreach ($priorities as $p) {
+			// On s'assure que $p est un entier
+			$i = (int) $p;
+	
+			// Préparer la requête en utilisant where pour une seule priorité
 			$query = $this->getQueryFiltered($priority, $states)
 				->where("id_account", $idAccount)
-				->where("priority", $i)
-				->limit($perPage, ($currentPage - 1) * $perPage)
+				->where("priority", $i)  // On passe ici un entier à la méthode where
 				->orderBy($sort, $sortOrder);
-
+	
+			// Exécuter la pagination
 			$tasks = $query->paginate($perPage, 'default', $currentPage);
-
+	
+			// Traiter les tâches récupérées (par exemple, pour les retards)
 			$tasks = $this->createRetardTasks($tasks);
-
+	
+			// Ajouter les tâches au résultat final en associant à chaque priorité
 			$result[$i] = $tasks;
 		}
-
+	
 		return $result;
 	}
+	
+		/**
+	 * Récupère les tâches et les organise par état actuel (current_state).
+	 *
+	 * @return array Tableau associatif avec les états comme clés et les tâches comme valeurs.
+	 */
+	public function getCountByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc')
+	{
+		// Définir les états
+		$states = ['Bloquée', 'Pas commencée', 'En cours', 'Terminée'];
+
+		// Créer et exécuter les requêtes pour chaque état
+		foreach ($states as $s) {
+			// Créer la requête pour chaque état
+			$query = $this->getQueryFiltered($priority, $statesFilters)
+				->where("id_account", $idAccount)
+				->where("current_state", $s)
+				->orderBy($sort, $sortOrder);
+
+			$result[$s] = $query->countAllResults();
+		}
+
+		asort($result);
+
+		// Retourner le tableau des résultats
+		return $result;
+	}
+
 
 	/**
 	 * Récupère les tâches et les organise par état actuel (current_state).
@@ -167,29 +239,32 @@ class TaskModel extends Model
 	 */
 	public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
 	{
-		$states = ['Bloquée', 'Pas commencée','En cours', 'Terminée'];
+		$states = array_keys($this->getCountByCurrentState($idAccount, $priority, $statesFilters, $sort, $sortOrder, $sortOrder));   
+		
+		$result = [];
 
-		$queryMax = $this;
-
+		// Créer et exécuter les requêtes pour chaque état
 		foreach ($states as $s) {
+			// Créer la requête pour chaque état
 			$query = $this->getQueryFiltered($priority, $statesFilters)
 				->where("id_account", $idAccount)
 				->where("current_state", $s)
-				->orderBy($sort, $sortOrder)
-				->limit($perPage, ($currentPage - 1) * $perPage);
-			
-			$tasks = $query->findAll();
-			
+				->orderBy($sort, $sortOrder);
+
+
+			$tasks = $query->paginate($perPage, 'default', $currentPage);
 
 			$tasks = $this->createRetardTasks($tasks);
 
-			$result[$s] =  $tasks;
+			$result[$s] = $tasks;
 		}
-		$tasks = $query->paginate($perPage, 'default', $currentPage);
 
-
+		// Retourner le tableau des résultats
 		return $result;
 	}
+
+
+
 
 	// public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
 	// {
