@@ -68,6 +68,19 @@ class TaskModel extends Model
 		return $tasks;
 	}
 
+
+	public function getTasksWhichAreNotTerminated($idAccount, $nbDays)
+	{
+		$date = new DateTime();
+		$date->modify("-$nbDays days");
+		$query = $this
+			->where('deadline >', $date->format('Y-m-d H:i:s'))
+			->where('current_state !=', 'Terminée')
+			->where('id_account', $idAccount);
+		$tasks = $query->orderBy('deadline', 'asc')->findAll();
+		return $tasks;
+	}
+
 	/**
 	 * Récupère les tâches entre une plage de dates et les organise par jour.
 	 *

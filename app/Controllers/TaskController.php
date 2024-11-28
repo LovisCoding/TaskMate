@@ -295,4 +295,13 @@ class TaskController extends BaseController
             return redirect()->to('/task/' . $newId);
         }
     }
+	public function getTasks() {
+
+		if (!session()->get('isLoggedIn')) {
+			return redirect()->to('/');
+		}
+		$taskModel = new TaskModel();
+		$tasks = $taskModel->findAll();
+		return json_encode($tasks) ;
+	}
 }
