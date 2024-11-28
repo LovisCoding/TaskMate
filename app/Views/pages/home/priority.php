@@ -33,7 +33,9 @@ function generatePriorityIndicators($priority)
 		</div>
 	</div>
 </div>
-<?= view('components/Pagination') ?>
+<ul class="pagination" id="pagination">
+	<?= $pager->links('default', 'default_paginate') ?>
+</ul>
 <div class="container mt-4">
 	<div class="row justify-content-center">
 		<?php foreach ($priorityColumns as $priority => $tasksByPriority): ?>
@@ -50,12 +52,14 @@ function generatePriorityIndicators($priority)
 							<?php foreach ($tasksByPriority as $task): ?>
 								<div class="mb-3 d-flex justify-content-center">
 									<?= view('components/Card', [
+										'date' => $task['deadline'],
 										'title' => htmlspecialchars($task['name']),
 										'text' => htmlspecialchars($task['description']),
 										'priority' => (int)htmlspecialchars($task['priority']),
 										'status' => htmlspecialchars($task['current_state']),
 										'color' => false,
-										'id'=> (int) htmlspecialchars($task['id_task'])
+										'id'=> (int) htmlspecialchars($task['id_task']),
+										'retard' => htmlspecialchars($task['retard'])
 									]) ?>
 								</div>
 							<?php endforeach; ?>

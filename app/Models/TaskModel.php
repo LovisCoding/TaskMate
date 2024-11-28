@@ -46,6 +46,27 @@ class TaskModel extends Model
 
 	}
 
+	public function createRetardTasks($tasks) {
+
+		$tasks = array_map(function ($task) {
+			$today = new \DateTime(); // Date actuelle
+			$deadline = new \DateTime($task['deadline']);
+			$endDate = isset($task['end_date']) ? new \DateTime($task['end_date']) : null;
+
+			if ($endDate) {
+				$delay = $endDate->diff($deadline)->days;
+				$task['retard'] = $delay > 0 ? "$delay jours en retard" : null;
+			} else {
+				$delay = $today->diff($deadline)->days;
+				$task['retard'] = $delay > 0 ? "$delay jours en retard" : null;
+			}
+
+			return $task;
+		}, $tasks);
+
+		return $tasks;
+	}
+
 	/**
 	 * Récupère les tâches entre une plage de dates et les organise par jour.
 	 *
@@ -89,6 +110,8 @@ class TaskModel extends Model
 			$result[$currentDate] = []; // Clé initialisée avec un tableau vide
 		}
 
+		$tasks = $this->createRetardTasks($tasks);
+
 		// Organiser les tâches par jour
 		foreach ($tasks as $task) {
 			$taskStartDate = new \DateTime($task['start_date']);
@@ -113,18 +136,29 @@ class TaskModel extends Model
 	/**
 	 * Récupère les tâches par priorité.
 	 */
-	public function getTasksByPriority($idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc')
+	public function getTasksByPriority($idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
 	{
 		$result = [];
+		$taskMax = [];
 
 		for ($i = 4; $i > 0; $i--) {
 			$query = $this->getQueryFiltered($priority, $states);
+
 			$tasks = $query->where("id_account", $idAccount)
 				->where("priority", $i)
-				->orderBy($sort, $sortOrder)
-				->findAll();
-			$result[$i] =  $tasks;
+				->limit($perPage, ($currentPage - 1) * $perPage)
+				->orderBy($sort, $sortOrder)->findAll();
+
+
+			$tasks = $this->createRetardTasks($tasks);
+
+			if (count($tasks) > count($taskMax))
+				$taskMax = $tasks;
+
+			$result[$i] = $tasks;
 		}
+
+		$taskMax = $query->paginate($perPage, 'default', $currentPage);
 
 		return $result;
 	}
@@ -134,19 +168,29 @@ class TaskModel extends Model
 	 *
 	 * @return array Tableau associatif avec les états comme clés et les tâches comme valeurs.
 	 */
-	public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc')
+	public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
 	{
 		$states = ['En retard', 'En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
+
+		$taskMax = [];
 
 		foreach ($states as $s) {
 			$query = $this->getQueryFiltered($priority, $statesFilters);
 			$tasks = $query->where("id_account", $idAccount)
 				->where("current_state", $s)
 				->orderBy($sort, $sortOrder)
+				->limit($perPage, ($currentPage - 1) * $perPage)
 				->findAll();
+
+			$tasks = $this->createRetardTasks($tasks);
+
+			if (count($tasks) > count($taskMax))
+				$taskMax = $tasks;
+
 			$result[$s] =  $tasks;
 		}
 
+		$taskMax = $query->paginate($perPage, 'default', $currentPage);
 		return $result;
 	}
 
@@ -169,6 +213,8 @@ class TaskModel extends Model
 				->where("deadline", $currentDateHour)
 				->orderBy($sort, $sortOrder)
 				->findAll();
+
+			$tasks = $this->createRetardTasks($tasks);
 
 			$result[$currentDate] = $tasks;
 		}

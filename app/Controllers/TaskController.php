@@ -29,7 +29,7 @@ class TaskController extends BaseController
         $blockList = [];
         $isBlockedList = [];
 
-        $perPage = 3    ;
+        $perPage = 3;
         $currentPage = $this->request->getVar('page') ?? 1;
 
         $task = $taskModel->where("id_task", $idTask)->first();
@@ -122,6 +122,14 @@ class TaskController extends BaseController
             }, $tasks);
         }
 
+        $sortByIsChecked = function ($a, $b) {
+            return $b['isChecked'] <=> $a['isChecked'];
+        };
+        
+        // Trier les deux listes
+        usort($blockList, $sortByIsChecked);
+        usort($isBlockedList, $sortByIsChecked);
+
         $dateI = new DateTime($date);
         helper("form");
 
@@ -157,7 +165,7 @@ class TaskController extends BaseController
 
         if ($action && $action === "delete") {
             $taskModel->delete($id);
-            return redirect()->to('/home/recap')->with('success', 'Tâche supprimée avec succès.');
+            return redirect()->to('/home/recap');
         } else {
             // Récupérer les données du formulaire
             $name = $this->request->getPost('task_name');
@@ -165,8 +173,6 @@ class TaskController extends BaseController
             $priority = $this->request->getPost('task_priority');
             $date = $this->request->getPost('task_date');
             $state = $this->request->getPost('task_state');
-			$isStarted = $this->request->getPost('taskIsStarted');
-
             $start_date = null;
             $end_date = null;
 
@@ -186,7 +192,7 @@ class TaskController extends BaseController
 
             // Validation des données (facultatif)
             if (empty($name) || empty($desc) || empty($priority) || empty($date) || empty($state) || empty($idAccount)) {
-                return redirect()->back()->with('error', 'Tous les champs sont obligatoires.');
+                return redirect()->back();
             }
 
             // Construire le tableau de données pour l'insertion
@@ -207,7 +213,7 @@ class TaskController extends BaseController
                 if ($taskModel->insert($taskData)) {
                     $taskId = $taskModel->getInsertID(); // Récupérer l'ID inséré
                 } else {
-                    return redirect()->back()->with('error', 'Erreur lors de l\'ajout de la tâche.');
+                    return redirect()->back();
                 }
             } else {
                 // Cas d'une mise à jour
@@ -216,20 +222,31 @@ class TaskController extends BaseController
 
             $newId = $taskId ?? $id;
 
+            $commentModel = new CommentModel();
+            $addCommentary = $this->request->getPost("addCommentary");
+
+            if ($addCommentary) {
+                $commentModel->insert([
+                    'comment' => '',
+                    'id_task' => $newId
+                ]);
+            }
+
+
 
             // Gestion des commentaires, blockList, etc. (si nécessaires)
             $commentaries = $this->request->getPost('task_commentaries');
-            // var_dump($commentaries);    
-            // var_dump($this->request->getPost('task_commentaries_id'));
-            // if (!empty($commentaries)) {
-            //     $commentModel = new CommentModel();
-            //     foreach ($commentaries as $comment) {
-            //         $commentModel->insert([
-            //             'id_task' => $taskId ?? $id,
-            //             'comment' => $comment
-            //         ]);
-            //     }
-            // }
+            $commentaries_id = $this->request->getPost('task_commentaries_id');
+            if (!empty($commentaries) && !empty($commentaries_id) && count($commentaries) == count($commentaries_id)) {
+                for ($i=0 ; $i<count($commentaries) ; $i++) {
+                    $strComment = $commentaries[$i];
+                    $idComment = $commentaries_id[$i];
+
+                    $commentModel->update($idComment, [
+                        'comment' => $strComment
+                    ]);
+                }
+            }
 
             $blockList = $this->request->getPost("task_blockList");
             if (!empty($blockList)) {
@@ -261,7 +278,7 @@ class TaskController extends BaseController
 
 
             // Redirection après insertion/mise à jour
-            return redirect()->to('/task/' . $newId)->with('success', 'Tâche sauvegardée avec succès.');
+            return redirect()->to('/task/' . $newId);
         }
     }
 }
