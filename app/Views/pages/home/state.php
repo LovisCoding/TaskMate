@@ -1,16 +1,36 @@
 <?php
-
 $stateOrder = ['En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
+
+$stateMap = [
+	'inProgress' => 'En cours',
+	'blocked' => 'Bloquée',
+	'notStarted' => 'Pas commencée',
+	'finished' => 'Terminée'
+];
+
+$statesFilter = [];
+foreach ($filters['states'] as $filterState) {
+	if (isset($stateMap[$filterState])) {
+		$statesFilter[] = $stateMap[$filterState];
+	}
+}
+
 $stateColumns = array_fill_keys($stateOrder, []);
 
 foreach ($tasks as $dateString => $taskes) {
 	foreach ($taskes as $task) {
 		$state = $task['current_state'];
-		if (isset($stateColumns[$state])) {
+
+		if (in_array($state, $statesFilter) && isset($stateColumns[$state])) {
 			$stateColumns[$state][] = $task;
 		}
 	}
 }
+
+$stateColumns = array_filter($stateColumns, function($state) use ($statesFilter) {
+	return in_array($state, $statesFilter);
+}, ARRAY_FILTER_USE_KEY);
+
 ?>
 
 <div>

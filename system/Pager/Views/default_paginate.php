@@ -46,7 +46,7 @@ foreach ($pager->links() as $link) {
 		  </li>';
 }
 
-if ($pager->hasNextPage()) {
+if ($pager->hasNext()) {
 	echo '<li class="page-item">
 			<a class="page-link blue text-decoration-none" href="' . $pager->getNext() . '" aria-label="Next">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 icon">

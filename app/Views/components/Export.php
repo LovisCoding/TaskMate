@@ -9,7 +9,7 @@ else $currentPage = explode('home/', $currentPage)[1];
 	<a class="export" id="btn-export" type="submit">
 		<button class="btn btn-link export d-flex align-items-center">
 			Exporter
-			<img src="<?= $imgSrc ?>" alt="filter" width="20px" height="20px" />
+			<img src="<?= $imgSrc ?>" alt="filter" width="20px" height="20px" style="margin-left: 5px;">
 		</button>
 	</a>
 	<input style="display:none;margin:0;padding:0;" hidden name="exportType" value="<?= $currentPage ?>" />
@@ -22,7 +22,4 @@ else $currentPage = explode('home/', $currentPage)[1];
 			<input style="display:none;margin:0;padding:0;" hidden name="tasks[<?= $dateString ?>][<?= $index ?>][id_task]" value="<?= esc($task['id_task']) ?>" />
 		<?php endforeach; ?>
 	<?php endforeach; ?>
-
-
-
 </form>
