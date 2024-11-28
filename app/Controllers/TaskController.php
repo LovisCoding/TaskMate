@@ -138,7 +138,7 @@ class TaskController extends BaseController
 
         $comments = [
             'items' => $commentaries,
-            'pager' => $commentModel->getPaginatedByTask($perPage, $idTask),
+            'pager' => $commentModel->getPaginatedByTask($perPage, $idTask)
         ];
 
         $data = [
