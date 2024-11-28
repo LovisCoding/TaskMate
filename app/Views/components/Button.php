@@ -6,6 +6,7 @@
 	}
 	if ( !isset($id) ) $id = "";
 	if ( !isset($value) ) $value = "";
+	if( !isset($disabled)) $disabled = "";
 ?>
 
 <div class="button">
