@@ -33,7 +33,9 @@ function generatePriorityIndicators($priority)
 		</div>
 	</div>
 </div>
-<?= $pager->links() ?>
+<ul class="pagination" id="pagination">
+	<?= $pager->links('default', 'default_paginate') ?>
+</ul>
 <div class="container mt-4">
 	<div class="row justify-content-center">
 		<?php foreach ($priorityColumns as $priority => $tasksByPriority): ?>

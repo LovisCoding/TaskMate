@@ -21,7 +21,9 @@ foreach ($tasks as $dateString => $taskes) {
 		</div>
 	</div>
 </div>
-<?= view('components/Pagination') ?>
+<ul class="pagination">
+	<?= $pager->links('default', 'default_paginate') ?>
+</ul>
 <div class="container">
 	<div class="row justify-content-center">
 		<?php foreach ($stateColumns as $state => $tasksByState): ?>
