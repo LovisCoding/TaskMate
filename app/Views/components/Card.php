@@ -1,5 +1,6 @@
 <?php
 	$title = $title ?? '';
+	$date = $date ?? '';
 	$text = $text ?? '';
 	$priority = $priority ?? 0;
 	$status = $status ?? '';
@@ -39,15 +40,24 @@
 ?>
 
 <a href="/task/<?= htmlspecialchars($id) ?>" class="card p-3 shadow-sm rounded-3 text-decoration-none <?= $borderClass ?>" >
-	<h5 class="card-title mb-2"><?= htmlspecialchars($title) ?></h5>
-	<p class="card-text text-muted overflow-hidden"><?= htmlspecialchars($text) ?></p>
-	<div class="d-flex align-items-center justify-content-between mt-2">
+	<div class="d-flex justify-content-between align-items-center mb-2">
 		<div class="d-flex">
 			<?= $priorityIndicators ?>
 		</div>
-		<div class="d-flex align-items-center text-end">
-			<span class="<?= $statusClass ?> small"><?= htmlspecialchars($status) ?></span>
-			<span class="indicator-circle <?= $bubbleClass ?>"></span>
+		<div class="d-flex gap-2">
+			<span class="small"><?= $date ?></span>
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" style="width:1rem">
+  				<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+			</svg>
 		</div>
+	</div>
+	<h5 class="card-title mb-2"><?= htmlspecialchars($title) ?></h5>
+	<p class="card-text text-muted overflow-hidden"><?= htmlspecialchars($text) ?></p>
+	<div class="d-flex align-items-center justify-content-between mt-2">
+		<div class="d-flex align-items-center gap-2">
+			<span class="indicator-circle <?= $bubbleClass ?>"></span>
+			<span class="<?= $statusClass ?> small"><?= htmlspecialchars($status) ?></span>
+		</div>
+		<span class="text-warning small">en retard</span>
 	</div>
 </a>
