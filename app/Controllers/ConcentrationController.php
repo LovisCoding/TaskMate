@@ -16,7 +16,7 @@ class ConcentrationController extends BaseController
             return redirect()->to('/');
         }
 
-        $idTask = "200";
+        $idTask = "15";
 
         $date = null;
         $taskModel = new TaskModel();
@@ -30,7 +30,7 @@ class ConcentrationController extends BaseController
         $blockList = [];
         $isBlockedList = [];
 
-        $perPage = 3    ;
+        $perPage = 3;
         $currentPage = $this->request->getVar('page') ?? 1;
 
         $task = $taskModel->where("id_task", $idTask)->first();

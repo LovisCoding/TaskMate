@@ -19,7 +19,7 @@
 							:
 							<input type="number" id="timerInputSeconds" class="fs-1 form-control mx-auto d-inline no-spinner" min="0" max="59" value="00" />
 						</span>
-						<div>
+						<div class="d-flex gap-1 justify-content-center" >
 							<div id="startPauseButton" style="width:6rem;" class="btn btn-success">Démarrer</div>
 							<div id="resetTimerButton" style="width:6rem;" class="btn btn-secondary">Effacer</div>
 						</div>

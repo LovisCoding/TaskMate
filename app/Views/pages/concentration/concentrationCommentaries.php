@@ -15,7 +15,7 @@
 	</div>
 
 	<ul class="pagination" id="pagination">
-		<?= $pager->links() ?>
+		<?= $pager->links('default', 'default_paginate') ?>
 	</ul>
 
 </div>
