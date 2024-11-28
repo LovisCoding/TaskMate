@@ -32,7 +32,7 @@ foreach ($tasks as $dateString => $taskes) {
 			<div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2">
 				<div class="mb-3 text-center">
 					<div class="d-flex justify-content-center mt-2">
-						<p class="fw-bold"><?= htmlspecialchars($state) ?></p>
+						<p class="fw-bold mb-0"><?= htmlspecialchars($state) ?></p>
 					</div>
 					<div class="line"></div>
 				</div>
