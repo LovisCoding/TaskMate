@@ -1,9 +1,14 @@
 <?php
-$stateColumns = [];
+
+$stateOrder = ['En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
+$stateColumns = array_fill_keys($stateOrder, []);
 
 foreach ($tasks as $dateString => $taskes) {
 	foreach ($taskes as $task) {
-		$stateColumns[$task['current_state']][] = $task;
+		$state = $task['current_state'];
+		if (isset($stateColumns[$state])) {
+			$stateColumns[$state][] = $task;
+		}
 	}
 }
 ?>
