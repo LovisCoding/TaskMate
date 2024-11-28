@@ -122,4 +122,21 @@ class ProfilController extends BaseController
 
 		return redirect()->to('/')->with('success', 'Votre compte a été supprimé.');
 	}
+
+	function updatePreferences() {
+		if (!session()->get('isLoggedIn')) {
+			return redirect()->to('/');
+		}
+
+		helper(['form']);
+		$session = session();
+		$accountModel = new AccountModel();
+
+		$id = $session->get("id");
+		$preferences = $this->request->getPost('preferences');
+
+		$accountModel->update($id, ['preferences' => $preferences]);
+
+		return redirect()->to('/profil')->with('message', 'Les modifications ont été enregistrées.');
+	}
 }
