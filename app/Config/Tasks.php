@@ -10,6 +10,8 @@ use CodeIgniter\Tasks\Scheduler;
 
 class Tasks extends BaseTasks
 {
+	public bool $enabled = true;
+	
     /**
      * Register any tasks within this method for the application.
      *
@@ -51,7 +53,9 @@ class Tasks extends BaseTasks
 			}
 	
 			$emailService->mailType = 'text';
+
+			log_message("debug", "test");
 	
-        })->everyMinute();
+        })->everyMinute()->named('mail');
     }
 }

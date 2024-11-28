@@ -70,7 +70,7 @@ class TaskModel extends Model
 	}
 
 
-	public function getTasksWhichAreNotTerminated($idAccount, $nbDays)
+	public function getTasksWhichAreNotTerminatedAndStartDays($idAccount, $nbDays)
 	{
 		$date = new DateTime();
 		$date->modify("-$nbDays days");
