@@ -88,57 +88,57 @@
 					</div>
 				</div>
 			</div>
-
+							
 			<!-- Onglet Réglages -->
 			<div class="tab-pane fade" id="reglages" role="tabpanel" aria-labelledby="reglages-tab">
 				<h2 class="mb-4 text-center titleProfil">Réglages</h2>
 
-				<?= form_open('profil/updateSettings', ['id' => 'settingsForm']) ?>
+				<?= form_open('profil/updatePreferences', ['preferences' => 'settingsForm']) ?>
 				<div class="mb-3">
-					<?= form_label('Nombre de jours avant le rappel échéance :', 'daysBeforeReminder', ['class' => 'form-label fw-bold text-secondary']) ?>
+					<?= form_label('Nombre de jours avant le rappel échéance :', 'days_reminder_deadline', ['class' => 'form-label fw-bold text-secondary']) ?>
 					<?= form_input([
-						'name' => 'daysBeforeReminder',
-						'id' => 'daysBeforeReminder',
+						'name' => 'days_reminder_deadline',
+						'id' => 'days_reminder_deadline',
 						'type' => 'number',
 						'class' => 'form-control rounded',
 						'placeholder' => 'Entrez un nombre',
-						'value' => set_value('daysBeforeReminder'),
+						'value' => $preferences['days_reminder_deadline'],
 						'min' => 2
 					]) ?>
 				</div>
 				<div class="mb-3">
-					<?= form_label('Nombre d\'éléments par page :', 'itemsPerPage', ['class' => 'form-label fw-bold text-secondary']) ?>
+					<?= form_label('Nombre d\'éléments par page :', 'rows_per_page', ['class' => 'form-label fw-bold text-secondary']) ?>
 					<?= form_input([
-						'name' => 'itemsPerPage',
-						'id' => 'itemsPerPage',
+						'name' => 'rows_per_page',
+						'id' => 'rows_per_page',
 						'type' => 'number',
 						'class' => 'form-control rounded',
 						'placeholder' => 'Entrez un nombre',
-						'value' => set_value('itemsPerPage'),
+						'value' => $preferences['rows_per_page'],
 						'min' => 2
 					]) ?>
 				</div>
 				<div class="mb-3">
-					<?= form_label('Nombre de pages affichées dans la pagination :', 'pagesDisplayed', ['class' => 'form-label fw-bold text-secondary']) ?>
+					<?= form_label('Nombre de pages affichées dans la pagination :', 'pagination_pages', ['class' => 'form-label fw-bold text-secondary']) ?>
 					<?= form_input([
-						'name' => 'pagesDisplayed',
-						'id' => 'pagesDisplayed',
+						'name' => 'pagination_pages',
+						'id' => 'pagination_pages',
 						'type' => 'number',
 						'class' => 'form-control rounded',
 						'placeholder' => 'Entrez un nombre',
-						'value' => set_value('pagesDisplayed'),
+						'value' => $preferences['pagination_pages'],
 						'min' => 2
 					]) ?>
 				</div>
 				<div class="mb-3">
-					<?= form_label('Nombre de jours affichés dans le calendrier :', 'daysInCalendar', ['class' => 'form-label fw-bold text-secondary']) ?>
+					<?= form_label('Nombre de jours affichés dans le calendrier :', 'displayed_days_in_calendar', ['class' => 'form-label fw-bold text-secondary']) ?>
 					<?= form_input([
-						'name' => 'daysInCalendar',
-						'id' => 'daysInCalendar',
+						'name' => 'displayed_days_in_calendar',
+						'id' => 'displayed_days_in_calendar',
 						'type' => 'number',
 						'class' => 'form-control rounded',
 						'placeholder' => 'Entrez un nombre',
-						'value' => set_value('daysInCalendar'),
+						'value' => $preferences['displayed_days_in_calendar'],
 						'min' => 2
 					]) ?>
 				</div>

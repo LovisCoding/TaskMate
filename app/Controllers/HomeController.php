@@ -4,12 +4,9 @@ namespace App\Controllers;
 
 use App\Models\TaskModel;
 use DateTime;
-use Config\Pager;
-
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
 
 class HomeController extends BaseController
 {
@@ -137,86 +134,86 @@ class HomeController extends BaseController
 	}
 
 
-    // composer require phpoffice/phpspreadsheet
-    public function exportData()
-    {
-        $exportType = $this->request->getPost('exportType');
-        $data = $this->request->getPost('tasks[]');
+	// composer require phpoffice/phpspreadsheet
+	public function exportData()
+	{
+		$exportType = $this->request->getPost('exportType');
+		$data = $this->request->getPost('tasks[]');
 
 
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        $filename = "";
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+		$filename = "";
 
-        if ($exportType == 'recap' || $exportType == 'deadLine') {
+		if ($exportType == 'recap' || $exportType == 'deadLine') {
 
-            if ($exportType == 'recap') $filename = 'Taches_Recapitulatif.xlsx';
-            if ($exportType == 'deadLine') $filename = 'Taches_par_Echeance.xlsx';
+			if ($exportType == 'recap') $filename = 'Taches_Recapitulatif.xlsx';
+			if ($exportType == 'deadLine') $filename = 'Taches_par_Echeance.xlsx';
 
-            $sheet->setCellValue('A1', 'Date');
-            $sheet->setCellValue('B1', 'ID Task');
-            $sheet->setCellValue('C1', 'Nom');
-            $sheet->setCellValue('D1', 'Description');
-            $sheet->setCellValue('E1', 'Priorité');
-            $sheet->setCellValue('F1', 'État actuel');
+			$sheet->setCellValue('A1', 'Date');
+			$sheet->setCellValue('B1', 'ID Task');
+			$sheet->setCellValue('C1', 'Nom');
+			$sheet->setCellValue('D1', 'Description');
+			$sheet->setCellValue('E1', 'Priorité');
+			$sheet->setCellValue('F1', 'État actuel');
 
-            $row = 2;
+			$row = 2;
 
-            foreach ($data as $date => $taskList) {
-                $sheet->setCellValue('A' . $row, $date);
-                foreach ($taskList as $task) {
-                    $sheet->setCellValue('B' . $row, $task['id_task']);
-                    $sheet->setCellValue('C' . $row, $task['name']);
-                    $sheet->setCellValue('D' . $row, $task['description']);
-                    $sheet->setCellValue('E' . $row, $task['priority'] . '/4');
-                    $sheet->setCellValue('F' . $row, $task['current_state']);
-                    $row++;
-                }
-            }
-        } else if ($exportType == 'priority' || $exportType == 'state') {
-            
-            if ($exportType == 'priority') {
-                $sheetTitle = 'Tâches de priorité ';
-                $filename = 'Taches_par_Priorité.xlsx';
-            } else {
-                $sheetTitle = 'Tâches d\'état ';
-                $filename = 'Taches_par_Etat.xlsx';
-            }
+			foreach ($data as $date => $taskList) {
+				$sheet->setCellValue('A' . $row, $date);
+				foreach ($taskList as $task) {
+					$sheet->setCellValue('B' . $row, $task['id_task']);
+					$sheet->setCellValue('C' . $row, $task['name']);
+					$sheet->setCellValue('D' . $row, $task['description']);
+					$sheet->setCellValue('E' . $row, $task['priority'] . '/4');
+					$sheet->setCellValue('F' . $row, $task['current_state']);
+					$row++;
+				}
+			}
+		} else if ($exportType == 'priority' || $exportType == 'state') {
+			
+			if ($exportType == 'priority') {
+				$sheetTitle = 'Tâches de priorité ';
+				$filename = 'Taches_par_Priorité.xlsx';
+			} else {
+				$sheetTitle = 'Tâches d\'état ';
+				$filename = 'Taches_par_Etat.xlsx';
+			}
 
-            $spreadsheet = new Spreadsheet();
+			$spreadsheet = new Spreadsheet();
 
-            foreach ($data as $key => $tasks) {
-                $sheet = $spreadsheet->createSheet();
-               
-                $sheet->setTitle($sheetTitle . $key);
+			foreach ($data as $key => $tasks) {
+				$sheet = $spreadsheet->createSheet();
+			   
+				$sheet->setTitle($sheetTitle . $key);
 
-                $sheet->setCellValue('A1', 'Name');
-                $sheet->setCellValue('B1', 'Description');
-                $sheet->setCellValue('C1', 'Priority');
-                $sheet->setCellValue('D1', 'Current State');
-                $sheet->setCellValue('E1', 'ID Task');
+				$sheet->setCellValue('A1', 'Name');
+				$sheet->setCellValue('B1', 'Description');
+				$sheet->setCellValue('C1', 'Priority');
+				$sheet->setCellValue('D1', 'Current State');
+				$sheet->setCellValue('E1', 'ID Task');
 
-                $row = 2;
-                foreach ($tasks as $task) {
-                    $sheet->setCellValue('A' . $row, $task['name']);
-                    $sheet->setCellValue('B' . $row, $task['description']);
-                    $sheet->setCellValue('C' . $row, $task['priority']);
-                    $sheet->setCellValue('D' . $row, $task['current_state']);
-                    $sheet->setCellValue('E' . $row, $task['id_task']);
-                    $row++;
-                }
-            }
+				$row = 2;
+				foreach ($tasks as $task) {
+					$sheet->setCellValue('A' . $row, $task['name']);
+					$sheet->setCellValue('B' . $row, $task['description']);
+					$sheet->setCellValue('C' . $row, $task['priority']);
+					$sheet->setCellValue('D' . $row, $task['current_state']);
+					$sheet->setCellValue('E' . $row, $task['id_task']);
+					$row++;
+				}
+			}
 
-            $spreadsheet->removeSheetByIndex(0); // deletes default sheet created on init
-        }
+			$spreadsheet->removeSheetByIndex(0); // deletes default sheet created on init
+		}
 
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="' . $filename . '"');
-        header('Cache-Control: max-age=0');
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment;filename="' . $filename . '"');
+		header('Cache-Control: max-age=0');
 
-        header('Content-Type: text/html; charset=UTF-8');
+		header('Content-Type: text/html; charset=UTF-8');
 
-        $writer = new Xlsx($spreadsheet);
+		$writer = new Xlsx($spreadsheet);
 
         $writer->save('php://output');
         exit;
