@@ -17,6 +17,9 @@ class TaskController extends BaseController
 
     public function index($idTask = -1)
     {
+		if (!session()->get('isLoggedIn')) {
+			return redirect()->to('/');
+		}
         $date = null;
         $taskModel = new TaskModel();
 
@@ -135,7 +138,7 @@ class TaskController extends BaseController
 
         $comments = [
             'items' => $commentaries,
-            'pager' => $commentModel->getPaginatedByTask($perPage, $idTask),
+            'pager' => $commentModel->getPaginatedByTask($perPage, $idTask)
         ];
 
         $data = [
