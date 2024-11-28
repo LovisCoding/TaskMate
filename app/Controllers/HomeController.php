@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\TaskModel;
+use App\Models\PreferencesModel;
+
 use DateTime;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -68,14 +70,13 @@ class HomeController extends BaseController
 			$defaultStates = ["inProgress", "finished"];
 		}
 		$date = $existingParams['date'] ?? $dateRange;
-		$nb = $existingParams['nb'] ?? 7;
+		
 		$endDate = $existingParams['end_date'] ?? null;
 		$taskGroups = $existingParams['task_groups'] ?? null;
 		$priority = $existingParams['priority'] ?? null;
 		$states = $existingParams['states'] ?? $defaultStates;
 		$sort = $existingParams['sort'] ?? 'deadline';
 		$sortOrder = $existingParams['sort_order'] ?? 'asc';
-		$perPage = $this->request->getGet('perPage') ?? 5;
 		$page = $this->request->getGet('page') ?? 1;
 
 		$stateOptions = [
@@ -100,6 +101,14 @@ class HomeController extends BaseController
 		$session = session();
 		$id_account = $session->get('id');
 
+		// Récupération des préférences
+
+		$preferencesModel = new PreferencesModel();
+		$preferences = $preferencesModel->getPreferencesByIdAccount($id_account);
+		$nb = $preferences['displayed_days_in_calendar'];
+		$perPage =  (int)$preferences['rows_per_page'];
+
+		 
 		// Récupération des tâches filtrées
 		$taskModel = new TaskModel();
 		$tasks = [];
@@ -110,6 +119,8 @@ class HomeController extends BaseController
 			'deadLine' => $taskModel->getTasksByDeadline($date, $nb, $id_account, $priority, $translatedStates, $sort, $sortOrder),
 			default => $taskModel->getTasksByDateRange($date, $nb, $id_account, $priority, $translatedStates, $sort, $sortOrder),
 		};
+
+		
 
 		// Passer les données à la vue
 		echo view('layout/header');
@@ -128,7 +139,8 @@ class HomeController extends BaseController
 				'sort' => $sort,
 				'sortOrder' => $sortOrder
 			],
-			'queryParams' => $existingParams
+			'queryParams' => $existingParams,
+			'preferences' => $preferences,
 		]);
 		echo view('layout/footer');
 	}
