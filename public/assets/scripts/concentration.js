@@ -80,3 +80,14 @@ timerInputSeconds.addEventListener("input", () => {
     if (timerInputSeconds.value > 59) timerInputSeconds.value = "59";
 });
 
+function handleEnter(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        startPauseTimer();
+    }
+}
+
+timerInputMinutes.addEventListener("keydown", function (event) { handleEnter(event); });
+timerInputSeconds.addEventListener("keydown", function (event) { handleEnter(event); });
+
+

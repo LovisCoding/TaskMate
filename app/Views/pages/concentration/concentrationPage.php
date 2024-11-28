@@ -25,13 +25,14 @@
 						</span>
 					</div>
 					<div>
-						<button id="startPauseButton" class="btn btn-success">Démarrer</button>
-						<button id="resetTimerButton" class="btn btn-secondary">Effacer</button>
+						<div id="startPauseButton" class="btn btn-success">Démarrer</div>
+						<div id="resetTimerButton" class="btn btn-secondary">Effacer</div>
 					</div>
 				</div>
 
 			</div>
 			<div class="concentration-section-button mt-3">
+				<button type="submit" class="btn btn-secondary">Ignorer la tâche</button>
 				<button type="submit" class="btn btn-primary">Terminer la tâche</button>
 			</div>
 		</div>
