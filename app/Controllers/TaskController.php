@@ -173,8 +173,6 @@ class TaskController extends BaseController
             $priority = $this->request->getPost('task_priority');
             $date = $this->request->getPost('task_date');
             $state = $this->request->getPost('task_state');
-			$isStarted = $this->request->getPost('taskIsStarted');
-
             $start_date = null;
             $end_date = null;
 
