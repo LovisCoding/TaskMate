@@ -212,9 +212,13 @@ class TaskController extends BaseController
                 $taskModel->update($id, $taskData);
             }
 
+            $newId = $taskId ?? $id;
+
+
             // Gestion des commentaires, blockList, etc. (si nécessaires)
-            // $commentaries = $this->request->getPost('task_commentaries');
+            $commentaries = $this->request->getPost('task_commentaries');
             // var_dump($commentaries);    
+            // var_dump($this->request->getPost('task_commentaries_id'));
             // if (!empty($commentaries)) {
             //     $commentModel = new CommentModel();
             //     foreach ($commentaries as $comment) {
@@ -227,21 +231,28 @@ class TaskController extends BaseController
 
             $blockList = $this->request->getPost("task_blockList");
             if (!empty($blockList)) {
-                $newId = $taskId ?? $id;
-
                 $taskDependenciesModel = new TaskDependenciesModel();
 
-                // $taskDependenciesModel->where("id_mother_task", $newId)->delete();
+                $taskDependenciesModel->where("id_mother_task", $newId)->delete();
 
                 foreach ($blockList as $taskBlockId) {
 
                     if ($newId && $taskBlockId) {
-                        $data = [
-                            'id_mother_task' => $newId,
-                            'id_child_task' => $taskBlockId
-                        ];
-                        var_dump($data);
                         $taskDependenciesModel->addDependency($newId, $taskBlockId);
+                    };
+                }
+            }
+
+            $isBlockedList = $this->request->getPost("task_isBlockedList");
+            if (!empty($isBlockedList)) {
+                $taskDependenciesModel = new TaskDependenciesModel();
+
+                $taskDependenciesModel->where("id_child_task", $newId)->delete();
+
+                foreach ($isBlockedList as $taskBlockId) {
+
+                    if ($newId && $taskBlockId) {
+                        $taskDependenciesModel->addDependency($taskBlockId, $newId);
                     };
                 }
             }
