@@ -172,7 +172,7 @@ class HomeController extends BaseController
 		$tasks = [];
 
 		$tasks = match ($type) {
-			'priority' => $taskModel->getTasksByPriority($id_account, $priority, $translatedStates, $sort, $sortOrder),
+			'priority' => $taskModel->getTasksByPriority($id_account, $priority, $translatedStates, $sort, $sortOrder, $perPage, $page),
 			'state' => $taskModel->getTasksByCurrentState($id_account, $priority, $translatedStates, $sort, $sortOrder),
 			'deadLine' => $taskModel->getTasksByDeadline($date, $nb, $id_account, $priority, $translatedStates, $sort, $sortOrder),
 			default => $taskModel->getTasksByDateRange($date, $nb, $id_account, $priority, $translatedStates, $sort, $sortOrder),
@@ -192,6 +192,7 @@ class HomeController extends BaseController
 			'tasks' => $tasks,
 			'date' => $date,
 			'nb' => $nb,
+			'pager' => $taskModel->pager,
 			'filters' => [
 				'start_date' => $date,
 				'end_date' => $endDate,

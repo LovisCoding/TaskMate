@@ -113,18 +113,30 @@ class TaskModel extends Model
 	/**
 	 * Récupère les tâches par priorité.
 	 */
-	public function getTasksByPriority($idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc')
+	public function getTasksByPriority($idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
 	{
 		$result = [];
+		$taskMax = [];
 
 		for ($i = 4; $i > 0; $i--) {
 			$query = $this->getQueryFiltered($priority, $states);
+
 			$tasks = $query->where("id_account", $idAccount)
 				->where("priority", $i)
-				->orderBy($sort, $sortOrder)
-				->findAll();
-			$result[$i] =  $tasks;
+				->limit($perPage, ($currentPage - 1) * $perPage)
+				->orderBy($sort, $sortOrder)->findAll();
+
+
+			if ($taskMax == null)
+				$taskMax = $tasks;
+			if (count($tasks) > count($taskMax))
+				$taskMax = $tasks;
+
+			$result[$i] = $tasks;
 		}
+
+		$taskMax = $query->paginate($perPage, 'default', $currentPage);
+
 
 		return $result;
 	}
