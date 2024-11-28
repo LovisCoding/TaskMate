@@ -65,12 +65,17 @@ class HomeController extends BaseController
 		if ($type == "deadLine") {
 			$dateRange = (new DateTime())->format('Y-m-d'); 
 		}
+
+		$defaultStates = ["blocked", "inProgress", "notStarted"];
+		if ($type == "home") {
+			$defaultStates = ["inProgress", "finished"];
+		}
 		$date = $existingParams['date'] ?? $dateRange;
 		$nb = $existingParams['nb'] ?? 7;
 		$endDate = $existingParams['end_date'] ?? null;
 		$taskGroups = $existingParams['task_groups'] ?? null;
 		$priority = $existingParams['priority'] ?? null;
-		$states = $existingParams['states'] ?? [];
+		$states = $existingParams['states'] ?? $defaultStates;
 		$sort = $existingParams['sort'] ?? 'deadline';
 		$sortOrder = $existingParams['sort_order'] ?? 'asc';
 		$perPage = $this->request->getGet('perPage') ?? 5;
@@ -104,7 +109,7 @@ class HomeController extends BaseController
 
 		$tasks = match ($type) {
 			'priority' => $taskModel->getTasksByPriority($id_account, $priority, $translatedStates, $sort, $sortOrder, $perPage, $page),
-			'state' => $taskModel->getTasksByCurrentState($id_account, $priority, $translatedStates, $sort, $sortOrder, $perPage, $page),
+			'state' => $taskModel->getTasksByCurrentState($id_account, $priority, $translatedStates, $sort, $sortOrder),
 			'deadLine' => $taskModel->getTasksByDeadline($date, $nb, $id_account, $priority, $translatedStates, $sort, $sortOrder),
 			default => $taskModel->getTasksByDateRange($date, $nb, $id_account, $priority, $translatedStates, $sort, $sortOrder),
 		};

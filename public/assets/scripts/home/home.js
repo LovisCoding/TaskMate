@@ -17,7 +17,7 @@ document.getElementById('btn-filter').addEventListener('click', function () {
 }, false);
 
 //checkboxEtat.js
-const etats = ['late', 'inProgress', 'notStarted', 'finished', 'blocked'];
+const etats = ['blocked', 'inProgress', 'notStarted', 'finished'];
 
 etats.forEach(function (etat) {
 	document.getElementById(etat).addEventListener('change', function () {
