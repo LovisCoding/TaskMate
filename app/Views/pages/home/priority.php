@@ -50,6 +50,7 @@ function generatePriorityIndicators($priority)
 							<?php foreach ($tasksByPriority as $task): ?>
 								<div class="mb-3 d-flex justify-content-center">
 									<?= view('components/Card', [
+										'date' => $task['deadline'],
 										'title' => htmlspecialchars($task['name']),
 										'text' => htmlspecialchars($task['description']),
 										'priority' => (int)htmlspecialchars($task['priority']),
