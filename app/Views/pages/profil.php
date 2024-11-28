@@ -1,3 +1,9 @@
+<?php if (isset($success)): ?>
+	<div class="alert alert-success" role="alert">
+		<?= $success; ?>
+	</div>
+<?php endif; ?>
+
 <div class="d-flex justify-content-center align-items-center mt-5">
 	<div class="rounded shadow p-4 profil mt-5">
 		<!-- Onglets -->
@@ -88,7 +94,7 @@
 					</div>
 				</div>
 			</div>
-							
+
 			<!-- Onglet Réglages -->
 			<div class="tab-pane fade" id="reglages" role="tabpanel" aria-labelledby="reglages-tab">
 				<h2 class="mb-4 text-center titleProfil">Réglages</h2>

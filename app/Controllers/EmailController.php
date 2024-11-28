@@ -19,8 +19,6 @@ class EmailController extends BaseController
 		];
 
 		
-		
-		
 		// Valider les données envoyées par le formulaire
 		if (!$this->validate($rules)) {
 			return redirect()->to('/auth/register')
@@ -154,7 +152,7 @@ class EmailController extends BaseController
 		$user = $userModel->where('reset_token', $token)
 			->where('reset_token_expiration >', date('Y-m-d H:i:s'))
 			->first();
-
+ 
 		if ($user && $password === $confirmPassword) {
 
 			echo $password;
