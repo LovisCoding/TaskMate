@@ -13,6 +13,7 @@ $routes->get('/home/recap', 'HomeController::index');
 $routes->get('/home/priority', 'HomeController::priority');
 $routes->get('/home/state', 'HomeController::state');
 $routes->get('/home/deadLine', 'HomeController::deadLine');
+$routes->post('/home/exportData', 'HomeController::exportData');
 
 $routes->get('/task', 'Task::index');
 $routes->get('/viewTask', 'ViewTaskController::index');
