@@ -259,3 +259,8 @@
 	padding-left: 2% !important;
 	padding-right: 2% !important;
 }
+
+.button-container > *:not(:last-child) {
+	padding: 0 0.5rem;
+	margin-right: 1.5rem;
+}
