@@ -1,0 +1,83 @@
+.concentration-page {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  gap: 5rem;
+}
+
+@media (max-width: 1000px) {
+  .concentration-page {
+    flex-direction: column; /* éléments alignés verticalement */
+    align-items: center;
+  }
+}
+
+.concentration-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.concentration-section-button {
+    display: flex;
+    justify-content: center;
+}
+
+.concentration-section-task {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border-radius: 20px;
+  gap: 1rem;
+  width: 40rem;
+  background-color: white;
+  height: fit-content;
+}
+
+.concentration-description {
+    min-height: 15vh;
+  /* background-color: grey; */
+}
+
+#timerDisplay {
+  cursor: pointer;
+  display: inline-block;
+  user-select: none;
+}
+
+#timerInputMinutes,
+#timerInputSeconds {
+  display: none;
+  width: 4rem;
+  text-align: center;
+  font-size: 2rem;
+  padding: 0;
+  margin: 0;
+}
+
+.play-button {
+  background-color: green;
+}
+
+.pause-button {
+  background-color: orange;
+}
+
+#resetTimer {
+  background-color: grey;
+}
+
+
+
+.concentration-commentaries {
+    width: 30rem;
+    padding: 2rem;
+    padding-bottom: 0;
+    border-radius: 20px;
+    background-color: white;
+    height: fit-content;
+}
+
+

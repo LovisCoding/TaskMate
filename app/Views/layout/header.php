@@ -9,7 +9,8 @@
 	
 	<link rel="stylesheet" href="<?= base_url('assets/styles/nav.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/styles/components.css'); ?>">
-	
+	<link rel="stylesheet" href="<?= base_url('assets/styles/concentration.css'); ?>">
+
 	<?=str_contains($_SERVER['REQUEST_URI'], '/home') ?  '<link href="'.base_url('assets/styles/home.css').'" rel="stylesheet"/>': '' ?>
 
 	<script src="/assets/scripts/Init.js"></script>

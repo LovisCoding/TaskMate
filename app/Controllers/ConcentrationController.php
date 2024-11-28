@@ -2,21 +2,22 @@
 
 namespace App\Controllers;
 
+
 use App\Models\CommentModel;
 use App\Models\TaskDependenciesModel;
 use App\Models\TaskModel;
 use DateTime;
 
-class TaskController extends BaseController
+class ConcentrationController extends BaseController
 {
-
-    public function insert(): void
+    public function index()
     {
-        $this->index(-1);
-    }
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/');
+        }
 
-    public function index($idTask = -1)
-    {
+        $idTask = "200";
+
         $date = null;
         $taskModel = new TaskModel();
 
@@ -34,9 +35,6 @@ class TaskController extends BaseController
 
         $task = $taskModel->where("id_task", $idTask)->first();
 
-        if ($idTask != -1 && !$task) {
-            return redirect()->to('/home/recap');
-        }
 
         $commentModel = new CommentModel();
 
@@ -137,118 +135,28 @@ class TaskController extends BaseController
             'priority' => $priority,
             'date' => $dateI,
             'state' => $state,
-            'commentaries' => $comments,
+            'commentaires' => $comments,
             'blockList' => $blockList,
             'isBlockedList' => $isBlockedList,
             'pager' => $commentModel->pager
         ];
 
+        // helper(['form']);
+
+        // $data = [
+        //     'success' => session()->getFlashdata('success'),
+        //     'error' => session()->getFlashdata('error'),
+        // ];
+
         echo view('layout/header');
         echo view('layout/navbar');
-        echo view('pages/viewTask/Task',  $data);
+        echo view('pages/concentration/concentrationPage', ['data' => $data]);
         echo view('layout/footer');
     }
 
-    public function validateTask($id)
-    {
+    public function validateConcentration() {
 
-        $action = $this->request->getPost('action');
-        $taskModel = new TaskModel();
+        echo "Donova mon amoureux <3";
 
-        if ($action && $action === "delete") {
-            $taskModel->delete($id);
-            return redirect()->to('/home/recap')->with('success', 'Tâche supprimée avec succès.');
-        } else {
-            // Récupérer les données du formulaire
-            $name = $this->request->getPost('task_name');
-            $desc = $this->request->getPost('task_desc');
-            $priority = $this->request->getPost('task_priority');
-            $date = $this->request->getPost('task_date');
-            $state = $this->request->getPost('task_state');
-            $start_date = null;
-            $end_date = null;
-
-            $now = (new DateTime())->format('Y-m-d');
-
-            if ($action == "complete") {
-                $end_date = $now;
-                $state = "Terminée";
-            }
-
-            if ($action == "start") {
-                $start_date = $now;
-                $state = "En cours";
-            }
-
-            $idAccount = intval(session()->get("id"));
-
-            // Validation des données (facultatif)
-            if (empty($name) || empty($desc) || empty($priority) || empty($date) || empty($state) || empty($idAccount)) {
-                return redirect()->back()->with('error', 'Tous les champs sont obligatoires.');
-            }
-
-            // Construire le tableau de données pour l'insertion
-            $taskData = [
-                'id_account' => $idAccount,
-                'name' => $name,
-                'description' => $desc,
-                'priority' => $priority,
-                'deadline' => $date,
-                'current_state' => $state,
-                'start_date' => $start_date,
-                'end_date' => $end_date
-            ];
-
-            // Insertion ou mise à jour
-            if ($id == -1) {
-                // Cas d'une nouvelle tâche
-                if ($taskModel->insert($taskData)) {
-                    $taskId = $taskModel->getInsertID(); // Récupérer l'ID inséré
-                } else {
-                    return redirect()->back()->with('error', 'Erreur lors de l\'ajout de la tâche.');
-                }
-            } else {
-                // Cas d'une mise à jour
-                $taskModel->update($id, $taskData);
-            }
-
-            // Gestion des commentaires, blockList, etc. (si nécessaires)
-            // $commentaries = $this->request->getPost('task_commentaries');
-            // var_dump($commentaries);    
-            // if (!empty($commentaries)) {
-            //     $commentModel = new CommentModel();
-            //     foreach ($commentaries as $comment) {
-            //         $commentModel->insert([
-            //             'id_task' => $taskId ?? $id,
-            //             'comment' => $comment
-            //         ]);
-            //     }
-            // }
-
-            $blockList = $this->request->getPost("task_blockList");
-            if (!empty($blockList)) {
-                $newId = $taskId ?? $id;
-
-                $taskDependenciesModel = new TaskDependenciesModel();
-
-                // $taskDependenciesModel->where("id_mother_task", $newId)->delete();
-
-                foreach ($blockList as $taskBlockId) {
-
-                    if ($newId && $taskBlockId) {
-                        $data = [
-                            'id_mother_task' => $newId,
-                            'id_child_task' => $taskBlockId
-                        ];
-                        var_dump($data);
-                        $taskDependenciesModel->addDependency($newId, $taskBlockId);
-                    };
-                }
-            }
-
-
-            // Redirection après insertion/mise à jour
-            return redirect()->to('/task/' . $newId)->with('success', 'Tâche sauvegardée avec succès.');
-        }
     }
 }
