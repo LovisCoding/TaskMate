@@ -143,25 +143,19 @@ class TaskModel extends Model
 		$taskMax = [];
 
 		for ($i = 4; $i > 0; $i--) {
-			$query = $this->getQueryFiltered($priority, $states);
 
-			$tasks = $query->where("id_account", $idAccount)
+			$query = $this->getQueryFiltered($priority, $states)
+				->where("id_account", $idAccount)
 				->where("priority", $i)
 				->limit($perPage, ($currentPage - 1) * $perPage)
-				->orderBy($sort, $sortOrder)->findAll();
+				->orderBy($sort, $sortOrder);
 
+			$tasks = $query->paginate($perPage, 'default', $currentPage);
 
 			$tasks = $this->createRetardTasks($tasks);
 
-			if (count($tasks) > count($taskMax))
-				$taskMax = $tasks;
-
 			$result[$i] = $tasks;
 		}
-
-		$taskMax = $query->paginate($perPage, 'default', $currentPage);
-		echo (count($taskMax));
-		// dd($this->pager->getTotal('default')); 
 
 		return $result;
 	}
@@ -173,41 +167,55 @@ class TaskModel extends Model
 	 */
 	public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
 	{
-		$states = ['En retard', 'En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
+		$states = ['Bloquée', 'Pas commencée','En cours', 'Terminée'];
 
-		$taskMax = [];
+		$queryMax = $this;
 
 		foreach ($states as $s) {
-			$query = $this->getQueryFiltered($priority, $statesFilters);
-			$total = $query->where("id_account", $idAccount)
-				->where("current_state", $s)
-				->countAllResults(); // Effectue le comptage des résultats sans la limite
-
-			// Applique la limite et la pagination pour récupérer les données
-			$tasks = $query->where("id_account", $idAccount)
+			$query = $this->getQueryFiltered($priority, $statesFilters)
+				->where("id_account", $idAccount)
 				->where("current_state", $s)
 				->orderBy($sort, $sortOrder)
-				->limit($perPage, ($currentPage - 1) * $perPage) // Applique la limite ici
-				->findAll();
+				->limit($perPage, ($currentPage - 1) * $perPage);
+			
+			$tasks = $query->findAll();
+			
 
-			// Traitement des tâches
 			$tasks = $this->createRetardTasks($tasks);
 
-			if (count($tasks) > count($taskMax)) {
-				$taskMax = $tasks;
-			}
-
-			// Stocke les résultats pour chaque état
-			$result[$s] = $tasks;
-
+			$result[$s] =  $tasks;
 		}
+		$tasks = $query->paginate($perPage, 'default', $currentPage);
 
-		$taskMax = $query->paginate($perPage, 'default', $currentPage);
-
-		
 
 		return $result;
 	}
+
+	// public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
+	// {
+	// 	$states = ['En retard', 'En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
+
+	// 	$query = $this->getQueryFiltered($priority, $statesFilters);
+	// 	$tasks = [];
+
+	// 	// Pour chaque état, on applique les filtres et récupère les tâches
+	// 	foreach ($states as $s) {
+	// 		// Appliquez la pagination sur la requête
+	// 		$query->where("id_account", $idAccount)
+	// 			->where("current_state", $s)
+	// 			->orderBy($sort, $sortOrder);
+
+	// 		$tasks = $this->createRetardTasks($tasks);
+
+
+	// 		// Récupérer les tâches pour une page donnée
+	// 		$tasks[$s] = $query->paginate($perPage, 'default', $currentPage);
+	// 	}
+
+	// 	// Retourner les tâches avec la pagination
+	// 	return $tasks;
+	// }
+
 
 	/**
 	 * Récupère les tâches entre une plage de dates et les organise par Deadline.
