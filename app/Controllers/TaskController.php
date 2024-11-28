@@ -258,6 +258,10 @@ class TaskController extends BaseController
 
                     if ($newId && $taskBlockId) {
                         $taskDependenciesModel->addDependency($newId, $taskBlockId);
+
+                        $taskModel->update($taskBlockId, [
+                            "current_state" => "Bloquée"
+                        ]);
                     };
                 }
             }
@@ -268,10 +272,17 @@ class TaskController extends BaseController
 
                 $taskDependenciesModel->where("id_child_task", $newId)->delete();
 
+                if (count($isBlockedList) > 0) {
+                    $taskModel->update($newId, [
+                        "current_state" => "Bloquée"
+                    ]);
+                }
+
                 foreach ($isBlockedList as $taskBlockId) {
 
                     if ($newId && $taskBlockId) {
                         $taskDependenciesModel->addDependency($taskBlockId, $newId);
+                        
                     };
                 }
             }

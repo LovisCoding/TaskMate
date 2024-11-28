@@ -191,6 +191,7 @@ class TaskModel extends Model
 		}
 
 		$taskMax = $query->paginate($perPage, 'default', $currentPage);
+
 		return $result;
 	}
 
