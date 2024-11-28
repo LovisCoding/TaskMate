@@ -8,7 +8,7 @@ class ViewGroupController extends BaseController
 	{
 		echo view('layout/header');
 		echo view('layout/navbar');
-		echo view('pages/viewTask/viewGroup');
+		echo view('pages/viewGroup');
 		echo view('layout/footer') ;
 	}
 }
