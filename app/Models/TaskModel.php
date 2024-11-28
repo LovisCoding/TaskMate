@@ -32,7 +32,8 @@ class TaskModel extends Model
 			->join('Group', 'Task.id_group = Group.id', 'left')
 			->findAll();
 	}
-	public function getQueryFiltered($priority = null, $states = []) {
+	public function getQueryFiltered($priority = null, $states = [])
+	{
 		$query = $this;
 		if ($priority) {
 			$query->where('priority', $priority);
@@ -43,10 +44,10 @@ class TaskModel extends Model
 		}
 
 		return $query;
-
 	}
 
-	public function createRetardTasks($tasks) {
+	public function createRetardTasks($tasks)
+	{
 
 		$tasks = array_map(function ($task) {
 			$today = new \DateTime(); // Date actuelle
@@ -171,29 +172,39 @@ class TaskModel extends Model
 	 * @return array Tableau associatif avec les états comme clés et les tâches comme valeurs.
 	 */
 	public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
-	{		
+	{
 		$states = ['En retard', 'En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
 
 		$taskMax = [];
 
 		foreach ($states as $s) {
 			$query = $this->getQueryFiltered($priority, $statesFilters);
+			$total = $query->where("id_account", $idAccount)
+				->where("current_state", $s)
+				->countAllResults(); // Effectue le comptage des résultats sans la limite
+
+			// Applique la limite et la pagination pour récupérer les données
 			$tasks = $query->where("id_account", $idAccount)
 				->where("current_state", $s)
 				->orderBy($sort, $sortOrder)
-				->limit($perPage, ($currentPage - 1) * $perPage)
+				->limit($perPage, ($currentPage - 1) * $perPage) // Applique la limite ici
 				->findAll();
 
+			// Traitement des tâches
 			$tasks = $this->createRetardTasks($tasks);
 
-			if (count($tasks) > count($taskMax))
+			if (count($tasks) > count($taskMax)) {
 				$taskMax = $tasks;
+			}
 
-			$result[$s] =  $tasks;
+			// Stocke les résultats pour chaque état
+			$result[$s] = $tasks;
+
 		}
 
-		$taskMax = $query->paginate($perPage);
 		$taskMax = $query->paginate($perPage, 'default', $currentPage);
+
+		
 
 		return $result;
 	}
@@ -225,6 +236,4 @@ class TaskModel extends Model
 
 		return $result;
 	}
-
-
 }
