@@ -9,6 +9,7 @@ class EmailController extends BaseController
 {
 	public function sendConfirmAccountMail()
 	{
+
 		// Définir les règles de validation
 		$rules = [
 			'name' => 'required|min_length[3]',
@@ -17,17 +18,27 @@ class EmailController extends BaseController
 			'confirm_password' => 'required|matches[password]',
 		];
 
+		
+		
+		
 		// Valider les données envoyées par le formulaire
 		if (!$this->validate($rules)) {
 			return redirect()->to('/auth/register')
 				->withInput() // Pour conserver les valeurs déjà saisies
 				->with('validation', $this->validator); // Passer les erreurs de validation
 		}
-
 		$name = $this->request->getPost('name');
 		$email = $this->request->getPost('email');
 		$password = $this->request->getPost('password');
+		$email = $this->request->getPost('email');
 
+		
+		$accountModel = new AccountModel();
+		$existingUser = $accountModel->getAccountByEmail($email);
+
+		if ($existingUser) {
+			return redirect()->to('/auth/register')->with('error', 'Un compte existe déjà avec cette adresse email.');
+		}
 		// Générer un token unique
 		$token = bin2hex(random_bytes(16));
 
@@ -73,7 +84,7 @@ class EmailController extends BaseController
 		}
 
 		// Enregistrer les données dans la base de données
-		$accountModel = new \App\Models\AccountModel();
+		$accountModel = new AccountModel();
 		$accountModel->createAccount($registrationData);
 
 		session()->remove("registration_$token");
@@ -84,7 +95,7 @@ class EmailController extends BaseController
 	public function sendResetLink()
 	{
 		$email = $this->request->getPost('email');
-		$userModel = new \App\Models\AccountModel();
+		$userModel = new AccountModel();
 		$user = $userModel->getAccountByEmail($email);
 
 		$email = $this->request->getPost('email');

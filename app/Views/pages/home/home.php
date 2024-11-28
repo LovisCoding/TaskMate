@@ -20,8 +20,7 @@ $date = new DateTime($date);
 	<?= view('components/CalendarRange', ['date' => $date, 'nb' => $nb]) ?>
 </div>
 
-<!-- Conteneur défilant horizontal -->
-<div class="container mt-4">
+<div class="container mt-4 justify-content-center">
 	<div class="overflow-auto">
 		<div class="d-flex flex-nowrap align-items-start">
 			<?php foreach ($tasks as $dateString => $taskes): ?>
@@ -35,12 +34,14 @@ $date = new DateTime($date);
 					<?php foreach ($taskes as $task): ?>
 						<div class="mb-3">
 							<?= view('components/Card', [
+								'date' => $task['deadline'],
 								'title' => htmlspecialchars($task['name']),
 								'text' => htmlspecialchars($task['description']),
 								'priority' => (int) htmlspecialchars($task['priority']),
 								'status' => htmlspecialchars($task['current_state']),
 								'color' => false,
-								'id'=> (int) htmlspecialchars($task['id_task'])
+								'id'=> (int) htmlspecialchars($task['id_task']),
+								'retard' => htmlspecialchars($task['retard'])
 							]) ?>
 						</div>
 					<?php endforeach; ?>

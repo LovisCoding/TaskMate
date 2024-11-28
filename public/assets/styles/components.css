@@ -177,7 +177,7 @@
 
 .col-12,
 .col {
-	min-width: 275px;
+	min-width: 310px;
 }
 
 .icon {
@@ -252,4 +252,10 @@
 
 .nav-tabs .nav-link {
 	color: #000;
+}
+
+.container {
+	max-width: 100% !important;
+	padding-left: 2% !important;
+	padding-right: 2% !important;
 }

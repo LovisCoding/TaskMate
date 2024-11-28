@@ -25,7 +25,7 @@
                 'class' => 'form-control',
                 'id' => 'endDate',
                 'name' => 'end_date',
-                'value' => $filters['end_date'] ?? ''
+                'value' => $filters['end_date'] ?? '',
             ]) ?>
 		</div> -->
 
@@ -72,18 +72,17 @@
             </div>
         </div>
         <div class="offcanvas-header" style="padding-left: 0;">
-        <h5 class="offcanvas-title" id="filterPanelLabel">Sélection des filtres</h5>
-    </div>
+            <h5 class="offcanvas-title" id="filterPanelLabel">Sélection des filtres</h5>
+        </div>
         <!-- États -->
         <div class="mb-3">
             <?= form_label('Etats:', '', ['class' => 'form-label']) ?>
             <?php
             $stateOptions = [
-                'late' => 'En retard',
+                'blocked' => 'Bloquée',
                 'inProgress' => 'En cours',
                 'notStarted' => 'Pas commencée',
-                'finished' => 'Terminée',
-                'blocked' => 'Bloquée'
+                'finished' => 'Terminée'
             ];
 
             foreach ($stateOptions as $key => $label): ?>
@@ -94,7 +93,8 @@
                         'name' => 'states[]',
                         'id' => $key,
                         'value' => $key,
-                        'class' => 'd-none pe-auto'
+                        'class' => 'd-none pe-auto',
+                        'checked' =>  in_array($key, $filters['states'])
                     ]) ?>
                     <?= form_label($label, $key, ['class' => 'form-check-label']) ?>
                 </div>

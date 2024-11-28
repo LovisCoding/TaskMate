@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\AccountModel;
+use App\Models\PreferencesModel;
 
 class ProfilController extends BaseController
 {
@@ -20,12 +21,17 @@ class ProfilController extends BaseController
 		$session = session();
 		$accountModel = new AccountModel();
 		$account = $accountModel->where("id", $session->get("id"))->first();
+		
+		$preferencesModel = new PreferencesModel();
+		$preferences = $preferencesModel->getPreferencesByIdAccount($session->get("id"));
+		
 		$data = [];
 
 		if ($account) {
 			$data = [
 				"name" => $account["name"],
-				"email" => $account["email"]
+				"email" => $account["email"],
+				"preferences" => $preferences,
 			];
 		}
 
@@ -121,5 +127,22 @@ class ProfilController extends BaseController
 		$session->destroy();
 
 		return redirect()->to('/')->with('success', 'Votre compte a été supprimé.');
+	}
+
+	function updatePreferences() {
+		if (!session()->get('isLoggedIn')) {
+			return redirect()->to('/');
+		}
+
+		helper(['form']);
+		$session = session();
+		$preferencesModel = new PreferencesModel();
+
+		$id = $session->get("id");
+		$preferences = $this->request->getPost();;
+
+		$preferencesModel->setPreferences($id, $preferences);
+
+		return redirect()->to('/profil')->with('message', 'Les modifications ont été enregistrées.');
 	}
 }

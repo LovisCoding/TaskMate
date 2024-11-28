@@ -14,5 +14,5 @@
 
 <div class="calendar_item_title">
 	<span class="title"><?= $formattedDate ?></span>
-	<div class="line"></div>
+	<div class="line mt-0"></div>
 </div>

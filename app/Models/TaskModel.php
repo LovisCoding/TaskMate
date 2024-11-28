@@ -32,7 +32,8 @@ class TaskModel extends Model
 			->join('Group', 'Task.id_group = Group.id', 'left')
 			->findAll();
 	}
-	public function getQueryFiltered($priority = null, $states = []) {
+	public function getQueryFiltered($priority = null, $states = [])
+	{
 		$query = $this;
 		if ($priority) {
 			$query->where('priority', $priority);
@@ -43,7 +44,28 @@ class TaskModel extends Model
 		}
 
 		return $query;
+	}
 
+	public function createRetardTasks($tasks)
+	{
+
+		$tasks = array_map(function ($task) {
+			$today = new \DateTime(); // Date actuelle
+			$deadline = new \DateTime($task['deadline']);
+			$endDate = isset($task['end_date']) ? new \DateTime($task['end_date']) : null;
+
+			if ($endDate) {
+				$delay = $endDate->diff($deadline)->days;
+				$task['retard'] = $delay > 0 ? "$delay jours en retard" : null;
+			} else {
+				$delay = $today->diff($deadline)->days;
+				$task['retard'] = $delay > 0 ? "$delay jours en retard" : null;
+			}
+
+			return $task;
+		}, $tasks);
+
+		return $tasks;
 	}
 
 	/**
@@ -89,6 +111,8 @@ class TaskModel extends Model
 			$result[$currentDate] = []; // Clé initialisée avec un tableau vide
 		}
 
+		$tasks = $this->createRetardTasks($tasks);
+
 		// Organiser les tâches par jour
 		foreach ($tasks as $task) {
 			$taskStartDate = new \DateTime($task['start_date']);
@@ -113,17 +137,24 @@ class TaskModel extends Model
 	/**
 	 * Récupère les tâches par priorité.
 	 */
-	public function getTasksByPriority($idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc')
+	public function getTasksByPriority($idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
 	{
 		$result = [];
+		$taskMax = [];
 
 		for ($i = 4; $i > 0; $i--) {
-			$query = $this->getQueryFiltered($priority, $states);
-			$tasks = $query->where("id_account", $idAccount)
+
+			$query = $this->getQueryFiltered($priority, $states)
+				->where("id_account", $idAccount)
 				->where("priority", $i)
-				->orderBy($sort, $sortOrder)
-				->findAll();
-			$result[$i] =  $tasks;
+				->limit($perPage, ($currentPage - 1) * $perPage)
+				->orderBy($sort, $sortOrder);
+
+			$tasks = $query->paginate($perPage, 'default', $currentPage);
+
+			$tasks = $this->createRetardTasks($tasks);
+
+			$result[$i] = $tasks;
 		}
 
 		return $result;
@@ -134,21 +165,57 @@ class TaskModel extends Model
 	 *
 	 * @return array Tableau associatif avec les états comme clés et les tâches comme valeurs.
 	 */
-	public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc')
+	public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
 	{
-		$states = ['En retard', 'En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
+		$states = ['Bloquée', 'Pas commencée','En cours', 'Terminée'];
+
+		$queryMax = $this;
 
 		foreach ($states as $s) {
-			$query = $this->getQueryFiltered($priority, $statesFilters);
-			$tasks = $query->where("id_account", $idAccount)
+			$query = $this->getQueryFiltered($priority, $statesFilters)
+				->where("id_account", $idAccount)
 				->where("current_state", $s)
 				->orderBy($sort, $sortOrder)
-				->findAll();
+				->limit($perPage, ($currentPage - 1) * $perPage);
+			
+			$tasks = $query->findAll();
+			
+
+			$tasks = $this->createRetardTasks($tasks);
+
 			$result[$s] =  $tasks;
 		}
+		$tasks = $query->paginate($perPage, 'default', $currentPage);
+
 
 		return $result;
 	}
+
+	// public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
+	// {
+	// 	$states = ['En retard', 'En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
+
+	// 	$query = $this->getQueryFiltered($priority, $statesFilters);
+	// 	$tasks = [];
+
+	// 	// Pour chaque état, on applique les filtres et récupère les tâches
+	// 	foreach ($states as $s) {
+	// 		// Appliquez la pagination sur la requête
+	// 		$query->where("id_account", $idAccount)
+	// 			->where("current_state", $s)
+	// 			->orderBy($sort, $sortOrder);
+
+	// 		$tasks = $this->createRetardTasks($tasks);
+
+
+	// 		// Récupérer les tâches pour une page donnée
+	// 		$tasks[$s] = $query->paginate($perPage, 'default', $currentPage);
+	// 	}
+
+	// 	// Retourner les tâches avec la pagination
+	// 	return $tasks;
+	// }
+
 
 	/**
 	 * Récupère les tâches entre une plage de dates et les organise par Deadline.
@@ -170,11 +237,11 @@ class TaskModel extends Model
 				->orderBy($sort, $sortOrder)
 				->findAll();
 
+			$tasks = $this->createRetardTasks($tasks);
+
 			$result[$currentDate] = $tasks;
 		}
 
 		return $result;
 	}
-
-
 }

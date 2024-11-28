@@ -21,14 +21,18 @@ foreach ($tasks as $dateString => $taskes) {
 		</div>
 	</div>
 </div>
-<?= view('components/Pagination') ?>
-<div class="container">
+
+<ul class="pagination">
+	<?= $pager->links('default', 'default_paginate') ?>
+</ul>
+
+<div class="container justify-content-center">
 	<div class="row justify-content-center">
 		<?php foreach ($stateColumns as $state => $tasksByState): ?>
 			<div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2">
 				<div class="mb-3 text-center">
 					<div class="d-flex justify-content-center mt-2">
-						<p class="fw-bold"><?= htmlspecialchars($state) ?></p>
+						<p class="fw-bold mb-0"><?= htmlspecialchars($state) ?></p>
 					</div>
 					<div class="line"></div>
 				</div>
@@ -38,12 +42,14 @@ foreach ($tasks as $dateString => $taskes) {
 						<?php foreach ($tasksByState as $task): ?>
 							<div class="mb-3 d-flex justify-content-center">
 								<?= view('components/Card', [
+									'date' => $task['deadline'],
 									'title' => htmlspecialchars($task['name']),
 									'text' => htmlspecialchars($task['description']),
 									'priority' => (int) htmlspecialchars($task['priority']),
 									'status' => htmlspecialchars($task['current_state']),
 									'color' => true,
-									'id'=> (int) htmlspecialchars($task['id_task'])
+									'id'=> (int) htmlspecialchars($task['id_task']),
+									'retard' => htmlspecialchars($task['retard'])
 								]) ?>
 							</div>
 						<?php endforeach; ?>
