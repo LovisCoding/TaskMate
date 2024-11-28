@@ -55,20 +55,24 @@ function generatePriorityIndicators($priority)
 					</div>
 					<div class="flex-grow-1 d-flex justify-content-center">
 						<div class="w-100">
-							<?php foreach ($tasksByPriority as $task): ?>
-								<div class="mb-3 d-flex justify-content-center">
-									<?= view('components/Card', [
-										'date' => $task['deadline'],
-										'title' => htmlspecialchars($task['name']),
-										'text' => htmlspecialchars($task['description']),
-										'priority' => (int)htmlspecialchars($task['priority']),
-										'status' => htmlspecialchars($task['current_state']),
-										'color' => false,
-										'id'=> (int) htmlspecialchars($task['id_task']),
-										'retard' => htmlspecialchars($task['retard'])
-									]) ?>
-								</div>
-							<?php endforeach; ?>
+							<?php if (empty($tasksByPriority)): ?>
+								<div class="mb-3 text-center text-muted">Aucune tâche sur cette page</div>
+							<?php else: ?>
+								<?php foreach ($tasksByPriority as $task): ?>
+									<div class="mb-3 d-flex justify-content-center">
+										<?= view('components/Card', [
+											'date' => $task['deadline'],
+											'title' => htmlspecialchars($task['name']),
+											'text' => htmlspecialchars($task['description']),
+											'priority' => (int)htmlspecialchars($task['priority']),
+											'status' => htmlspecialchars($task['current_state']),
+											'color' => false,
+											'id'=> (int) htmlspecialchars($task['id_task']),
+											'retard' => htmlspecialchars($task['retard'])
+										]) ?>
+									</div>
+								<?php endforeach; ?>
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>
