@@ -54,7 +54,8 @@ class ProfilController extends BaseController
 
 		$accountModel->update($id, ['name' => $name]);
 
-		return redirect()->to('/profil')->with('message', 'Les modifications ont été enregistrées.');
+
+		return redirect()->to('/profil')->with('success', 'Les modifications ont été enregistrées.');
 	}
 
 	public function resetPassword()
@@ -143,6 +144,6 @@ class ProfilController extends BaseController
 
 		$preferencesModel->setPreferences($id, $preferences);
 
-		return redirect()->to('/profil')->with('message', 'Les modifications ont été enregistrées.');
+		return redirect()->to('/profil')->with('success', 'Les modifications ont été enregistrées.');
 	}
 }
