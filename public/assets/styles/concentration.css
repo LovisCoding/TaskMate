@@ -18,9 +18,11 @@
     justify-content: center;
 }
 
-.concentration-section-button {
+.concentration-section-buttons {
     display: flex;
     justify-content: center;
+    gap: 1rem;
+
 }
 
 .concentration-section-task {
@@ -34,11 +36,6 @@
   width: 40rem;
   background-color: white;
   height: fit-content;
-}
-
-.concentration-description {
-    min-height: 15vh;
-  /* background-color: grey; */
 }
 
 #timerDisplay {
