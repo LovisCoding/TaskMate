@@ -159,6 +159,8 @@ class TaskModel extends Model
 		}
 
 		$taskMax = $query->paginate($perPage, 'default', $currentPage);
+		echo (count($taskMax));
+		// dd($this->pager->getTotal('default')); 
 
 		return $result;
 	}
@@ -169,7 +171,7 @@ class TaskModel extends Model
 	 * @return array Tableau associatif avec les états comme clés et les tâches comme valeurs.
 	 */
 	public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
-	{
+	{		
 		$states = ['En retard', 'En cours', 'Pas commencée', 'Terminée', 'Bloquée'];
 
 		$taskMax = [];
@@ -190,6 +192,7 @@ class TaskModel extends Model
 			$result[$s] =  $tasks;
 		}
 
+		$taskMax = $query->paginate($perPage);
 		$taskMax = $query->paginate($perPage, 'default', $currentPage);
 
 		return $result;
