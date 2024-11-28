@@ -142,8 +142,8 @@ class HomeController extends BaseController
 		$states = $existingParams['states'] ?? [];
 		$sort = $existingParams['sort'] ?? 'deadline';
 		$sortOrder = $existingParams['sort_order'] ?? 'asc';
-		$perPage = $this->request->getGet('perPage') ?? 5;
-		$page = $this->request->getGet('page') ?? 1;
+		$perPage = 5;
+		$page = $existingParams['page'] ?? 1;
 
 		$stateOptions = [
 			'late' => 'En retard',
