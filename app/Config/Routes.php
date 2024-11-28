@@ -28,6 +28,7 @@ $routes->post('/profil/updateName', 'ProfilController::updateName');
 $routes->get('/profil/resetPassword', 'ProfilController::resetPassword');
 $routes->get('/profil/logout', 'ProfilController::logout');
 $routes->get('/profil/deleteAccount', 'ProfilController::deleteAccount');
+$routes->post('/profil/updatePreferences', 'ProfilController::updatePreferences');
 
 $routes->post('/forgot-password/sendResetLink', 'EmailController::sendResetLink');
 $routes->get('/forgot-password/reset-password/(:any)', 'EmailController::resetPassword/$1');
