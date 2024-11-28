@@ -19,9 +19,9 @@
 				<div class="container text-center">
 					<div class="mb-2">
 						<span id="timerDisplay" class="fs-1">
-							<input type="number" id="timerInputMinutes" class="fs-1 form-control mx-auto d-inline" min="0" max="59" value="00" />
+							<input type="number" id="timerInputMinutes" class="fs-1 form-control mx-auto d-inline no-spinner" min="0" max="59" value="00" />
 							:
-							<input type="number" id="timerInputSeconds" class="fs-1 form-control mx-auto d-inline" min="0" max="59" value="00" />
+							<input type="number" id="timerInputSeconds" class="fs-1 form-control mx-auto d-inline no-spinner" min="0" max="59" value="00" />
 						</span>
 					</div>
 					<div>
