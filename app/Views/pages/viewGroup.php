@@ -2,7 +2,6 @@
 	<div class="container mt-3">
 		<h4 class="text-center">Gestion des groupes</h4>
 		<div class="row g-"> <!-- g-4 ajoute un espace entre les colonnes -->
-			<!-- Panneau de gauche avec titre "Création d'un groupe" -->
 			<div class="col-md-6 bg-white rounded p-3">
 				<h5 class="text-center mb-4">Création d'un groupe</h5>
 				<form action="/newGroup/create" method="post">
@@ -35,13 +34,12 @@
 				</form>
 			</div>
 
-			<!-- Panneau de droite avec titre "Suppression d'un groupe" -->
 			<div class="col-md-6 bg-white rounded p-3">
 				<h5 class="text-center mb-4">Suppression d'un groupe</h5>
 				<div class="viewgroup-right-panel">
 					<div class="mb-3">
 						<label for="group_select">Sélectionner des groupes</label>
-						<div class="viewgroup-listcontent" style="max-height: 70rem; overflow-y: auto;">
+						<div class="listGroup">
 							<div class="mb-2">
 								<label class="input-group-text">
 									<input class="form-check-input me-2" type="checkbox" value="group1" id="group1">
@@ -100,6 +98,30 @@
 								<label class="input-group-text">
 									<input class="form-check-input me-2" type="checkbox" value="group1" id="group1">
 									Groupe 1
+								</label>
+							</div>
+							<div class="mb-2">
+								<label class="input-group-text">
+									<input class="form-check-input me-2" type="checkbox" value="group2" id="group2">
+									Groupe 2
+								</label>
+							</div>
+							<div class="mb-2">
+								<label class="input-group-text">
+									<input class="form-check-input me-2" type="checkbox" value="group3" id="group3">
+									Groupe 3
+								</label>
+							</div>
+							<div class="mb-2">
+								<label class="input-group-text">
+									<input class="form-check-input me-2" type="checkbox" value="group2" id="group2">
+									Groupe 2
+								</label>
+							</div>
+							<div class="mb-2">
+								<label class="input-group-text">
+									<input class="form-check-input me-2" type="checkbox" value="group3" id="group3">
+									Groupe 3
 								</label>
 							</div>
 							<div class="mb-2">
