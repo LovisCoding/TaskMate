@@ -1,11 +1,9 @@
 <form action="/concentration" method="GET">
 
-
-
 	<div class="concentration-page mb-5">
 		<div class="concentration-section ms-2">
 
-			<div class="concentration-section-task">
+			<div class="concentration-section-task shadow">
 
 				<div class="d-flex flex-column mb-1 gap-2" >
 

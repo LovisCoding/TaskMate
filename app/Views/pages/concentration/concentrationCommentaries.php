@@ -1,6 +1,6 @@
 
 
-<div id="commentary" class="concentration-commentaries me-2">
+<div id="commentary" class="concentration-commentaries shadow me-2">
 
 	<div class="d-flex justify-content-center mb-3">
 		<h4>Commentaires</h4>
