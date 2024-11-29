@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="<?= base_url('assets/styles/nav.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/styles/components.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/styles/concentration.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/styles/view-group.css'); ?>">
 
 	<?=str_contains($_SERVER['REQUEST_URI'], '/home') ?  '<link href="'.base_url('assets/styles/home.css').'" rel="stylesheet"/>': '' ?>
 
