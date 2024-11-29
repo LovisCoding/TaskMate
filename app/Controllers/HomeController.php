@@ -48,6 +48,15 @@ class HomeController extends BaseController
 		$this->getTasks("deadLine");
 	}
 
+	public function groups()
+	{
+		if (!session()->get('isLoggedIn')) {
+			return redirect()->to('/');
+		}
+
+		$this->getTasks("groups");
+	}
+
 	public function getTasks($type)
 	{
 		if (!session()->get('isLoggedIn')) {
