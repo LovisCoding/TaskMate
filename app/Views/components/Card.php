@@ -44,7 +44,7 @@ for ($i = 0; $i < 4; $i++) {
 }
 ?>
 
-<a href="/task/<?= htmlspecialchars($id) ?>" class="card p-3 shadow-sm rounded-3 text-decoration-none <?= $borderClass ?>">
+<a href="/task/<?= $id ?>" class="card p-3 shadow-sm rounded-3 text-decoration-none <?= $borderClass ?>">
 	<div class="d-flex justify-content-between align-items-center mb-3">
 		<div class="d-flex">
 			<?= $priorityIndicators ?>
@@ -56,12 +56,12 @@ for ($i = 0; $i < 4; $i++) {
 			</svg>
 		</div>
 	</div>
-	<h5 class="card-title mb-2"><?= htmlspecialchars($title) ?></h5>
-	<p class="card-text text-muted overflow-hidden"><?= htmlspecialchars($text) ?></p>
+	<h5 class="card-title mb-2"><?= $title ?></h5>
+	<p class="card-text text-muted overflow-hidden"><?= $text ?></p>
 	<div class="d-flex align-items-center justify-content-between mt-3">
 		<div class="d-flex align-items-center gap-2">
 			<span class="indicator-circle <?= $bubbleClass ?>"></span>
-			<span class="<?= $statusClass ?> small"><?= htmlspecialchars($status) ?></span>
+			<span class="<?= $statusClass ?> small"><?= $status ?></span>
 		</div>
 		<?php if ($retard > 0) : ?>
 			<span class="text-danger small">
