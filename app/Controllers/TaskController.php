@@ -62,6 +62,7 @@ class TaskController extends BaseController
 				->select('id, comment')
 				->where("id_task", $idTask)
 				->limit($perPage, ($currentPage - 1) * $perPage)
+				->orderBy("id", "desc")
 				->get()
 				->getResultArray();
 
