@@ -6,6 +6,7 @@ namespace App\Controllers;
 use App\Models\CommentModel;
 use App\Models\TaskDependenciesModel;
 use App\Models\TaskModel;
+use App\Models\PreferencesModel;
 use DateTime;
 
 class ConcentrationController extends BaseController
@@ -15,11 +16,17 @@ class ConcentrationController extends BaseController
         if (!session()->get('isLoggedIn')) {
             return redirect()->to('/');
         }
+        
 
         $taskModel = new TaskModel();
 
         $tasksConcentration = [];
         $session = session();
+        $idAccount = intval(session()->get("id"));
+
+        if (!$idAccount) {
+            return redirect()->to('/');
+        }
 
         if (!$session->get("tasksConcentration")) {
             $tasksConcentration = $taskModel->getTasksConcentration();
@@ -30,7 +37,10 @@ class ConcentrationController extends BaseController
 
         $commentaries = [];
 
-        $perPage = 2;
+        $preferencesModel = new PreferencesModel();
+		$preferences = $preferencesModel->getPreferencesByIdAccount($idAccount);
+		$perPage =  (int)$preferences['rows_per_page'];
+
         $currentPage = $this->request->getVar('page') ?? 1;
 
         $action = $this->request->getGet("action");
@@ -52,11 +62,13 @@ class ConcentrationController extends BaseController
                 ]);
             }
 
-            if (count($tasksConcentration) == 0) {
-                $session->remove("tasksConcentration");
-                return redirect()->to('/home/recap');
-    
-            }
+ 
+        }
+
+        if (count($tasksConcentration) == 0) {
+            $session->remove("tasksConcentration");
+            return redirect()->to('/home/recap');
+
         }
 
         
@@ -95,13 +107,9 @@ class ConcentrationController extends BaseController
             $priority = $task["priority"];
             $state = $task["current_state"];
         } else {
-            if ($action == 'complete' || $action == 'ignore') {
-                $session->remove("tasksConcentration");
-                // Pas de tâches dispo
-                return redirect()->to('/home/recap');  
-            }
-
-
+            $session->remove("tasksConcentration");
+            // Pas de tâches dispo
+            return redirect()->to('/home/recap');  
         }
 
         helper("form");
