@@ -295,11 +295,14 @@ class TaskController extends BaseController
 				}
 			}
 
-			$blockList = $this->request->getPost("task_blockList");
-			if (!empty($blockList)) {
-				$taskDependenciesModel = new TaskDependenciesModel();
+			$taskDependenciesModel = new TaskDependenciesModel();
 
-				$taskDependenciesModel->where("id_mother_task", $newId)->delete();
+
+			$blockList = $this->request->getPost("task_blockList");
+			$taskDependenciesModel->where("id_mother_task", $newId)->delete();
+
+			if ($blockList != null) {
+
 
 				foreach ($blockList as $taskBlockId) {
 
@@ -314,10 +317,9 @@ class TaskController extends BaseController
 			}
 
 			$isBlockedList = $this->request->getPost("task_isBlockedList");
-			if (!empty($isBlockedList)) {
-				$taskDependenciesModel = new TaskDependenciesModel();
+			$taskDependenciesModel->where("id_child_task", $newId)->delete();
 
-				$taskDependenciesModel->where("id_child_task", $newId)->delete();
+			if ($isBlockedList != null) {
 
 				if (count($isBlockedList) > 0) {
 					$taskModel->update($newId, [

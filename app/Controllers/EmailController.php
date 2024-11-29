@@ -116,7 +116,7 @@ class EmailController extends BaseController
 			$from = 'mail.taskmate@gmail.com';
 
 			$emailService->setTo($email);
-			$emailService->setFrom($from);
+			$emailService->setFrom($from, 'TaskMate');
 			$emailService->setSubject('Réinitialisation de mot de passe');
 			$emailService->setMessage($message);
 

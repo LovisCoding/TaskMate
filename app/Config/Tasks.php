@@ -45,7 +45,7 @@ class Tasks extends BaseTasks
 				$message = view('email/Notification', [ 'data' => $data ]);
 		
 				$emailService->setTo($email);
-				$emailService->setFrom($from);
+				$emailService->setFrom($from, 'TaskMate');
 				$emailService->setSubject('Vous avez des tâches en retard !');
 				$emailService->setMessage($message);
 				$emailService->send();
@@ -53,6 +53,6 @@ class Tasks extends BaseTasks
 			}
 	
 			$emailService->mailType = 'text';
-		})->everyMinute();
+		})->everyHour();
 	}
 }
