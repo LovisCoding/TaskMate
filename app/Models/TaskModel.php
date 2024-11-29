@@ -327,31 +327,45 @@ class TaskModel extends Model
 	{
 		$result = [];
 	
-		// Joindre la table des groupes pour récupérer le nom des groupes
-		$query = $this->getQueryFiltered($priority, $states)
-			->select('task.*, group.name as group_name') // Sélectionner les colonnes nécessaires
-			->join('group', 'group.id = task.id_group', 'left') // Joindre la table des groupes
-			->where('task.id_account', $idAccount)
-			->orderBy('group.name', 'asc') // Trier par le nom du groupe
-			->orderBy($sort, $sortOrder); // Trier par la colonne spécifiée
+		// 1. Filtrer les groupes qui ont des tâches
+		$groupModel = new GroupModel();
 	
-		// Récupérer toutes les tâches
-		$tasks = $query->findAll();
+		// Jointure pour récupérer uniquement les groupes ayant des tâches
+		$groupsQuery = $groupModel
+			->select('group.id, group.name') // Sélectionner l'id et le nom du groupe
+			->join('task', 'task.id_group = group.id', 'inner') // Joindre la table des tâches
+			->where('group.id_account', $idAccount) // Filtrer par l'utilisateur (id_account)
+			->groupBy('group.id') // Grouper par id de groupe pour éviter les doublons
+			->orderBy('group.name', 'asc'); // Trier les groupes par nom
 	
-		// Organiser les tâches par nom de groupe
-		foreach ($tasks as $task) {
-			$groupName = $task['group_name'] ?? 'Sans Groupe'; // Nom du groupe ou 'Sans Groupe' si non défini
+		// 2. Pagination des groupes
+		$groups = $groupsQuery->paginate($perPage, 'default', $currentPage);
 	
-			// Appeler createRetardTasks et prendre la première tâche transformée
-			$transformedTask = $this->createRetardTasks([$task])[0]; // Récupérer la tâche modifiée
-			$result[$groupName][] = $transformedTask; // Ajouter au résultat
+		// 3. Pour chaque groupe récupéré, récupérer les tâches associées
+		foreach ($groups as $group) {
+			// Récupérer toutes les tâches de ce groupe
+			$tasks = $this->getQueryFiltered($priority, $states)
+				->where('id_group', $group['id'])
+				->where('id_account', $idAccount)
+				->orderBy($sort, $sortOrder)
+				->findAll();
+	
+			// Ajouter les tâches transformées à notre résultat
+			$groupName = $group['name']; // Nom du groupe
+			$result[$groupName] = [];
+	
+			// Transformer les tâches (exemple : ajouter des délais ou des autres transformations)
+			foreach ($tasks as $task) {
+				$transformedTask = $this->createRetardTasks([$task])[0]; // Transformer la tâche
+				$result[$groupName][] = $transformedTask; // Ajouter à la liste des tâches du groupe
+			}
 		}
 	
-		// $result = $query->paginate($perPage, 'default', $currentPage);
-
+		// Retourner les groupes paginés avec leurs tâches respectives et l'objet de pagination
 		return $result;
 	}
 	
+
 
 
 	public function getTasksConcentration()

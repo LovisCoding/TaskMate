@@ -39,7 +39,7 @@ if ($color) {
 
 $priorityIndicators = '';
 for ($i = 0; $i < 4; $i++) {
-	$color = $i < $priority ? 'black' : 'gray';
+	$color = $i < $priority ? 'black' : 'lightgray';
 	$priorityIndicators .= "<span class=\"indicator $color\"></span>";
 }
 ?>
