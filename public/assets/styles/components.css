@@ -131,6 +131,10 @@
 	margin-top: 0.5rem;
 }
 
+.line {
+	margin-bottom: 20px;
+}
+
 .commentaire {
 	color: #6C757D;
 }
@@ -274,7 +278,27 @@
 	cursor: pointer;
 }
 
-
 .lightgray {
 	background-color:  #BBB;
+}
+
+.calendar_item_title {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	background-color: #F8F9FA;
+}
+
+.sticky-header {
+	position: sticky;
+	top: 12vh;
+	background-color: #F8F9FA;
+	z-index: 1000;
+}
+
+.sticky-wrapper {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	background-color: #F8F9FA;
 }

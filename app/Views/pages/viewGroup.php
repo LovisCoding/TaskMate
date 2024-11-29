@@ -8,7 +8,7 @@
 
             <div class="viewgroup-inputname">
                 <label for="group_name">Nom du groupe</label>
-                <input type="text" name="group_name" id="group_name" placeholder="Nom du groupe" required>
+                <input type="text" name="group_name" id="group_name" style="border: 1px solid black; border-radius: 10px; padding: .2rem;" placeholder="Nom du groupe" required>
             </div>
 
             <div class="viewgroup-list">
