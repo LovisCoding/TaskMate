@@ -10,7 +10,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'ConnectionController::index');
 
 $routes->get('/concentration', 'ConcentrationController::index');
-$routes->get('/concentration/validate', 'ConcentrationController::validateConcentration');
+$routes->post('/concentration/validate', 'ConcentrationController::validateConcentration');
 
 $routes->get('/home/recap', 'HomeController::index');
 $routes->get('/home/priority', 'HomeController::priority');

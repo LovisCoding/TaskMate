@@ -19,6 +19,7 @@ $session = session();
 $id_account = $session->get('id');
 $preferencesModel = new PreferencesModel();
 $preferences = $preferencesModel->getPreferencesByIdAccount($id_account);
+
 // Personnalisation du rendu de la pagination
 $pager->setSurroundCount($preferences['pagination_pages']); // Nombre de pages à afficher autour de la page active
 
