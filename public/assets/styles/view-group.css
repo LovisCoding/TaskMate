@@ -18,6 +18,15 @@
     border-radius: 10px;
 }
 
+.group-svginput {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    margin: 0;
+    border: none;
+    height: 100%;
+}
 
 .viewgroup-inputname {
     width: 80%;
@@ -33,15 +42,15 @@
 .viewgroup-listinput {
     display: flex;
     justify-content: start;
-    align-items: start;
-    border: 1px solid black;
+    align-items: center;
+    border: 1px solid #BBB;
     padding: .2rem;
     border-radius: 7px;
     gap: .3rem;
     padding: .3rem .5rem;
 }
 
-input {
+.viewgroup-listinput input {
     background-color: transparent;
     border: none;
     outline: none;

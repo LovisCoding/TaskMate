@@ -13,7 +13,7 @@
                     <div class="viewgroup-list mb-3">
                         <h4>Ajouter des tâches</h4>
                         <div class="viewgroup-listinput input-group">
-                            <span class="input-group-text">
+                            <span class="input-group-text group-svginput">
                                 <img src="/assets/imgs/search.svg" width="17px" height="auto">
                             </span>
                             <input type="text" class="form-control" placeholder="Rechercher une tâche" id="search">

@@ -15,7 +15,7 @@ class ViewGroupController extends BaseController
 
 		$groupModel = new GroupModel();
 
-		$groups = $groupModel->findAll();
+		$groups = $groupModel->orderBy("name")->findAll();
 
 		echo view('layout/header');
 		echo view('layout/navbar');

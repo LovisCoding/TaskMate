@@ -128,6 +128,9 @@ class HomeController extends BaseController
 			default => $taskModel->getTasksByDateRange($date, $nb, $id_account, $priority, $translatedStates, $sort, $sortOrder),
 		};
 
+		$pager = \Config\Services::pager();
+
+
 		// Passer les données à la vue
 		echo view('layout/header');
 		echo view('layout/navbar');
@@ -135,7 +138,7 @@ class HomeController extends BaseController
 			'tasks' => $tasks,
 			'date' => $date,
 			'nb' => $nb,
-			'pager' => $taskModel->pager,
+			'pager' => $pager,
 			'filters' => [
 				'start_date' => $date,
 				'end_date' => $endDate,
@@ -163,7 +166,6 @@ class HomeController extends BaseController
 		$sheet = $spreadsheet->getActiveSheet();
 		$filename = "";
 
-
 		if ($exportType == 'recap' || $exportType == 'deadLine') {
 
 			if ($exportType == 'recap') $filename = 'Taches_Recapitulatif.xlsx';
@@ -180,7 +182,6 @@ class HomeController extends BaseController
 
 			foreach ($data as $date => $taskList) {
 				$sheet->setCellValue('A' . $row, $date);
-				$row++;
 				foreach ($taskList as $task) {
 					$sheet->setCellValue('B' . $row, $task['id_task']);
 					$sheet->setCellValue('C' . $row, $task['name']);
@@ -225,36 +226,6 @@ class HomeController extends BaseController
 			}
 
 			$spreadsheet->removeSheetByIndex(0); // deletes default sheet created on init
-		} else if ($exportType == 'groups') {
-
-			$filename = 'Taches_par_Groupes.xlsx';
-
-			$sheet->setCellValue('A1', 'Groupe');
-			$sheet->setCellValue('B1', 'ID Task');
-			$sheet->setCellValue('C1', 'Nom');
-			$sheet->setCellValue('D1', 'Description');
-			$sheet->setCellValue('E1', 'Priorité');
-			$sheet->setCellValue('F1', 'État actuel');
-
-			$row = 2;
-
-			foreach ($data as $group => $tasks) {
-				$sheet->setCellValue('A' . $row, $group);
-				$row++;
-				foreach ($tasks as $task) {
-					$sheet->setCellValue('B' . $row, $task['id_task']);
-					$sheet->setCellValue('C' . $row, $task['name']);
-					$sheet->setCellValue('D' . $row, $task['description']);
-					$sheet->setCellValue('E' . $row, $task['priority'] . '/4');
-					$sheet->setCellValue('F' . $row, $task['current_state']);
-					$row++;
-				}
-			}
-		}
-
-		// set auto size
-		foreach (range('A', 'F') as $column) {
-			$sheet->getColumnDimension($column)->setAutoSize(true);
 		}
 
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
