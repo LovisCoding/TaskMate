@@ -62,54 +62,42 @@ class TaskController extends BaseController
                 ];
             }, $commentaries);
 
-
             $tasks = $taskModel->findAll(); // Récupère toutes les tâches
             $taskDependenciesModel = new TaskDependenciesModel();
+
+            $childTasks = $taskDependenciesModel->where("id_mother_task", $idTask)->findColumn('id_child_task') ?? [];
+            $motherTasks = $taskDependenciesModel->where("id_child_task", $idTask)->findColumn('id_mother_task') ?? [];
+ 
             
-            // Obtenez les dépendances : toutes les tâches enfants liées à une tâche mère.
-            $allChildTasks = $taskDependenciesModel->findColumn('id_child_task') ?? [];
-            
-            // Filtrer les tâches pour exclure celles qui correspondent à `idTask` ou qui ont une tâche mère.
-            $filteredTasks = array_filter($tasks, function ($task) use ($idTask, $allChildTasks) {
-                return $task['id_task'] != $idTask // Exclure la tâche actuelle
-                    && !in_array($task['id_task'], $allChildTasks); // Exclure les tâches ayant une tâche mère
+            // Filtrer les tâches pour exclure celles qui correspondent à `idTask` ou qui nous bloque déjà
+            $filteredTasks = array_filter($tasks, function ($task) use ($idTask, $motherTasks) {
+                return $task['id_task'] != $idTask 
+                    && !in_array($task['id_task'], $motherTasks); 
             });
+
             
             // Construire le résultat final
-            $blockList = array_map(function ($task) {
+            $blockList = array_map(function ($task) use ($childTasks) {
                 return [
                     'id' => $task['id_task'],
                     'name' => $task['name'],
-                    'isChecked' => false // Par défaut, aucune tâche n'est cochée
+                    'isChecked' => in_array($task['id_task'], $childTasks)
                 ];
             }, $filteredTasks);
 
-            $motherTasks = $taskDependenciesModel
-            ->where('id_child_task', $idTask)
-            ->findColumn('id_mother_task'); // Tâches mères de `idTask`
-        
-            // Trouver tous les enfants de la tâche actuelle
-            $childTasks = $taskDependenciesModel
-                ->where('id_mother_task', $idTask)
-                ->findColumn('id_child_task') ?? []; // Liste des tâches enfants
-            
-            if ($motherTasks) {
-                $isBlockedList = array_map(function ($task) use ($motherTasks, $idTask, $childTasks) {
-                    // Exclure `idTask` lui-même et vérifier si un enfant est bloqué
-                    $isBlocked = in_array($task['id_task'], $motherTasks) || in_array($task['id_task'], $childTasks);
-                    if ($task['id_task'] != $idTask && !$isBlocked) {
-                        return [
-                            'id' => $task['id_task'],
-                            'name' => $task['name'],
-                            'isChecked' => in_array($task['id_task'], $motherTasks) // `true` si présent dans les dépendances
-                        ];
-                    }
-                    return null; // Exclure la tâche si elle est bloquée ou si c'est elle-même
-                }, $tasks);
-            
-                // Filtrer les tâches nulles
-                $isBlockedList = array_filter($isBlockedList);
-            }
+            // Filtrer les tâches pour exclure celles qui correspondent à `idTask` ou qui nous bloque déjà
+            $filteredTasks = array_filter($tasks, function ($task) use ($idTask, $childTasks) {
+                return $task['id_task'] != $idTask 
+                    && !in_array($task['id_task'], $childTasks); 
+            });
+
+            $isBlockedList = array_map(function ($task) use ($motherTasks) {
+                return [
+                    'id' => $task['id_task'],
+                    'name' => $task['name'],
+                    'isChecked' => in_array($task['id_task'], $motherTasks)
+                ];
+            }, $filteredTasks);
             
             $title = $task["name"];
             $description = $task["description"];
