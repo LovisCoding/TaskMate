@@ -162,6 +162,8 @@ class HomeController extends BaseController
 		$data = $this->request->getPost('tasks[]');
 
 
+		if (!$data) return redirect()->to('/home/'.$exportType);
+
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet->getActiveSheet();
 		$filename = "";
