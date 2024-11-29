@@ -62,7 +62,6 @@ $taskList = [
 
 ?>
 
-
 <div class="viewgroup-content">
 
     <div class="viewgroup-container">
@@ -82,7 +81,7 @@ $taskList = [
             </div>
 
             <div class="viewgroup-listcontent" >
-                <?= view('pages/viewTask/TaskCheckBoxes', ['taskList' => $taskList ]) ?>
+                <?= view('pages/viewTask/TaskCheckBoxes', ['taskList' => $taskList, 'name' => 'task_list' ]) ?>
             </div>
 
         </div>
