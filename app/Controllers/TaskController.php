@@ -30,9 +30,9 @@ class TaskController extends BaseController
 
 		$date = null;
 
-		$title = "Titre de la tâche";
-		$description = "Description de la tâche";
-		$priority = 2;
+		$title = null;
+		$description = null;
+		$priority = 1;
 		$state = "Pas commencée";
 		$started = false;
 
@@ -223,6 +223,17 @@ class TaskController extends BaseController
 			$end_date = null;
 			$taskGroupId = $this->request->getPost('task_group');
 
+			if ($id == -1) {
+				$state = "Pas commencée";
+			}
+			else {
+				$task = $taskModel->where("id_task", $id)->first();
+				if ($task) {
+					$start_date = $task['start_date'];
+					$end_date = $task['end_date'];
+				}
+			}
+ 
 
 			$now = (new DateTime())->format('Y-m-d');
 
@@ -299,6 +310,23 @@ class TaskController extends BaseController
 
 
 			$blockList = $this->request->getPost("task_blockList");
+
+			$childTasks = $taskDependenciesModel->where("id_mother_task", $newId)->select("id_child_task")->findAll();
+
+			// réaffectation de l'ancien state avant d'etre bloquée
+			foreach($childTasks as $childId) {
+				$task = $taskModel->where("id_task", $childId)->first();
+				if ($task['start_date'])
+					$old_state = $task['end_date'] ? "Terminée" : "En cours";
+				else 
+					$old_state = "Pas commencée";
+			
+
+				$taskModel->update($childId, [
+					"current_state" => $old_state
+				]);
+			}
+
 			$taskDependenciesModel->where("id_mother_task", $newId)->delete();
 
 			if ($blockList != null) {
@@ -317,6 +345,7 @@ class TaskController extends BaseController
 			}
 
 			$isBlockedList = $this->request->getPost("task_isBlockedList");
+			
 			$taskDependenciesModel->where("id_child_task", $newId)->delete();
 
 			if ($isBlockedList != null) {
@@ -326,7 +355,6 @@ class TaskController extends BaseController
 						"current_state" => "Bloquée"
 					]);
 				}
-
 				foreach ($isBlockedList as $taskBlockId) {
 
 					if ($newId && $taskBlockId) {
@@ -335,11 +363,25 @@ class TaskController extends BaseController
 					};
 				}
 			}
+			else {
+				$task = $taskModel->where("id_task", $newId)->first();
+				if ($task['start_date'])
+					$old_state = $task['end_date'] ? "Terminée" : "En cours";
+				else 
+					$old_state = "Pas commencée";
+				
+				$taskModel->update($newId, [
+					"start_date" => $task["start_date"],
+					"current_state" => $old_state,
+					"end_date" => $task["end_date"]
+				]);
+			}
 
 
             // Redirection après insertion/mise à jour
             return redirect()->to('/task/' . $newId);
         }
+		
     }
 	public function getTasks() {
 
