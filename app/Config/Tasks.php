@@ -20,6 +20,9 @@ class Tasks extends BaseTasks
     public function init(Scheduler $schedule)
     {
         $schedule->call(function() {
+
+			log_message("debug", "000111 - Lancement de Tasks");
+
 			$accountModel = new AccountModel();
 			$taskModel = new TaskModel();
 			$preferencesModel = new PreferencesModel();
@@ -30,15 +33,12 @@ class Tasks extends BaseTasks
 			foreach ($accounts as $account) {
 	
 				$pref = $preferencesModel->getPreferencesByIdAccount($account['id']);
-				
 
 				$tasks = $taskModel->getTasksWhichAreNotTerminatedAndStartDays($account['id'], $pref['days_reminder_deadline']);
 				$data = [];
 				foreach ($tasks as $task) {
 					$data[$task['deadline']][] = $task['name'];
 				}
-
-				// Order by task deadline
 
 				$from = 'mail.taskmate@gmail.com';
 				$email = $account['email'];
@@ -53,9 +53,6 @@ class Tasks extends BaseTasks
 			}
 	
 			$emailService->mailType = 'text';
-
-			log_message("debug", "test");
-	
-        })->everyMinute()->named('mail');
-    }
+		})->everyMinute();
+	}
 }

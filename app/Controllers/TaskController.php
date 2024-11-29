@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\CommentModel;
 use App\Models\TaskDependenciesModel;
 use App\Models\TaskModel;
+use App\Models\PreferencesModel;
 use DateTime;
 
 class TaskController extends BaseController
@@ -39,7 +40,11 @@ class TaskController extends BaseController
 		$blockList = [];
 		$isBlockedList = [];
 
-		$perPage = 3;
+		$idAccount = intval(session()->get("id"));
+
+        $preferencesModel = new PreferencesModel();
+		$preferences = $preferencesModel->getPreferencesByIdAccount($idAccount);
+		$perPage =  (int)$preferences['rows_per_page'];		
 		$currentPage = $this->request->getVar('page') ?? 1;
 
         $taskModel = new TaskModel();
@@ -57,6 +62,7 @@ class TaskController extends BaseController
 				->select('id, comment')
 				->where("id_task", $idTask)
 				->limit($perPage, ($currentPage - 1) * $perPage)
+				->orderBy("id", "desc")
 				->get()
 				->getResultArray();
 

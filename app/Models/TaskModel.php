@@ -73,9 +73,9 @@ class TaskModel extends Model
 	public function getTasksWhichAreNotTerminatedAndStartDays($idAccount, $nbDays)
 	{
 		$date = new DateTime();
-		$date->modify("-$nbDays days");
+		$date->modify("+$nbDays days");
 		$query = $this
-			->where('deadline >', $date->format('Y-m-d H:i:s'))
+			->where('deadline <', $date->format('Y-m-d H:i:s'))
 			->where('current_state !=', 'Terminée')
 			->where('id_account', $idAccount);
 		$tasks = $query->orderBy('deadline', 'asc')->findAll();

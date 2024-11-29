@@ -8,7 +8,7 @@ class ConnectionController extends BaseController
 	public function index()
 	{
 		if (session()->get("isLoggedIn")) {
-			redirect()->to('/home/recap');
+			return redirect()->to('/home/recap');
 		}
 
 		helper(['form']);

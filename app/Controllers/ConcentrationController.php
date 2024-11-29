@@ -6,6 +6,7 @@ namespace App\Controllers;
 use App\Models\CommentModel;
 use App\Models\TaskDependenciesModel;
 use App\Models\TaskModel;
+use App\Models\PreferencesModel;
 use DateTime;
 
 class ConcentrationController extends BaseController
@@ -16,51 +17,39 @@ class ConcentrationController extends BaseController
             return redirect()->to('/');
         }
 
+
         $taskModel = new TaskModel();
 
         $tasksConcentration = [];
         $session = session();
+        $idAccount = intval(session()->get("id"));
+
+        if (!$idAccount) {
+            return redirect()->to('/');
+        }
 
         if (!$session->get("tasksConcentration")) {
             $tasksConcentration = $taskModel->getTasksConcentration();
-        }
-        else {
+        } else {
             $tasksConcentration = $session->get("tasksConcentration");
         }
 
         $commentaries = [];
 
-        $perPage = 2;
+        $preferencesModel = new PreferencesModel();
+        $preferences = $preferencesModel->getPreferencesByIdAccount($idAccount);
+        $perPage =  (int)$preferences['rows_per_page'];
+
         $currentPage = $this->request->getVar('page') ?? 1;
 
-        $action = $this->request->getGet("action");
         $now = (new DateTime())->format('Y-m-d');
 
-        if ($action == "complete" || $action == "ignore") {
-            $task = array_shift($tasksConcentration);
-
-            if ($action == "complete") {
-                $taskModel->update($task["id_task"], [
-                    "end_date" => $now,
-                    "current_state" => "Terminée"
-                ]);
-            }
-            else if ($action == "ignore") {
-                $taskModel->update($task["id_task"], [
-                    "start_date" => null,
-                    "current_state" => "Pas commencée"
-                ]);
-            }
-
-            if (count($tasksConcentration) == 0) {
-                $session->remove("tasksConcentration");
-                return redirect()->to('/home/recap');
-    
-            }
+        if (count($tasksConcentration) == 0) {
+            $session->remove("tasksConcentration");
+            return redirect()->to('/home/recap');
         }
 
-        
-        $task = $tasksConcentration[0]; 
+        $task = $tasksConcentration[0];
 
         $commentModel = new CommentModel();
 
@@ -79,29 +68,20 @@ class ConcentrationController extends BaseController
                 ->get()
                 ->getResultArray();
 
-            // Optionnel : Vous pouvez ajouter l'ID au tableau de commentaires
-            // Ici, vous ajoutez chaque commentaire avec son ID
             $commentaries = array_map(function ($comment) {
                 return [
-                    'id' => $comment['id'],    // Ajoutez l'ID du commentaire
-                    'comment' => $comment['comment'] // Gardez le texte du commentaire
+                    'id' => $comment['id'],
+                    'comment' => $comment['comment'] 
                 ];
             }, $commentaries);
-
-
 
             $title = $task["name"];
             $description = $task["description"];
             $priority = $task["priority"];
             $state = $task["current_state"];
         } else {
-            if ($action == 'complete' || $action == 'ignore') {
-                $session->remove("tasksConcentration");
-                // Pas de tâches dispo
-                return redirect()->to('/home/recap');  
-            }
-
-
+            $session->remove("tasksConcentration");
+            return redirect()->to('/home/recap');
         }
 
         helper("form");
@@ -124,22 +104,57 @@ class ConcentrationController extends BaseController
         $session->remove("tasksConcentration");
         $session->set("tasksConcentration", $tasksConcentration);
 
-        // helper(['form']);
-
-        // $data = [
-        //     'success' => session()->getFlashdata('success'),
-        //     'error' => session()->getFlashdata('error'),
-        // ];
-
         echo view('layout/header');
         echo view('layout/navbar');
         echo view('pages/concentration/concentrationPage', ['data' => $data]);
         echo view('layout/footer');
     }
 
-    public function validateConcentration() {
+    public function validateConcentration()
+    {
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/');
+        }
 
-        echo "Donova mon amoureux <3";
+        $taskModel = new TaskModel();
+        $tasksConcentration = [];
 
+        $session = session();
+        $idAccount = intval(session()->get("id"));
+
+        if (!$idAccount) {
+            return redirect()->to('/');
+        }
+
+        if (!$session->get("tasksConcentration")) {
+            $tasksConcentration = $taskModel->getTasksConcentration();
+        } else {
+            $tasksConcentration = $session->get("tasksConcentration");
+        }
+
+
+        $action = $this->request->getPost("action");
+        $now = (new DateTime())->format('Y-m-d');
+
+        if ($action == "complete" || $action == "ignore") {
+            $task = array_shift($tasksConcentration);
+
+            if ($action == "complete") {
+                $taskModel->update($task["id_task"], [
+                    "end_date" => $now,
+                    "current_state" => "Terminée"
+                ]);
+            } else if ($action == "ignore") {
+                $taskModel->update($task["id_task"], [
+                    "start_date" => null,
+                    "current_state" => "Pas commencée"
+                ]);
+            }
+        }
+
+        $session->remove("tasksConcentration");
+        $session->set("tasksConcentration", $tasksConcentration);
+
+        return redirect()->to('/concentration');
     }
 }

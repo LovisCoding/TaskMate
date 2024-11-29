@@ -1,14 +1,14 @@
 <div class="viewgroup-content">
-    <div class="container mt-3">
-        <h4 class="text-center">Gestion des groupes</h4>
-        <div class="row g-3">
-            <div class="col-md-6 bg-white rounded p-3">
-                <h5 class="text-center mb-4">Création d'un groupe</h5>
-                <form action="/newGroup/create" method="post">
-                    <div class="viewgroup-inputname mb-3">
-                        <label for="group_name">Nom du groupe</label>
-                        <input type="text" name="group_name" id="group_name" class="form-control" placeholder="Nom du groupe" required>
-                    </div>
+    <div class="viewgroup-container">
+        <h4>Créer un nouveau groupe</h4>
+
+        <!-- Formulaire -->
+        <form action="/newGroup/create" method="post">
+
+            <div class="viewgroup-inputname">
+                <label for="group_name">Nom du groupe</label>
+                <input type="text" maxlength="50" name="group_name" id="group_name" style="border: 1px solid black; border-radius: 10px; padding: .2rem;" placeholder="Nom du groupe" required>
+            </div>
 
                     <div class="viewgroup-list mb-3">
                         <h4>Ajouter des tâches</h4>
