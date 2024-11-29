@@ -30,7 +30,7 @@ class ConcentrationController extends BaseController
 
         $commentaries = [];
 
-        $perPage = 3;
+        $perPage = 2;
         $currentPage = $this->request->getVar('page') ?? 1;
 
         $action = $this->request->getGet("action");
@@ -51,13 +51,15 @@ class ConcentrationController extends BaseController
                     "current_state" => "Pas commencée"
                 ]);
             }
+
+            if (count($tasksConcentration) == 0) {
+                $session->remove("tasksConcentration");
+                return redirect()->to('/home/recap');
+    
+            }
         }
 
-        if (count($tasksConcentration) == 0) {
-            $session->remove("tasksConcentration");
-            return redirect()->to('/home/recap');
-
-        }
+        
         $task = $tasksConcentration[0]; 
 
         $commentModel = new CommentModel();
@@ -93,9 +95,13 @@ class ConcentrationController extends BaseController
             $priority = $task["priority"];
             $state = $task["current_state"];
         } else {
-            $session->remove("tasksConcentration");
-            // Pas de tâches dispo
-            return redirect()->to('/home/recap');
+            if ($action == 'complete' || $action == 'ignore') {
+                $session->remove("tasksConcentration");
+                // Pas de tâches dispo
+                return redirect()->to('/home/recap');  
+            }
+
+
         }
 
         helper("form");
