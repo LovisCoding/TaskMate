@@ -14,5 +14,6 @@
 		id="<?= $name ?>" 
 		name="<?= $name ?>" 
 		placeholder="<?= $placeholder ?? "" ?>"
+		maxlength="<?= $maxlength ?? "" ?>"
 	>
 </div>
