@@ -21,6 +21,8 @@ class Tasks extends BaseTasks
     {
         $schedule->call(function() {
 
+			log_message("debug", "000111 - Lancement de Tasks");
+
 			$accountModel = new AccountModel();
 			$taskModel = new TaskModel();
 			$preferencesModel = new PreferencesModel();
@@ -31,11 +33,8 @@ class Tasks extends BaseTasks
 			foreach ($accounts as $account) {
 	
 				$pref = $preferencesModel->getPreferencesByIdAccount($account['id']);
-				$days = 7;
 
-				if ( $pref !== null ) $days = $pref['days_reminder_deadline'];
-
-				$tasks = $taskModel->getTasksWhichAreNotTerminatedAndStartDays($account['id'], $days);
+				$tasks = $taskModel->getTasksWhichAreNotTerminatedAndStartDays($account['id'], $pref['days_reminder_deadline']);
 				$data = [];
 				foreach ($tasks as $task) {
 					$data[$task['deadline']][] = $task['name'];
