@@ -1,4 +1,3 @@
-
 <div id="commentary" class="commentaires">
 
 	<div class="d-flex justify-content-between align-items-center">
@@ -12,11 +11,13 @@
 		<div class="pt-4"></div>
 	</div>
 
-	<div id="commentaryList" style="position:relative">
+	<div id="commentaryList">
 		<?php foreach ($commentaires['items'] as $commentaire) { ?>
-			<button name="DeleteCommentary" value="<?= $commentaire['id'] ?>" style="top: 4px; right: 4px; font-size:1.25rem;position:absolute" class="btn text-danger" type="submit">x</button>
-			<input type="hidden" name="task_commentaries_id[]" value="<?= $commentaire['id'] ?>">
-			<textarea class="form-control commentaire mb-3" rows="3" name="task_commentaries[]"><?= $commentaire['comment'] ?></textarea>
+			<div style="position:relative">
+				<button name="DeleteCommentary" value="<?= $commentaire['id'] ?>" style="top: -8px; right: -4px; font-size:1.25rem;position:absolute" class="btn text-danger" type="submit">x</button>
+				<input type="hidden" name="task_commentaries_id[]" value="<?= $commentaire['id'] ?>">
+				<textarea class="form-control commentaire mb-3" rows="3" name="task_commentaries[]"><?= $commentaire['comment'] ?></textarea>
+			</div>
 		<?php } ?>
 	</div>
 
