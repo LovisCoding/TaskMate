@@ -1,23 +1,17 @@
 
 
 
-<h1>Donova c'est mon amoureux secret</h1>
-<h6>Et gars il est une <b>GROSSE</b> beteu </h6>
+<body>
+    <div class="form-container">
+              <form class="form">
+                  <input id="search" type="text" class="input" placeholder="search..."/>
+                  <button id="clear" class="clear-results">clear</button>
+              </form>
 
+    </div>
+    <div class="results-container>
+       <ul class="results-list" id="list">
 
+       </ul>
+    </div>
 
-<div>
-
-
-<div>
-    label
-</div>
-
-
-<div>
-    <div>search</div>
-    
-</div>
-
-
-</div>
