@@ -13,10 +13,13 @@
 
 	<div id="commentaryList">
 		<?php foreach ($commentaires['items'] as $commentaire) { ?>
-			<div style="position:relative">
-				<button name="DeleteCommentary" value="<?= $commentaire['id'] ?>" style="top: -8px; right: -4px; font-size:1.25rem;position:absolute" class="btn text-danger" type="submit">x</button>
+			<div class="d-flex align-items-center">
+				
 				<input type="hidden" name="task_commentaries_id[]" value="<?= $commentaire['id'] ?>">
 				<textarea class="form-control commentaire mb-3" rows="3" name="task_commentaries[]"><?= $commentaire['comment'] ?></textarea>
+				<button name="DeleteCommentary" value="<?= $commentaire['id'] ?>" style="height: fit-content" class="btn mb-3" type="submit">
+					<img src="/assets/imgs/trash.svg" alt="trash" width="20px" height="20px"  >
+				</button>
 			</div>
 		<?php } ?>
 	</div>
