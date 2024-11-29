@@ -8,19 +8,11 @@ class TaskDependenciesSeeder extends Seeder
 {
     public function run()
     {
-        $data = [];
-        for ($i = 1; $i <= 10; $i++) {
-            $data[] = [
-                'id_mother_task' => rand(1, 20),
-                'id_child_task' => rand(1, 20),
-            ];
-        }
+        $dependencies = [
+            ['id_mother_task' => 3, 'id_child_task' => 4],  // Réparer le robinet qui fuit dépend de Organiser le garage
+            ['id_mother_task' => 7, 'id_child_task' => 8],  // Implémenter le système d'authentification dépend de Créer le schéma de la base de données
+        ];
 
-        // Avoid circular dependencies
-        $filteredData = array_filter($data, function ($item) {
-            return $item['id_mother_task'] !== $item['id_child_task'];
-        });
-
-        $this->db->table('taskdependencies')->insertBatch($filteredData);
+        $this->db->table('taskdependencies')->insertBatch($dependencies);
     }
 }

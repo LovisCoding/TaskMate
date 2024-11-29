@@ -59,8 +59,13 @@ class TaskModel extends Model
 				$delay = $endDate->diff($deadline)->days;
 				$task['retard'] = $delay > 0 ? $delay : null;
 			} else {
-				$delay = $today->diff($deadline)->days;
-				$task['retard'] = $delay > 0 ? $delay : null;
+				if ($today > $deadline) {
+					$delay = $today->diff($deadline)->days;
+					$task['retard'] = $delay > 0 ? $delay : null;
+				}
+				else {
+					$task['retard'] = null;
+				}
 			}
 
 			return $task;
