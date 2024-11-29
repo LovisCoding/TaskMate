@@ -1,56 +1,58 @@
 <?php
-	$title = $title ?? '';
-	$date = $date ?? '';
-	$text = $text ?? '';
-	$priority = $priority ?? 0;
-	$status = $status ?? '';
-	$color = $color ?? false;
-	$statusClass = '';
-	$bubbleClass = '';
-	$borderClass = '';
-	$id = $id ?? '';
+$title = $title ?? '';
+$date = $date ?? '';
+$text = $text ?? '';
+$priority = $priority ?? 0;
+$status = $status ?? '';
+$color = $color ?? false;
+$statusClass = '';
+$bubbleClass = '';
+$borderClass = '';
+$id = $id ?? '';
 
-	$date = new DateTime($date);
-	$date->format("j F Y");
+setlocale(LC_TIME, 'fr_FR.UTF-8');
 
-	if (strpos(strtolower($status), 'en retard') !== false) {
-		$statusClass = 'text-danger';
-		$bubbleClass = 'bg-danger';
-	} elseif (strpos(strtolower($status), 'en cours') !== false) {
-		$statusClass = 'text-warning';
-		$bubbleClass = 'bg-warning';
-	} elseif (strpos(strtolower($status), 'terminée') !== false) {
-		$statusClass = 'text-success';
-		$bubbleClass = 'bg-success';
-	} elseif (strpos(strtolower($status), 'bloquée') !== false) {
-		$statusClass = 'text-primary';
-		$bubbleClass = 'bg-primary';
-	} elseif (strpos(strtolower($status), 'pas commencée') !== false) {
-		$statusClass = 'text-dark';
-		$bubbleClass = 'bg-secondary';
-	}
+$date = new DateTime($date);
+$formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+$dateFormatted = $formatter->format($date);
 
-	if ($color) {
-		$borderClass = 'border-' . $statusClass;
-	}
+if (strpos(strtolower($status), 'en retard') !== false) {
+	$statusClass = 'text-danger';
+	$bubbleClass = 'bg-danger';
+} elseif (strpos(strtolower($status), 'en cours') !== false) {
+	$statusClass = 'text-warning';
+	$bubbleClass = 'bg-warning';
+} elseif (strpos(strtolower($status), 'terminée') !== false) {
+	$statusClass = 'text-success';
+	$bubbleClass = 'bg-success';
+} elseif (strpos(strtolower($status), 'bloquée') !== false) {
+	$statusClass = 'text-primary';
+	$bubbleClass = 'bg-primary';
+} elseif (strpos(strtolower($status), 'pas commencée') !== false) {
+	$statusClass = 'text-dark';
+	$bubbleClass = 'bg-secondary';
+}
 
+if ($color) {
+	$borderClass = 'border-' . $statusClass;
+}
 
-	$priorityIndicators = '';
-	for ($i = 0; $i < 4; $i++) {
-		$color = $i < $priority ? 'black' : 'gray';
-		$priorityIndicators .= "<span class=\"indicator $color\"></span>";
-	}
+$priorityIndicators = '';
+for ($i = 0; $i < 4; $i++) {
+	$color = $i < $priority ? 'black' : 'gray';
+	$priorityIndicators .= "<span class=\"indicator $color\"></span>";
+}
 ?>
 
-<a href="/task/<?= htmlspecialchars($id) ?>" class="card p-3 shadow-sm rounded-3 text-decoration-none <?= $borderClass ?>" >
+<a href="/task/<?= htmlspecialchars($id) ?>" class="card p-3 shadow-sm rounded-3 text-decoration-none <?= $borderClass ?>">
 	<div class="d-flex justify-content-between align-items-center mb-3">
 		<div class="d-flex">
 			<?= $priorityIndicators ?>
 		</div>
 		<div class="d-flex gap-2">
-			<span class="small"><?= $date->format("j F Y") ?></span>
+			<span class="small"><?= $dateFormatted ?></span>
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" style="width:1rem">
-  				<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+				<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
 			</svg>
 		</div>
 	</div>
