@@ -41,7 +41,8 @@ $stateColumns = array_filter($stateColumns, function($state) use ($statesFilter)
 			<?= view('components/Export', ['redirect'=>'/home', 'tasks' => $tasks, 'currentPage' => $_SERVER['PHP_SELF']]) ?>
 			<?= view('components/Filter') ?>
 		</div>
-		<div class="right">
+		<div class="right d-flex">
+			<?= view('components/NewGroup') ?>
 			<?= view('components/NewTache') ?>
 		</div>
 	</div>

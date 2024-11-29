@@ -6,7 +6,8 @@
 			<?= view('components/Export', ['redirect'=>'/home', 'tasks' => $tasks, 'currentPage' => $_SERVER['PHP_SELF']]) ?>
 			<?= view('components/Filter') ?>
 		</div>
-		<div class="right">
+		<div class="right d-flex">
+			<?= view('components/NewGroup') ?>
 			<?= view('components/NewTache') ?>
 		</div>
 	</div>
@@ -21,7 +22,7 @@
 		<?php foreach ($tasks as $groupName => $taskes): ?>
 			<div class="col-12 col-sm-6 col-md-4 col-lg-3">
 				<div class="mb-3 text-center">
-					<div class="d-flex justify-content-center mt-2">
+					<div class="d-flex justify-content-center mt-2 sticky-title">
 						<p class="fw-bold mb-0"><?= htmlspecialchars($groupName) ?></p>
 					</div>
 					<div class="line"></div>
