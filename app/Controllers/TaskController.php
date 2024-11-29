@@ -216,6 +216,7 @@ class TaskController extends BaseController
 				return redirect()->back();
 			}
 
+			$taskGroupId = $taskGroupId === "" ? null : $taskGroupId;
 
 			// Construire le tableau de données pour l'insertion
 			$taskData = [

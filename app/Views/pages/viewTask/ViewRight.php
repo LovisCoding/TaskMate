@@ -32,6 +32,7 @@ $groups = [
 			<div>
 				<label for="taskGroup" class="fs-5 mb-2 fw-bold">Groupe de tâches :</label>
 				<select id="taskGroup" name="task_group" class="form-select">
+					<option value="" <?= empty($group['id']) ? 'selected' : '' ?>>Aucun groupe</option>
 					<?php foreach ($groups as $group): ?>
 						<option value="<?= $group['id'] ?>"><?= esc($group['name']) ?></option>
 					<?php endforeach; ?>

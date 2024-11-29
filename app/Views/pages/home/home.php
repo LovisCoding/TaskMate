@@ -22,14 +22,14 @@ $date = new DateTime($date);
 </div>
 
 <div class="container mt-4 justify-content-center">
-	<div class="overflow-auto">
+	<div class="overflow-auto" style="max-height: 65vh">
 		<div class="d-flex flex-nowrap align-items-start">
 			<?php foreach ($tasks as $dateString => $taskes): ?>
 				<div class="d-flex flex-column me-4 mb-4 col">
 					<?php
 					$date = new DateTime($dateString);
 					?>
-					<div class="mb-3">
+					<div class="mb-3 calendar_item_title">
 						<?= view('components/CalendarItemTitle', ['date' => $date]) ?>
 					</div>
 					<?php foreach ($taskes as $task): ?>
