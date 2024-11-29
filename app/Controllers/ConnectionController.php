@@ -7,6 +7,10 @@ class ConnectionController extends BaseController
 {
 	public function index()
 	{
+		if (session()->get("isLoggedIn")) {
+			redirect()->to('/home/recap');
+		}
+
 		helper(['form']);
 
 		$data = [
@@ -19,6 +23,10 @@ class ConnectionController extends BaseController
 
 	public function register()
 	{
+		if (session()->get("isLoggedIn")) {
+			redirect()->to('/home/recap');
+		}
+
 		helper(['form']);
 
 		$data = [

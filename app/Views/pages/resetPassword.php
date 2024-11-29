@@ -24,21 +24,41 @@
 				<?= session()->getFlashdata('success') ?>
 				</div>
 			<?php endif; ?>
-			<form action="/forgot-password/updatePassword" method="post">
+			
+			<?php echo form_open('/forgot-password/updatePassword', ['method' => 'post']); ?>
 				<?= csrf_field() ?>
 				<input type="hidden" name="token" value="<?= esc($token) ?>">
 
 				<div class="form-group">
 					<label for="password" class="form-label">Nouveau mot de passe :</label>
-					<input type="password" class="form-control" id="password" name="password" placeholder="Entrez un nouveau mot de passe" required>
+					<?php
+						$passwordValue = old('password') ?: '';
+						$passwordClass = session('validation') && session('validation')->hasError('password') ? 'is-invalid' : '';
+					?>
+					<input type="password" class="form-control <?= $passwordClass ?>" id="password" name="password" placeholder="Entrez un nouveau mot de passe" value="<?= esc($passwordValue) ?>" required>
+					<?php if (session('validation') && session('validation')->hasError('password')): ?>
+						<div class="invalid-feedback">
+							<?= session('validation')->getError('password') ?>
+						</div>
+					<?php endif; ?>
 				</div>
 
 				<div class="form-group">
 					<label for="confirm_password" class="form-label">Confirmez le mot de passe :</label>
-					<input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirmez le mot de passe" required>
+					<?php
+						$confirmPasswordValue = old('confirm_password') ?: '';
+						$confirmPasswordClass = session('validation') && session('validation')->hasError('confirm_password') ? 'is-invalid' : '';
+					?>
+					<input type="password" class="form-control <?= $confirmPasswordClass ?>" id="confirm_password" name="confirm_password" placeholder="Confirmez le mot de passe" value="<?= esc($confirmPasswordValue) ?>" required>
+					<?php if (session('validation') && session('validation')->hasError('confirm_password')): ?>
+						<div class="invalid-feedback">
+							<?= session('validation')->getError('confirm_password') ?>
+						</div>
+					<?php endif; ?>
 				</div>
+
 				<button type="submit" class="btn btn-primary w-100 form-text mt-3">Confirmer</button>
-			</form>
+			<?php echo form_close(); ?>
 		</div>
 	</div>
 

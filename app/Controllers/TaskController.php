@@ -20,8 +20,14 @@ class TaskController extends BaseController
 		if (!session()->get('isLoggedIn')) {
 			return redirect()->to('/');
 		}
+
+
+        $page = $this->request->getVar('page');
+        if ($page && $idTask !== -1) {
+            $this->validateTask($idTask);
+        }
+
 		$date = null;
-		$taskModel = new TaskModel();
 
 		$title = "Titre de la tâche";
 		$description = "Description de la tâche";
@@ -36,7 +42,8 @@ class TaskController extends BaseController
 		$perPage = 3;
 		$currentPage = $this->request->getVar('page') ?? 1;
 
-		$task = $taskModel->where("id_task", $idTask)->first();
+        $taskModel = new TaskModel();
+        $task = $taskModel->where("id_task", $idTask)->first();
 
 		if ($idTask != -1 && !$task) {
 			return redirect()->to('/home/recap');
@@ -184,9 +191,11 @@ class TaskController extends BaseController
 		$taskModel = new TaskModel();
 
 		if ($action && $action === "delete") {
+
 			$taskModel->delete($id);
 			return redirect()->to('/home/recap');
 		} else {
+
 			// Récupérer les données du formulaire
 			$name = $this->request->getPost('task_name');
 			$desc = $this->request->getPost('task_desc');
@@ -197,6 +206,7 @@ class TaskController extends BaseController
 			$start_date = null;
 			$end_date = null;
 			$taskGroupId = $this->request->getPost('task_group');
+
 
 			$now = (new DateTime())->format('Y-m-d');
 

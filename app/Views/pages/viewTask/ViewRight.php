@@ -8,7 +8,7 @@ $groups = [
 ?>
 
 <div class="col-sm-12 col-lg-4">
-	<div class="p-5 pt-3 bg-white rounded-2" style="height: fit-content;">
+	<div class="shadow p-5 pt-3 bg-white rounded-2" style="height: fit-content;">
 		<div class="d-flex flex-column gap-4">
 			<div>
 				<div class="d-flex justify-content-between align-items-center">
