@@ -268,5 +268,8 @@
 
 .task-checkboxes {
 	max-height: 12rem;
+}
+
+.input-group-text input, .input-group-text label {
 	cursor: pointer;
 }

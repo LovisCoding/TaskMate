@@ -4,18 +4,18 @@ let dataAPI
 const list = document.querySelector("#list")
 
 fetch('/api/tasks').then(response => {
-	  return response.json();
+    return response.json();
 }).then(data => {
-	
-	  dataAPI = data;	
+
+    dataAPI = data;
 }).catch(err => {
-	  console.log(err);
+    console.log(err);
 });
 
-function setList(results){
+function setList(results) {
 
-	
-    for (const task of results){
+
+    for (const task of results) {
         // creating a li element for each result item
         const resultItem = document.createElement('li')
 
@@ -39,9 +39,9 @@ const searchInput = document.querySelector("#search")
 searchInput.addEventListener("input", (e) => {
     let value = e.target.value
 
-	list.innerHTML = ''
-    if (value && value.trim().length > 0){
-         value = value.trim().toLowerCase()
+    list.innerHTML = ''
+    if (value && value.trim().length > 0) {
+        value = value.trim().toLowerCase()
 
         //returning only the results of setList if the value of the search is included in the person's name
         setList(dataAPI.filter(task => {

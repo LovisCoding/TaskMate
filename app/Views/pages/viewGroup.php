@@ -61,7 +61,7 @@ $taskList = [
 ];
 
 ?>
-    
+
 
 <div class="viewgroup-content">
 
@@ -88,5 +88,8 @@ $taskList = [
         </div>
 
     </div>
+
+    <?= view('components/Button', ['text' => "<strong>Valider le groupe</strong>", 'type' => 'green', 'name' => 'action', 'value' => 'complete', 'disabled' => false, 'svgName' => 'check']) ?>
+
 
 </div>

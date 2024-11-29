@@ -3,6 +3,7 @@
 	if ( isset($type) ){
 		if ($type == 'danger') $color= 'btn-danger';
 		if ($type == 'marron') $color= 'btn-marron';
+		if ($type == 'green') $color= 'btn-success';
 	}
 	if ( !isset($id) ) $id = "";
 	if ( !isset($value) ) $value = "";

@@ -2,6 +2,9 @@
 .viewgroup-content {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
 .viewgroup-container {
@@ -11,7 +14,7 @@
     background-color: white;
     width: 50rem;
     padding: 2rem 5rem;
-    margin-top: 3rem;
+    margin-top: 2rem;
     border-radius: 10px;
 }
 
