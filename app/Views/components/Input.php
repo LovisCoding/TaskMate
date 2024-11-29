@@ -1,6 +1,7 @@
 <?php 
 	if (!isset($value)) $value = "";
 	if (!isset($labelClass)) $labelClass = "";
+	if (!isset($required)) $required = false;
 ?>
 
 <div>
@@ -15,5 +16,6 @@
 		name="<?= $name ?>" 
 		placeholder="<?= $placeholder ?? "" ?>"
 		maxlength="<?= $maxlength ?? "" ?>"
+		<?= $required ? 'required' : '' ?>
 	>
 </div>
