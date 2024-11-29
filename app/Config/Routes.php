@@ -21,6 +21,9 @@ $routes->get('/home/groups', 'HomeController::groups');
 
 $routes->get('/task', 'Task::index');
 $routes->get('/viewTask', 'ViewTaskController::index');
+$routes->get('/newGroup', 'ViewGroupController::index');
+$routes->post('/newGroup/create', 'ViewGroupController::create');
+
 
 $routes->get('/auth/register', 'ConnectionController::register');
 $routes->post('/auth/login', 'ConnectionController::connection');
@@ -45,6 +48,7 @@ $routes->get('email/confirmAccount/(:any)', 'EmailController::confirmAccount/$1'
 $routes->get('/task/insert', 'TaskController::index'); // Sans paramètre
 $routes->get('/task/(:any)', 'TaskController::index/$1'); // Avec paramètre
 $routes->post('/task/validate/(:any)','TaskController::validateTask/$1');
+$routes->get('/api/tasks', 'APITaskController::index');
 
 // taches
 //getTaches

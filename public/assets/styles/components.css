@@ -265,6 +265,16 @@
 	margin-right: 1.5rem;
 }
 
+
+.task-checkboxes {
+	max-height: 12rem;
+}
+
+.input-group-text input, .input-group-text label {
+	cursor: pointer;
+}
+
+
 .lightgray {
 	background-color:  #BBB;
 }

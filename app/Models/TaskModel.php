@@ -426,4 +426,7 @@ class TaskModel extends Model
 
 		return $tasks;
 	}
+	public function getTasks() {
+		return $this->findAll();
+	}
 }
