@@ -302,3 +302,7 @@
 	z-index: 10;
 	background-color: #F8F9FA;
 }
+
+.input-group-text {
+	font-size: 0.8rem;
+}

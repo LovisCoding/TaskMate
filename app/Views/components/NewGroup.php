@@ -6,7 +6,7 @@ $color = 'btn-grey';
 if (!isset($value)) $value = "";
 if (!isset($disabled)) $disabled = "";
 $svgName = "u-group";
-$textContent = "Nouveau groupe";
+$textContent = "Gestion des groupes";
 ?>
 
 
