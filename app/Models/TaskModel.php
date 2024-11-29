@@ -322,4 +322,12 @@ class TaskModel extends Model
 
 		return $result;
 	}
+
+	public function getTasksConcentration() {
+		return $this->where("current_state", "Pas commencée")
+					->orderBy("priority", "DESC")
+					->orderBy("deadline")
+					->findAll();
+	}
+	
 }
