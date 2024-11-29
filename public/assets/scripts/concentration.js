@@ -8,6 +8,8 @@ const timerInputSeconds = document.getElementById("timerInputSeconds");
 const startPauseButton = document.getElementById("startPauseButton");
 const resetTimerButton = document.getElementById("resetTimerButton");
 
+timerInputMinutes.value = localStorage.getItem('timerMinutes') || "00";
+timerInputSeconds.value = localStorage.getItem('timerSeconds') || '00';
 
 function getTimeInSeconds() {
     const minutes = parseInt(timerInputMinutes.value, 10) || 0;
@@ -20,6 +22,8 @@ function setTimeFromSeconds(totalSeconds) {
     const seconds = totalSeconds % 60;
     timerInputMinutes.value = String(minutes).padStart(2, "0");
     timerInputSeconds.value = String(seconds).padStart(2, "0");
+    localStorage.setItem('timerMinutes', String(minutes).padStart(2, "0"));
+    localStorage.setItem('timerSeconds', String(seconds).padStart(2, "0"));
 }
 
 function startPauseTimer() {
@@ -57,6 +61,7 @@ function resetTimer() {
     pauseTimer();
     timerInputMinutes.value = "00";
     timerInputSeconds.value = "00";
+    localStorage.clear();
 }
 
 function updateButtonText() {
@@ -86,6 +91,10 @@ function handleEnter(event) {
         startPauseTimer();
     }
 }
+
+window.navigation.addEventListener("navigate", (event) => {
+    if (!(event.destination.url+"").includes("/concentration")) resetTimer();
+});
 
 timerInputMinutes.addEventListener("keydown", function (event) { handleEnter(event); });
 timerInputSeconds.addEventListener("keydown", function (event) { handleEnter(event); });
