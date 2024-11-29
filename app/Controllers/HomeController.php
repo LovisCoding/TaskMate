@@ -128,8 +128,6 @@ class HomeController extends BaseController
 			default => $taskModel->getTasksByDateRange($date, $nb, $id_account, $priority, $translatedStates, $sort, $sortOrder),
 		};
 
-		$pager = \Config\Services::pager();
-
 		// Passer les données à la vue
 		echo view('layout/header');
 		echo view('layout/navbar');
@@ -137,7 +135,7 @@ class HomeController extends BaseController
 			'tasks' => $tasks,
 			'date' => $date,
 			'nb' => $nb,
-			'pager' => $pager,
+			'pager' => $taskModel->pager,
 			'filters' => [
 				'start_date' => $date,
 				'end_date' => $endDate,
