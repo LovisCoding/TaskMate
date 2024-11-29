@@ -1,4 +1,4 @@
-<form action="/concentration/validate" method="POST">
+<form action="/concentration" method="GET">
 
 	<div class="concentration-page mb-5">
 		<div class="concentration-section ms-2">
