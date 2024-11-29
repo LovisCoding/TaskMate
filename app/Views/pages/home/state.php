@@ -64,20 +64,26 @@ $stateColumns = array_filter($stateColumns, function($state) use ($statesFilter)
 
 				<div class="flex-grow-1 d-flex justify-content-center">
 					<div class="w-100">
-						<?php foreach ($tasksByState as $task): ?>
-							<div class="mb-3 d-flex justify-content-center">
-								<?= view('components/Card', [
-									'date' => $task['deadline'],
-									'title' => htmlspecialchars($task['name']),
-									'text' => htmlspecialchars($task['description']),
-									'priority' => (int) htmlspecialchars($task['priority']),
-									'status' => htmlspecialchars($task['current_state']),
-									'color' => true,
-									'id'=> (int) htmlspecialchars($task['id_task']),
-									'retard' => htmlspecialchars($task['retard'])
-								]) ?>
+						<?php if (empty($tasksByState)): ?>
+							<div class="mb-3 text-center text-muted">
+								Aucune tâche sur cette page
 							</div>
-						<?php endforeach; ?>
+						<?php else: ?>
+							<?php foreach ($tasksByState as $task): ?>
+								<div class="mb-3 d-flex justify-content-center">
+									<?= view('components/Card', [
+										'date' => $task['deadline'],
+										'title' => htmlspecialchars($task['name']),
+										'text' => htmlspecialchars($task['description']),
+										'priority' => (int) htmlspecialchars($task['priority']),
+										'status' => htmlspecialchars($task['current_state']),
+										'color' => true,
+										'id'=> (int) htmlspecialchars($task['id_task']),
+										'retard' => htmlspecialchars($task['retard'])
+									]) ?>
+								</div>
+							<?php endforeach; ?>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>
