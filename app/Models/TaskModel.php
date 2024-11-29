@@ -57,10 +57,10 @@ class TaskModel extends Model
 
 			if ($endDate) {
 				$delay = $endDate->diff($deadline)->days;
-				$task['retard'] = $delay > 0 ? "$delay jours en retard" : null;
+				$task['retard'] = $delay > 0 ? $delay : null;
 			} else {
 				$delay = $today->diff($deadline)->days;
-				$task['retard'] = $delay > 0 ? "$delay jours en retard" : null;
+				$task['retard'] = $delay > 0 ? $delay : null;
 			}
 
 			return $task;
@@ -115,6 +115,9 @@ class TaskModel extends Model
 
 
 		$tasks = $query->orderBy($sort, $sortOrder)->findAll();
+		if ($sort == 'current_state') {
+			$tasks = $this->sortTasksByStateAndRetard($tasks, $sortOrder);
+		}
 
 		// Préparer le tableau associatif
 		$result = [];
@@ -200,6 +203,13 @@ class TaskModel extends Model
 			// Traiter les tâches récupérées (par exemple, pour les retards)
 			$tasks = $this->createRetardTasks($tasks);
 
+
+			// Appliquer le tri spécifique uniquement si le sort est 'current_state'
+			if ($sort == 'current_state') {
+				$tasks = $this->sortTasksByStateAndRetard($tasks, $sortOrder);
+			}
+
+
 			// Ajouter les tâches au résultat final en associant à chaque priorité
 			$result[$i] = $tasks;
 		}
@@ -259,6 +269,10 @@ class TaskModel extends Model
 
 			$tasks = $this->createRetardTasks($tasks);
 
+			if ($sort == 'current_state') {
+				$tasks = $this->sortTasksByStateAndRetard($tasks, $sortOrder);
+			}
+
 			$result[$s] = $tasks;
 		}
 
@@ -317,6 +331,10 @@ class TaskModel extends Model
 
 			$tasks = $this->createRetardTasks($tasks);
 
+			if ($sort == 'current_state') {
+				$tasks = $this->sortTasksByStateAndRetard($tasks, $sortOrder);
+			}
+
 			$result[$currentDate] = $tasks;
 		}
 
@@ -326,10 +344,10 @@ class TaskModel extends Model
 	public function getTasksByGroupName($idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
 	{
 		$result = [];
-	
+
 		// 1. Filtrer les groupes qui ont des tâches
 		$groupModel = new GroupModel();
-	
+
 		// Jointure pour récupérer uniquement les groupes ayant des tâches
 		$groupsQuery = $groupModel
 			->select('group.id, group.name') // Sélectionner l'id et le nom du groupe
@@ -337,10 +355,10 @@ class TaskModel extends Model
 			->where('group.id_account', $idAccount) // Filtrer par l'utilisateur (id_account)
 			->groupBy('group.id') // Grouper par id de groupe pour éviter les doublons
 			->orderBy('group.name', 'asc'); // Trier les groupes par nom
-	
+
 		// 2. Pagination des groupes
 		$groups = $groupsQuery->paginate($perPage, 'default', $currentPage);
-	
+
 		// 3. Pour chaque groupe récupéré, récupérer les tâches associées
 		foreach ($groups as $group) {
 			// Récupérer toutes les tâches de ce groupe
@@ -349,22 +367,22 @@ class TaskModel extends Model
 				->where('id_account', $idAccount)
 				->orderBy($sort, $sortOrder)
 				->findAll();
-	
+			
+			$tasks = $this->createRetardTasks($tasks);
+
+			if ($sort == 'current_state') {
+				$tasks = $this->sortTasksByStateAndRetard($tasks, $sortOrder);
+			}
+
 			// Ajouter les tâches transformées à notre résultat
 			$groupName = $group['name']; // Nom du groupe
-			$result[$groupName] = [];
-	
-			// Transformer les tâches (exemple : ajouter des délais ou des autres transformations)
-			foreach ($tasks as $task) {
-				$transformedTask = $this->createRetardTasks([$task])[0]; // Transformer la tâche
-				$result[$groupName][] = $transformedTask; // Ajouter à la liste des tâches du groupe
-			}
+			$result[$groupName] = $tasks;
 		}
-	
+
 		// Retourner les groupes paginés avec leurs tâches respectives et l'objet de pagination
 		return $result;
 	}
-	
+
 
 
 
@@ -374,5 +392,38 @@ class TaskModel extends Model
 			->orderBy("priority", "DESC")
 			->orderBy("deadline")
 			->findAll();
+	}
+
+
+	private function sortTasksByStateAndRetard(array $tasks, string $sortOrder = 'desc')
+	{
+		// Définir un ordre de tri pour les états
+		$stateOrder = [
+			'En cours' => 0,
+			'Pas commencée' => 1,
+			'Bloquée' => 2,
+			'Terminée' => 3,
+		];
+
+		// Fonction de comparaison pour usort
+		usort($tasks, function ($a, $b) use ($stateOrder, $sortOrder) {
+			// Trier d'abord par retard
+			$aRetard = isset($a['retard']) ? $a['retard'] : 0;
+			$bRetard = isset($b['retard']) ? $b['retard'] : 0;
+
+			// Comparer les retards : ajuster l'ordre en fonction de $sortOrder
+			if ($aRetard !== $bRetard) {
+				return ($sortOrder === 'desc') ? ($bRetard - $aRetard) : ($aRetard - $bRetard);
+			}
+
+			// Si les retards sont égaux, trier par current_state
+			$aStateOrder = $stateOrder[$a['current_state']] ?? 999;
+			$bStateOrder = $stateOrder[$b['current_state']] ?? 999;
+
+			// Comparer les états en fonction de $sortOrder
+			return ($sortOrder === 'desc') ? ($bStateOrder - $aStateOrder) : ($aStateOrder - $bStateOrder);
+		});
+
+		return $tasks;
 	}
 }

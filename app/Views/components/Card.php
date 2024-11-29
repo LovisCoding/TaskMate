@@ -63,6 +63,10 @@ for ($i = 0; $i < 4; $i++) {
 			<span class="indicator-circle <?= $bubbleClass ?>"></span>
 			<span class="<?= $statusClass ?> small"><?= htmlspecialchars($status) ?></span>
 		</div>
-		<span class="text-danger small"><?= htmlspecialchars($retard) ?></span>
+		<?php if ($retard > 0) : ?>
+			<span class="text-danger small">
+				<?= htmlspecialchars($retard) . (htmlspecialchars($retard) == 1 ? " jour de retard" : " jours de retard") ?>
+			</span>
+		<?php endif; ?>
 	</div>
 </a>

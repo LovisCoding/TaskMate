@@ -75,7 +75,7 @@ class HomeController extends BaseController
 			$dateRange = (new DateTime())->format('Y-m-d'); 
 		}
 
-		$defaultStates = ["blocked", "inProgress", "notStarted"];
+		$defaultStates = ["blocked", "inProgress", "notStarted", "finished"];
 		if ($type == "home") {
 			$defaultStates = ["inProgress", "finished"];
 		}

@@ -37,6 +37,7 @@
 										'date' => $task['deadline'],
 										'title' => htmlspecialchars($task['name']),
 										'text' => htmlspecialchars($task['description']),
+										'status' => htmlspecialchars($task['current_state']),
 										'priority' => (int) htmlspecialchars($task['priority']),
 										'color' => true,
 										'id' => (int) htmlspecialchars($task['id_task']),
