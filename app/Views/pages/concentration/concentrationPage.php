@@ -1,4 +1,4 @@
-<form action="/concentration/validate" method="GET">
+<form action="/concentration" method="GET">
 
 
 
@@ -32,14 +32,13 @@
 
 				<div class="concentration-description">
 					<?= $data['description'] ?>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nihil, quibusdam laboriosam amet necessitatibus fuga consequuntur consequatur explicabo dignissimos enim ab. Mollitia ullam facere assumenda animi error ut voluptatibus rem soluta.
 				</div>
 
 
 			</div>
 			<div class="concentration-section-buttons mt-3">
-				<button type="submit" class="btn btn-secondary">Ignorer la tâche</button>
-				<button type="submit" class="btn btn-primary">Terminer la tâche</button>
+				<button type="submit" name="action" value="ignore" class="btn btn-secondary">Ignorer la tâche</button>
+				<button type="submit" name="action" value="complete" class="btn btn-primary">Terminer la tâche</button>
 			</div>
 		</div>
 
