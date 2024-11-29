@@ -33,7 +33,7 @@ $stateColumns = array_filter($stateColumns, function($state) use ($statesFilter)
 
 ?>
 
-<div>
+<div class="sticky-wrapper">
 	<div class="pt-4"></div>
 	<div class="d-flex justify-content-between mx-4" id="vues">
 		<div class="left d-flex">
@@ -46,17 +46,16 @@ $stateColumns = array_filter($stateColumns, function($state) use ($statesFilter)
 			<?= view('components/NewTache') ?>
 		</div>
 	</div>
+	<ul class="pagination">
+		<?= $pager->links('default', 'default_paginate') ?>
+	</ul>
 </div>
-
-<ul class="pagination">
-	<?= $pager->links('default', 'default_paginate') ?>
-</ul>
 
 <div class="container justify-content-center">
 	<div class="row justify-content-center">
 		<?php foreach ($stateColumns as $state => $tasksByState): ?>
 			<div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2">
-				<div class="mb-3 text-center">
+				<div class="mb-3 text-center sticky-header">
 					<div class="d-flex justify-content-center mt-2">
 						<p class="fw-bold mb-0"><?= $state ?></p>
 					</div>

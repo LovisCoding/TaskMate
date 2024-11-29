@@ -24,7 +24,7 @@ function generatePriorityIndicators($priority)
 }
 ?>
 
-<div>
+<div class="sticky-wrapper">
 	<div class="pt-4"></div>
 	<div class="d-flex justify-content-between mx-4" id="vues">
 		<div class="left d-flex">
@@ -37,18 +37,17 @@ function generatePriorityIndicators($priority)
 			<?= view('components/NewTache') ?>
 		</div>
 	</div>
+	<ul class="pagination" id="pagination">
+		<?= $pager->links('default', 'default_paginate') ?>
+	</ul>
 </div>
-
-<ul class="pagination" id="pagination">
-	<?= $pager->links('default', 'default_paginate') ?>
-</ul>
 
 <div class="container mt-4 justify-content-center">
 	<div class="row justify-content-center">
 		<?php foreach ($priorityColumns as $priority => $tasksByPriority): ?>
 			<div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4 d-flex justify-content-center">
 				<div class="d-flex flex-column p-3 h-100 justify-content-start w-100">
-					<div class="mb-3 text-center">
+					<div class="mb-3 text-center sticky-header">
 						<div class="d-flex align-items-center justify-content-center mt-2">
 							<?= generatePriorityIndicators($priority) ?>
 						</div>
