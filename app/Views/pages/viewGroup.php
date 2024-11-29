@@ -35,27 +35,30 @@
 
             <div class="col-md-6 bg-white rounded p-3">
                 <h5 class="text-center mb-4">Suppression d'un groupe</h5>
-                <div class="viewgroup-right-panel">
-                    <div class="mb-3">
-                        <label for="group_select">Sélectionner des groupes</label>
-                        <div class="listGroup">
-                            <?php 
-                            foreach ($groups as $id => $label) : ?>
-                                <div class="mb-2">
-                                    <label class="input-group-text">
-                                        <input class="form-check-input me-2" type="checkbox" value="<?= $id ?>" id="<?= $id ?>">
-                                        <?= $label ?>
-                                    </label>
-                                </div>
-                            <?php endforeach; ?>
+                <form action="/newGroup/delete" method="post">
+                    <div class="viewgroup-right-panel">
+                        <div class="mb-3">
+                            <label for="group_select">Sélectionner des groupes</label>
+                            <div class="listGroup">
+                                <?php
+                                foreach ($groups as $group) : ?>
+                                    <div class="mb-2">
+                                        <label class="input-group-text">
+                                            <input class="form-check-input me-2" name="groups[]" type="checkbox" value="<?= $group['id'] ?>" id="<?= $group['id']  ?>">
+                                            <?= $group['name']  ?>
+                                        </label>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-outline-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer la sélection">
+                                <i class="bi bi-x-circle"></i> Supprimer
+                            </button>
                         </div>
                     </div>
-                    <div class="text-center mt-3">
-                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer la sélection">
-                            <i class="bi bi-x-circle"></i> Supprimer
-                        </button>
-                    </div>
-                </div>
+                </form>
+
             </div>
         </div>
     </div>

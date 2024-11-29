@@ -13,9 +13,15 @@ class ViewGroupController extends BaseController
 			return redirect()->to('/');
 		}
 
+		$groupModel = new GroupModel();
+
+		$groups = $groupModel->findAll();
+
 		echo view('layout/header');
 		echo view('layout/navbar');
-		echo view('pages/viewGroup');
+		echo view('pages/viewGroup', [
+			'groups' => $groups
+		]);
 		echo view('layout/footer');
 	}
 	public function create()
@@ -39,5 +45,17 @@ class ViewGroupController extends BaseController
 
 		$groupModel->createGroupAndUpdateTasks($idAccount, $groupName, $tasksList);
 		return redirect()->to('/home/recap');
+
+	}
+
+	public function delete() {
+		$groupList = $this->request->getPost('groups');
+		$groupModel = new GroupModel();
+		foreach($groupList as $group) {
+			$groupModel->delete($group);
+		}
+
+		return redirect()->to('/newGroup');
+
 	}
 }
