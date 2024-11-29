@@ -21,6 +21,7 @@ $routes->post('/home/exportData', 'HomeController::exportData');
 $routes->get('/task', 'Task::index');
 $routes->get('/viewTask', 'ViewTaskController::index');
 $routes->get('/newGroup', 'ViewGroupController::index');
+$routes->post('/newGroup/create', 'ViewGroupController::create');
 
 
 $routes->get('/auth/register', 'ConnectionController::register');

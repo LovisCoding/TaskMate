@@ -22,4 +22,21 @@ class GroupModel extends Model
 					->join('Task', 'Group.id = Task.id_group', 'left')
 					->findAll();
 	}
+	public function createGroupAndUpdateTasks(int $id_account, string $groupName, array $tasksIds)
+	{
+		$params = [
+            'p_id_account' => $id_account,
+            'p_group_name' => $groupName,
+            'p_task_ids' => $tasksIds
+        ];
+
+        // Appeler la fonction SQL avec les paramètres nécessaires
+        $query = $this->query('
+            SELECT create_group_and_assign_tasks(:p_id_account, :p_group_name, :p_task_ids)
+        ', $params);
+
+        // Vous pouvez vérifier la réponse si nécessaire, ou gérer les erreurs ici
+        return $query->getResult();
+
+	}
 }
