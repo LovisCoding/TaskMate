@@ -18,7 +18,7 @@ class CreateGroupsTable extends Migration
         //     ],
         //     'name' => [
         //         'type' => 'VARCHAR',
-        //         'constraint' => 255,
+        //         'constraint' => 100,
         //     ]
         // ]);
         // echo "exec: group\n";
