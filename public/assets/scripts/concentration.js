@@ -1,4 +1,3 @@
-
 let timer;
 let isRunning = false;
 
@@ -61,7 +60,8 @@ function resetTimer() {
     pauseTimer();
     timerInputMinutes.value = "00";
     timerInputSeconds.value = "00";
-    localStorage.clear();
+    localStorage.setItem('timerMinutes', "00");
+    localStorage.setItem('timerSeconds', "00");
 }
 
 function updateButtonText() {
@@ -93,10 +93,8 @@ function handleEnter(event) {
 }
 
 window.navigation.addEventListener("navigate", (event) => {
-    if (!(event.destination.url+"").includes("/concentration")) resetTimer();
+    if (!(event.destination.url+"").includes("/concentration")) localStorage.clear();
 });
 
 timerInputMinutes.addEventListener("keydown", function (event) { handleEnter(event); });
 timerInputSeconds.addEventListener("keydown", function (event) { handleEnter(event); });
-
-
