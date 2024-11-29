@@ -149,7 +149,7 @@ class TaskModel extends Model
 	}
 
 
-			/**
+	/**
 	 * Récupère les tâches et les organise par état actuel (current_state).
 	 *
 	 * @return array Tableau associatif avec les états comme clés et les tâches comme valeurs.
@@ -172,7 +172,7 @@ class TaskModel extends Model
 
 		return $result;
 	}
-	
+
 	/**
 	 * Récupère les tâches par priorité.
 	 */
@@ -180,34 +180,34 @@ class TaskModel extends Model
 	{
 		// Récupérer les priorités triées par nombre de résultats
 		$priorities = array_keys($this->getCountByPriority($idAccount, $priority, $states, $sort, $sortOrder));
-	
+
 		$result = [];
-	
+
 		// Boucle sur chaque priorité triée
 		foreach ($priorities as $p) {
 			// On s'assure que $p est un entier
 			$i = (int) $p;
-	
+
 			// Préparer la requête en utilisant where pour une seule priorité
 			$query = $this->getQueryFiltered($priority, $states)
 				->where("id_account", $idAccount)
 				->where("priority", $i)  // On passe ici un entier à la méthode where
 				->orderBy($sort, $sortOrder);
-	
+
 			// Exécuter la pagination
 			$tasks = $query->paginate($perPage, 'default', $currentPage);
-	
+
 			// Traiter les tâches récupérées (par exemple, pour les retards)
 			$tasks = $this->createRetardTasks($tasks);
-	
+
 			// Ajouter les tâches au résultat final en associant à chaque priorité
 			$result[$i] = $tasks;
 		}
-	
+
 		return $result;
 	}
-	
-		/**
+
+	/**
 	 * Récupère les tâches et les organise par état actuel (current_state).
 	 *
 	 * @return array Tableau associatif avec les états comme clés et les tâches comme valeurs.
@@ -242,8 +242,8 @@ class TaskModel extends Model
 	 */
 	public function getTasksByCurrentState($idAccount, $priority = null, $statesFilters = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
 	{
-		$states = array_keys($this->getCountByCurrentState($idAccount, $priority, $statesFilters, $sort, $sortOrder, $sortOrder));   
-		
+		$states = array_keys($this->getCountByCurrentState($idAccount, $priority, $statesFilters, $sort, $sortOrder, $sortOrder));
+
 		$result = [];
 
 		// Créer et exécuter les requêtes pour chaque état
@@ -323,11 +323,42 @@ class TaskModel extends Model
 		return $result;
 	}
 
-	public function getTasksConcentration() {
-		return $this->where("current_state", "Pas commencée")
-					->orderBy("priority", "DESC")
-					->orderBy("deadline")
-					->findAll();
+	public function getTasksByGroupName($idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc', $perPage = 5, $currentPage = 1)
+	{
+		$result = [];
+	
+		// Joindre la table des groupes pour récupérer le nom des groupes
+		$query = $this->getQueryFiltered($priority, $states)
+			->select('task.*, group.name as group_name') // Sélectionner les colonnes nécessaires
+			->join('group', 'group.id = task.id_group', 'left') // Joindre la table des groupes
+			->where('task.id_account', $idAccount)
+			->orderBy('group.name', 'asc') // Trier par le nom du groupe
+			->orderBy($sort, $sortOrder); // Trier par la colonne spécifiée
+	
+		// Récupérer toutes les tâches
+		$tasks = $query->findAll();
+	
+		// Organiser les tâches par nom de groupe
+		foreach ($tasks as $task) {
+			$groupName = $task['group_name'] ?? 'Sans Groupe'; // Nom du groupe ou 'Sans Groupe' si non défini
+	
+			// Appeler createRetardTasks et prendre la première tâche transformée
+			$transformedTask = $this->createRetardTasks([$task])[0]; // Récupérer la tâche modifiée
+			$result[$groupName][] = $transformedTask; // Ajouter au résultat
+		}
+	
+		// $result = $query->paginate($perPage, 'default', $currentPage);
+
+		return $result;
 	}
 	
+
+
+	public function getTasksConcentration()
+	{
+		return $this->where("current_state", "Pas commencée")
+			->orderBy("priority", "DESC")
+			->orderBy("deadline")
+			->findAll();
+	}
 }

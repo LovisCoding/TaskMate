@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\GroupModel;
 use App\Models\TaskModel;
 use App\Models\PreferencesModel;
 use DateTime;
@@ -123,6 +124,7 @@ class HomeController extends BaseController
 			'priority' => $taskModel->getTasksByPriority($id_account, $priority, $translatedStates, $sort, $sortOrder, $perPage, $page),
 			'state' => $taskModel->getTasksByCurrentState($id_account, $priority, $translatedStates, $sort, $sortOrder, $perPage, $page),
 			'deadLine' => $taskModel->getTasksByDeadline($date, $nb, $id_account, $priority, $translatedStates, $sort, $sortOrder),
+			'groups' => $taskModel->getTasksByGroupName($id_account, $priority, $translatedStates, $sort, $sortOrder),
 			default => $taskModel->getTasksByDateRange($date, $nb, $id_account, $priority, $translatedStates, $sort, $sortOrder),
 		};
 
