@@ -196,6 +196,16 @@ class TaskController extends BaseController
 		$action = $this->request->getPost('action');
 		$taskModel = new TaskModel();
 
+		$deleteCommentary = $this->request->getPost('DeleteCommentary');
+		$commentModel = new CommentModel();
+
+
+		if ($deleteCommentary != null && isset($deleteCommentary)) {
+			$comment = $commentModel->delete($deleteCommentary);
+            return redirect()->to('/task/' . $id);
+		}
+
+
 		if ($action && $action === "delete") {
 
 			$taskModel->delete($id);
@@ -262,7 +272,6 @@ class TaskController extends BaseController
 
 			$newId = $taskId ?? $id;
 
-			$commentModel = new CommentModel();
 			$addCommentary = $this->request->getPost("addCommentary");
 
 			if ($addCommentary) {
