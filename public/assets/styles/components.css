@@ -306,3 +306,9 @@
 .input-group-text {
 	font-size: 0.8rem;
 }
+
+.listGroup {
+    max-height: 60vh;
+    overflow-y: auto;
+    height: calc(100% - 50px);
+}
