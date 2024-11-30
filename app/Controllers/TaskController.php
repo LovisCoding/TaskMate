@@ -252,14 +252,14 @@ class TaskController extends BaseController
 				$taskDependenciesModel = new TaskDependenciesModel();
 
 
-				$childTasks = $taskDependenciesModel->where("id_account", $idAccount)->where("id_mother_task", $id)->select("id_child_task")->findAll();
+				$childTasks = $taskDependenciesModel->where("id_mother_task", $id)->select("id_child_task")->findAll();
 
 				// réaffectation de l'ancien state avant d'etre bloquée
 				foreach ($childTasks as $childId) {
 
 					$task = $taskModel->where("id_task", $childId)->first();
 
-					$motherTasks = $taskDependenciesModel->where("id_account", $idAccount)->where("id_child_task", $childId)->select("id_mother_task")->findAll();
+					$motherTasks = $taskDependenciesModel->where("id_child_task", $childId)->select("id_mother_task")->findAll();
 					if (count($motherTasks) == 1) {
 						if ($task['start_date'])
 							$old_state = $task['end_date'] ? "Terminée" : "En cours";
@@ -343,7 +343,7 @@ class TaskController extends BaseController
 			if ($action !== "complete") {
 				$blockList = $this->request->getPost("task_blockList");
 
-				$childTasks = $taskDependenciesModel->where("id_account", $idAccount)->where("id_mother_task", $newId)->select("id_child_task")->findAll();
+				$childTasks = $taskDependenciesModel->where("id_mother_task", $newId)->select("id_child_task")->findAll();
 
 				// réaffectation de l'ancien state avant d'etre bloquée
 				foreach ($childTasks as $childId) {
