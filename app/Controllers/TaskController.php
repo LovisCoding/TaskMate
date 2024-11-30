@@ -33,7 +33,7 @@ class TaskController extends BaseController
 		$title = null;
 		$description = null;
 		$priority = 1;
-		$state = "Pas commencée";
+		$state = "";
 		$started = false;
 
 		$commentaries = [];
@@ -200,9 +200,8 @@ class TaskController extends BaseController
 		$deleteCommentary = $this->request->getPost('DeleteCommentary');
 		$commentModel = new CommentModel();
 
-
 		if ($deleteCommentary != null && isset($deleteCommentary)) {
-			$comment = $commentModel->delete($deleteCommentary);
+			$commentModel->delete($deleteCommentary);
 			return redirect()->to('/task/' . $id);
 		}
 
@@ -225,6 +224,8 @@ class TaskController extends BaseController
 			$taskGroupId = $this->request->getPost('task_group');
 
 			if ($id == -1) {
+				dd($id);
+
 				$state = "Pas commencée";
 			} else {
 				$task = $taskModel->where("id_task", $id)->first();

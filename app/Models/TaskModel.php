@@ -109,9 +109,11 @@ class TaskModel extends Model
 		$query = $this->groupStart()
 			->where("start_date <=", $endDate)
 			->where("end_date >=", $startDate)
+			->where("id_account", $idAccount)
 			->groupEnd()
 			->orGroupStart()
 			->where("end_date", null) // Date de fin non définie
+			->where("id_account", $idAccount)
 			->groupEnd();
 
 		$query = $this->getQueryFiltered($priority, $states)->where("id_account", $idAccount);
