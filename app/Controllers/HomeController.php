@@ -266,6 +266,9 @@ class HomeController extends BaseController
 					$sheet->setCellValue('E' . $row, $task['id_task']);
 					$row++;
 				}
+				foreach (range('A', 'F') as $columnID) {
+					$sheet->getColumnDimension($columnID)->setAutoSize(true);
+				}
 			}
 
 			$spreadsheet->removeSheetByIndex(0); // deletes default sheet created on init
