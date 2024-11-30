@@ -8,7 +8,7 @@
 
 <br>
 
-**TaskMate** est une solution moderne et intuitive pour gérer vos tâches au quotidien. Conçue pour être à la fois simple et efficace, elle vous aide à mieux organiser votre temps et à prioriser vos objectifs.  
+**TaskMate** est une solution moderne et intuitive pour planifier vos tâches au quotidien. Conçue pour être à la fois simple et efficace, elle vous aide à mieux organiser votre temps et à prioriser vos objectifs.  
 
 ## 🌟 **Fonctionnalités clés**  
 - **Ajouter des tâches** : Créez des tâches en quelques clics pour ne rien oublier.  
