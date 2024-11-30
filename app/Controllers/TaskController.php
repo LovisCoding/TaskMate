@@ -23,10 +23,10 @@ class TaskController extends BaseController
 		}
 
 
-        $page = $this->request->getVar('page');
-        if ($page && $idTask !== -1) {
-            $this->validateTask($idTask);
-        }
+		$page = $this->request->getVar('page');
+		if ($page && $idTask !== -1) {
+			$this->validateTask($idTask);
+		}
 
 		$date = null;
 
@@ -42,13 +42,13 @@ class TaskController extends BaseController
 
 		$idAccount = intval(session()->get("id"));
 
-        $preferencesModel = new PreferencesModel();
+		$preferencesModel = new PreferencesModel();
 		$preferences = $preferencesModel->getPreferencesByIdAccount($idAccount);
-		$perPage =  (int)$preferences['rows_per_page'];		
+		$perPage =  (int)$preferences['rows_per_page'];
 		$currentPage = $this->request->getVar('page') ?? 1;
 
-        $taskModel = new TaskModel();
-        $task = $taskModel->where("id_task", $idTask)->first();
+		$taskModel = new TaskModel();
+		$task = $taskModel->where("id_task", $idTask)->first();
 
 		if ($idTask != -1 && !$task) {
 			return redirect()->to('/home/recap');
@@ -78,11 +78,12 @@ class TaskController extends BaseController
 
 			$childTasks = $taskDependenciesModel->where("id_mother_task", $idTask)->findColumn('id_child_task') ?? [];
 			$motherTasks = $taskDependenciesModel->where("id_child_task", $idTask)->findColumn('id_mother_task') ?? [];
-			
+
 			// Filtrer les tâches pour exclure celles qui correspondent à `idTask` ou qui nous bloque déjà
 			$filteredTasks = array_filter($tasks, function ($task) use ($idTask, $motherTasks) {
-				return $task['id_task'] != $idTask 
-					&& !in_array($task['id_task'], $motherTasks); 
+				return $task['id_task'] != $idTask
+					&& !in_array($task['id_task'], $motherTasks) &&
+					$task['current_state'] != "Terminée";
 			});
 
 			// Construire le résultat final
@@ -96,8 +97,9 @@ class TaskController extends BaseController
 
 			// Filtrer les tâches pour exclure celles qui correspondent à `idTask` ou qui nous bloque déjà
 			$filteredTasks = array_filter($tasks, function ($task) use ($idTask, $childTasks) {
-				return $task['id_task'] != $idTask 
-					&& !in_array($task['id_task'], $childTasks); 
+				return $task['id_task'] != $idTask
+					&& !in_array($task['id_task'], $childTasks)
+					&& $task['current_state'] != "Terminée";
 			});
 
 			$isBlockedList = array_map(function ($task) use ($motherTasks) {
@@ -107,7 +109,7 @@ class TaskController extends BaseController
 					'isChecked' => in_array($task['id_task'], $motherTasks)
 				];
 			}, $filteredTasks);
-			
+
 			$title = $task["name"];
 			$description = $task["description"];
 			$priority = $task["priority"];
@@ -131,7 +133,7 @@ class TaskController extends BaseController
 				}
 				return null;
 			}, $tasks);
-			
+
 			// Filtrer pour enlever les valeurs nulles
 			$blockList = array_filter($blockList);
 		}
@@ -143,7 +145,7 @@ class TaskController extends BaseController
 			$filteredTasks = array_filter($tasks, function ($task) use ($idTask) {
 				return $task['id_task'] != $idTask; // Exclure la tâche ayant l'id $idTask
 			});
-			
+
 			// Construire la liste après filtrage
 			$isBlockedList = array_map(function ($task) {
 				return [
@@ -152,13 +154,12 @@ class TaskController extends BaseController
 					'isChecked' => false
 				];
 			}, $filteredTasks);
-			
 		}
 
 		$sortByIsChecked = function ($a, $b) {
 			return $b['isChecked'] <=> $a['isChecked'];
 		};
-		
+
 		// Trier les deux listes
 		usort($blockList, $sortByIsChecked);
 		usort($isBlockedList, $sortByIsChecked);
@@ -202,7 +203,7 @@ class TaskController extends BaseController
 
 		if ($deleteCommentary != null && isset($deleteCommentary)) {
 			$comment = $commentModel->delete($deleteCommentary);
-            return redirect()->to('/task/' . $id);
+			return redirect()->to('/task/' . $id);
 		}
 
 
@@ -225,15 +226,14 @@ class TaskController extends BaseController
 
 			if ($id == -1) {
 				$state = "Pas commencée";
-			}
-			else {
+			} else {
 				$task = $taskModel->where("id_task", $id)->first();
 				if ($task) {
 					$start_date = $task['start_date'];
 					$end_date = $task['end_date'];
 				}
 			}
- 
+
 
 			$now = (new DateTime())->format('Y-m-d');
 
@@ -247,25 +247,25 @@ class TaskController extends BaseController
 				$childTasks = $taskDependenciesModel->where("id_mother_task", $id)->select("id_child_task")->findAll();
 
 				// réaffectation de l'ancien state avant d'etre bloquée
-				foreach($childTasks as $childId) {
+				foreach ($childTasks as $childId) {
 
 					$task = $taskModel->where("id_task", $childId)->first();
-					if ($task['start_date'])
-						$old_state = $task['end_date'] ? "Terminée" : "En cours";
-					else 
-						$old_state = "Pas commencée";
 
+					$motherTasks = $taskDependenciesModel->where("id_child_task", $childId)->select("id_mother_task")->findAll();
+					if (count($motherTasks) == 1) {
+						if ($task['start_date'])
+							$old_state = $task['end_date'] ? "Terminée" : "En cours";
+						else
+							$old_state = "Pas commencée";
 
-					$taskModel->update((int) $childId, [
-						"current_state" => $old_state
-					]);
+						$task['current_state'] = $old_state;
 
-					dd($task);
+						$taskModel->update($childId, $task);
+
+						$taskDependenciesModel->where("id_child_task", $childId);
+					}
 				}
-				
-				$taskDependenciesModel->where("id_mother_task", $id)->delete();
-			}
-			else if ($started) {
+			} else if ($started) {
 				$start_date = $now;
 				$state = "En cours";
 			}
@@ -320,7 +320,7 @@ class TaskController extends BaseController
 			$commentaries = $this->request->getPost('task_commentaries');
 			$commentaries_id = $this->request->getPost('task_commentaries_id');
 			if (!empty($commentaries) && !empty($commentaries_id) && count($commentaries) == count($commentaries_id)) {
-				for ($i=0 ; $i<count($commentaries) ; $i++) {
+				for ($i = 0; $i < count($commentaries); $i++) {
 					$strComment = $commentaries[$i];
 					$idComment = $commentaries_id[$i];
 
@@ -332,88 +332,88 @@ class TaskController extends BaseController
 
 			$taskDependenciesModel = new TaskDependenciesModel();
 
+			if ($action !== "complete") {
+				$blockList = $this->request->getPost("task_blockList");
 
-			$blockList = $this->request->getPost("task_blockList");
+				$childTasks = $taskDependenciesModel->where("id_mother_task", $newId)->select("id_child_task")->findAll();
 
-			$childTasks = $taskDependenciesModel->where("id_mother_task", $newId)->select("id_child_task")->findAll();
-
-			// réaffectation de l'ancien state avant d'etre bloquée
-			foreach($childTasks as $childId) {
-				$task = $taskModel->where("id_task", $childId)->first();
-				if ($task['start_date'])
-					$old_state = $task['end_date'] ? "Terminée" : "En cours";
-				else 
-					$old_state = "Pas commencée";
-			
-
-				$taskModel->update($childId, [
-					"current_state" => $old_state
-				]);
-			}
-
-			$taskDependenciesModel->where("id_mother_task", $newId)->delete();
-
-			if ($blockList != null) {
+				// réaffectation de l'ancien state avant d'etre bloquée
+				foreach ($childTasks as $childId) {
+					$task = $taskModel->where("id_task", $childId)->first();
+					if ($task['start_date'])
+						$old_state = $task['end_date'] ? "Terminée" : "En cours";
+					else
+						$old_state = "Pas commencée";
 
 
-				foreach ($blockList as $taskBlockId) {
-
-					if ($newId && $taskBlockId) {
-						$taskDependenciesModel->addDependency($newId, $taskBlockId);
-
-						$taskModel->update($taskBlockId, [
-							"current_state" => "Bloquée"
-						]);
-					};
-				}
-			}
-
-			$isBlockedList = $this->request->getPost("task_isBlockedList");
-			
-			$taskDependenciesModel->where("id_child_task", $newId)->delete();
-
-			if ($isBlockedList != null) {
-
-				if (count($isBlockedList) > 0) {
-					$taskModel->update($newId, [
-						"current_state" => "Bloquée"
+					$taskModel->update($childId, [
+						"current_state" => $old_state
 					]);
 				}
-				foreach ($isBlockedList as $taskBlockId) {
 
-					if ($newId && $taskBlockId) {
-						$taskDependenciesModel->addDependency($taskBlockId, $newId);
-						
-					};
+				$taskDependenciesModel->where("id_mother_task", $newId)->delete();
+
+				if ($blockList != null) {
+
+
+					foreach ($blockList as $taskBlockId) {
+
+						if ($newId && $taskBlockId) {
+							$taskDependenciesModel->addDependency($newId, $taskBlockId);
+
+							$taskModel->update($taskBlockId, [
+								"current_state" => "Bloquée"
+							]);
+						};
+					}
+				}
+
+				$isBlockedList = $this->request->getPost("task_isBlockedList");
+
+				$taskDependenciesModel->where("id_child_task", $newId)->delete();
+
+				if ($isBlockedList != null) {
+
+					if (count($isBlockedList) > 0) {
+						$taskModel->update($newId, [
+							"current_state" => "Bloquée"
+						]);
+					}
+					foreach ($isBlockedList as $taskBlockId) {
+
+						if ($newId && $taskBlockId) {
+							$taskDependenciesModel->addDependency($taskBlockId, $newId);
+						};
+					}
+				} else {
+					$task = $taskModel->where("id_task", $newId)->first();
+					if ($task['start_date'])
+						$old_state = $task['end_date'] ? "Terminée" : "En cours";
+					else
+						$old_state = "Pas commencée";
+
+					$taskModel->update($newId, [
+						"start_date" => $task["start_date"],
+						"current_state" => $old_state,
+						"end_date" => $task["end_date"]
+					]);
 				}
 			}
-			else {
-				$task = $taskModel->where("id_task", $newId)->first();
-				if ($task['start_date'])
-					$old_state = $task['end_date'] ? "Terminée" : "En cours";
-				else 
-					$old_state = "Pas commencée";
-				
-				$taskModel->update($newId, [
-					"start_date" => $task["start_date"],
-					"current_state" => $old_state,
-					"end_date" => $task["end_date"]
-				]);
-			}
 
 
-            // Redirection après insertion/mise à jour
-            return redirect()->to('/task/' . $newId);
-        }
-		
-    }
-	public function getTasks() {
+
+			// Redirection après insertion/mise à jour
+			return redirect()->to('/task/' . $newId);
+		}
+	}
+	public function getTasks()
+	{
 
 		if (!session()->get('isLoggedIn')) {
 			return redirect()->to('/');
 		}
 		$taskModel = new TaskModel();
 		$tasks = $taskModel->findAll();
-		return json_encode($tasks) ;
+		return json_encode($tasks);
 	}
 }
