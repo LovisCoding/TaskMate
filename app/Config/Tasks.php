@@ -35,6 +35,8 @@ class Tasks extends BaseTasks
 				$pref = $preferencesModel->getPreferencesByIdAccount($account['id']);
 
 				$tasks = $taskModel->getTasksWhichAreNotTerminatedAndStartDays($account['id'], $pref['days_reminder_deadline']);
+				
+				if (count($tasks) == 0) break;
 				$data = [];
 				foreach ($tasks as $task) {
 					$data[$task['deadline']][] = $task['name'];
@@ -53,6 +55,6 @@ class Tasks extends BaseTasks
 			}
 	
 			$emailService->mailType = 'text';
-		})->everyHour();
+		});
 	}
 }
