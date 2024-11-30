@@ -197,16 +197,22 @@ class HomeController extends BaseController
 		$data = $this->request->getPost('tasks[]');
 
 
-		if (!$data) return redirect()->to('/home/'.$exportType);
-
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet->getActiveSheet();
 		$filename = "";
 
 		if ($exportType == 'recap' || $exportType == 'deadLine') {
 
-			if ($exportType == 'recap') $filename = 'Taches_Recapitulatif.xlsx';
-			if ($exportType == 'deadLine') $filename = 'Taches_par_Echeance.xlsx';
+			if ($exportType == 'recap') {
+				$sheetTitle = 'Recapitulatif des tâches ';
+				$filename = 'Taches_Recapitulatif.xlsx';
+			} else { // $exportType == 'deadLine'
+				$sheetTitle = 'Tâches par Echeance ';
+				$filename = 'Taches_par_Echeance.xlsx';
+			}
+
+			$sheet = $spreadsheet->createSheet();
+			$sheet->setTitle($sheetTitle);
 
 			$sheet->setCellValue('A1', 'Date');
 			$sheet->setCellValue('B1', 'ID Task');
@@ -228,8 +234,11 @@ class HomeController extends BaseController
 					$row++;
 				}
 			}
+
+			$spreadsheet->removeSheetByIndex(0); // deletes default sheet created on init
+
 		} else if ($exportType == 'priority' || $exportType == 'state') {
-			
+
 			if ($exportType == 'priority') {
 				$sheetTitle = 'Tâches de priorité ';
 				$filename = 'Taches_par_Priorité.xlsx';
@@ -238,11 +247,8 @@ class HomeController extends BaseController
 				$filename = 'Taches_par_Etat.xlsx';
 			}
 
-			$spreadsheet = new Spreadsheet();
-
 			foreach ($data as $key => $tasks) {
 				$sheet = $spreadsheet->createSheet();
-			   
 				$sheet->setTitle($sheetTitle . $key);
 
 				$sheet->setCellValue('A1', 'Name');
@@ -263,6 +269,42 @@ class HomeController extends BaseController
 			}
 
 			$spreadsheet->removeSheetByIndex(0); // deletes default sheet created on init
+
+		} else if ($exportType == 'groups') {
+
+			$sheetTitle = 'Tâches par Groupe';
+			$filename = 'Taches_par_Groupe.xlsx';
+
+			$sheet = $spreadsheet->createSheet();
+			$sheet->setTitle($sheetTitle);
+
+			$sheet->setCellValue('A1', 'Groupe');
+			$sheet->setCellValue('B1', 'ID Tache');
+			$sheet->setCellValue('C1', 'Nom');
+			$sheet->setCellValue('D1', 'Description');
+			$sheet->setCellValue('E1', 'Priorité');
+			$sheet->setCellValue('F1', 'État actuel');
+
+			$row = 2;
+
+			foreach ($data as $date => $taskList) {
+				$sheet->setCellValue('A' . $row, $date);
+				foreach ($taskList as $task) {
+					$sheet->setCellValue('B' . $row, $task['id_task']);
+					$sheet->setCellValue('C' . $row, $task['name']);
+					$sheet->setCellValue('D' . $row, $task['description']);
+					$sheet->setCellValue('E' . $row, $task['priority'] . '/4');
+					$sheet->setCellValue('F' . $row, $task['current_state']);
+					$row++;
+				}
+			}
+
+			$spreadsheet->removeSheetByIndex(0); // deletes default sheet created on init
+
+		}
+
+		foreach (range('A', 'F') as $columnID) {
+			$sheet->getColumnDimension($columnID)->setAutoSize(true);
 		}
 
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -273,7 +315,7 @@ class HomeController extends BaseController
 
 		$writer = new Xlsx($spreadsheet);
 
-        $writer->save('php://output');
-        exit;
-    }
+		$writer->save('php://output');
+		exit;
+	}
 }
