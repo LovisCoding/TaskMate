@@ -240,6 +240,30 @@ class TaskController extends BaseController
 			if ($action == "complete") {
 				$end_date = $now;
 				$state = "Terminée";
+
+				$taskDependenciesModel = new TaskDependenciesModel();
+
+
+				$childTasks = $taskDependenciesModel->where("id_mother_task", $id)->select("id_child_task")->findAll();
+
+				// réaffectation de l'ancien state avant d'etre bloquée
+				foreach($childTasks as $childId) {
+
+					$task = $taskModel->where("id_task", $childId)->first();
+					if ($task['start_date'])
+						$old_state = $task['end_date'] ? "Terminée" : "En cours";
+					else 
+						$old_state = "Pas commencée";
+
+
+					$taskModel->update((int) $childId, [
+						"current_state" => $old_state
+					]);
+
+					dd($task);
+				}
+				
+				$taskDependenciesModel->where("id_mother_task", $id)->delete();
 			}
 			else if ($started) {
 				$start_date = $now;
