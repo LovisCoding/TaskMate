@@ -93,7 +93,7 @@ class HomeController extends BaseController
 		$existingParams = $this->request->getGet();
 
 		// Paramètres par défaut ou nouveaux paramètres
-		$dateRange = (new DateTime())->modify('-7 days')->format('Y-m-d');
+		$dateRange = (new DateTime())->modify('-6 days')->format('Y-m-d');
 		if ($type == "deadLine") {
 			$dateRange = (new DateTime())->format('Y-m-d'); 
 		}
