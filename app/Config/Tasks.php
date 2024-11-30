@@ -36,7 +36,7 @@ class Tasks extends BaseTasks
 
 				$tasks = $taskModel->getTasksWhichAreNotTerminatedAndStartDays($account['id'], $pref['days_reminder_deadline']);
 				
-				if (count($tasks) == 0) break;
+				if (count($tasks) == 0) continue;
 				$data = [];
 				foreach ($tasks as $task) {
 					$data[$task['deadline']][] = $task['name'];

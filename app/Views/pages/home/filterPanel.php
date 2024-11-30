@@ -103,7 +103,7 @@
 
         <!-- Priorités -->
         <div class="mb-3">
-            <?= form_label('Prioritée:', '', ['class' => 'form-label']) ?>
+            <?= form_label('Priorité:', '', ['class' => 'form-label']) ?>
             <div class="d-flex">
                 <?php
                 for ($i = 4; $i >= 1; $i--) {

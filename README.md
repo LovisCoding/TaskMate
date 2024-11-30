@@ -1,60 +1,74 @@
-# CodeIgniter 4 Framework
+<div align="center">
+    <h1>TaskMate</h1>
+</div>
 
-## What is CodeIgniter?
+<div align="center">
+    <img src="./public/assets/imgs/Logo_TaskMate.svg" alt="TaskMate Logo" width="300">
+</div>
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+<br>
 
-This repository holds the distributable version of the framework.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+**TaskMate** est une solution moderne et intuitive pour planifier vos tâches au quotidien. Conçue pour être à la fois simple et efficace, elle vous aide à mieux organiser votre temps et à prioriser vos objectifs.  
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## 🔑 **Fonctionnalités clés**  
+- **Ajouter des tâches** : Créez des tâches en quelques clics pour ne rien oublier.  
+- **Marquer les tâches comme terminées** : Suivez vos progrès facilement.  
+- **Supprimer des tâches** : Gardez une liste toujours à jour.  
+- **Filtrer les tâches par statut** : Trouvez rapidement ce que vous cherchez.  
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+## 🚀 **Pourquoi choisir TaskMate ?**  
+TaskMate se distingue par son interface claire et ses fonctionnalités pratiques qui répondent à vos besoins essentiels sans superflu. Que ce soit pour un usage personnel ou professionnel, TaskMate est conçu pour simplifier votre gestion des priorités, sans compromis sur l’efficacité.  
 
-## Important Change with index.php
+---
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+## 🛠️ **Installation**  
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+### 1. **Cloner le dépôt**  
+Téléchargez le projet en local avec la commande suivante :  
+```bash
+git clone https://github.com/LovisCoding/TaskMate.git
+```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+### 2. **Accéder au projet**
+Naviguez vers le dossier téléchargé :  
+```bash
+cd TaskMate
+```
 
-## Repository Management
+### 3. **Installer les dépendances**
+Installez les bibliothèques nécessaires avec Composer :  
+```bash
+composer install
+```
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+### 4. **Configurer CodeIgniter 4**
+Copiez le fichier de configuration d'exemple :  
+```bash
+cp .env.example .env
+```
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+### 5. **Configurer la base de données**
+Modifiez le fichier .env en y ajoutant vos informations de connexion :
+```bash
+database.default.DSN =
+database.default.hostname = localhost
+database.default.database = votredb
+database.default.username = votreuser
+database.default.password = motdepasse
+database.default.DBDriver = Postgre
+database.default.port = 7777
+```
 
-## Contributing
+### 6. **Créer la base de données**
+Exécutez les migrations pour générer les tables nécessaires : 
+```bash
+php spark migrate
+```
 
-We welcome contributions from the community.
+Si cette étape échoue, vous pouvez importer manuellement le fichier SQL init.sql situé à la racine du projet dans votre base de données.
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the development repository.
-
-## Server Requirements
-
-PHP version 8.1 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+### 7. **Lancer l'application**
+Accédez à TaskMate via votre navigateur en vous rendant sur :
+```bash
+http://localhost:8080
+```
