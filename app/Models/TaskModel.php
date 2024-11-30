@@ -102,6 +102,9 @@ class TaskModel extends Model
 
 	public function getTasksByDateRange($startDate, $days, $idAccount, $priority = null, $states = [], $sort = 'deadline', $sortOrder = 'asc')
 	{
+		$now = (new DateTime())->format('Y-m-d');
+		if ($startDate > $now)
+			return [];
 		$days -= 1;
 		$endDate = date('Y-m-d', strtotime("$startDate +$days days")); // Calcul de la date de fin
 
