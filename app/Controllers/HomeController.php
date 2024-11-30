@@ -76,17 +76,31 @@ class HomeController extends BaseController
 		}
 
 		$defaultStates = ["blocked", "inProgress", "notStarted", "finished"];
-		if ($type == "home") {
-			$defaultStates = ["inProgress", "finished"];
-		}
 		$date = $existingParams['date'] ?? $dateRange;
-		$endDate = $existingParams['end_date'] ?? null;
-		$taskGroups = $existingParams['task_groups'] ?? null;
-		$priority = $existingParams['priority'] ?? null;
-		$states = $existingParams['states'] ?? $defaultStates;
-		$sort = $existingParams['sort'] ?? 'deadline';
-		$sortOrder = $existingParams['sort_order'] ?? 'asc';
 		$page = $this->request->getGet('page') ?? 1;
+
+		$filters = session()->get("filters");
+
+		if ($filters && count($this->request->getGet()) == 0) {
+			$priority = $existingParams['priority'] ?? $filters["priority"];
+			$states = $existingParams['states'] ?? $filters['states'];
+			$sort = $existingParams['sort'] ?? $filters['sort'];
+			$sortOrder = $existingParams['sort_order'] ?? $filters['sort_order'];
+		}
+		else {
+			$priority =  $existingParams['priority'] ?? null;
+			$states = $existingParams['states'] ?? $defaultStates;
+			$sort = $existingParams['sort'] ?? 'deadline';
+			$sortOrder = $existingParams['sort_order'] ?? 'asc';
+		}
+
+		$filters = [
+			"priority" => $priority,
+			"states" => $states,
+			"sort" => $sort,
+			"sort_order" => $sortOrder
+		];
+		session()->set("filters", $filters);
 
 		$stateOptions = [
 			'late' => 'En retard',
@@ -141,8 +155,6 @@ class HomeController extends BaseController
 			'pager' => $pager,
 			'filters' => [
 				'start_date' => $date,
-				'end_date' => $endDate,
-				'task_groups' => $taskGroups,
 				'priority' => $priority,
 				'states' => $states,
 				'sort' => $sort,

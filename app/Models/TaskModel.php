@@ -59,8 +59,13 @@ class TaskModel extends Model
 				$delay = $endDate->diff($deadline)->days;
 				$task['retard'] = $delay > 0 ? $delay : null;
 			} else {
-				$delay = $today->diff($deadline)->days;
-				$task['retard'] = $delay > 0 ? $delay : null;
+				if ($today > $deadline) {
+					$delay = $today->diff($deadline)->days;
+					$task['retard'] = $delay > 0 ? $delay : null;
+				}
+				else {
+					$task['retard'] = null;
+				}
 			}
 
 			return $task;
@@ -95,17 +100,8 @@ class TaskModel extends Model
 		$days -= 1;
 		$endDate = date('Y-m-d', strtotime("$startDate +$days days")); // Calcul de la date de fin
 
-		$query = $this->where("id_account", $idAccount);
-		if ($priority) {
-			$query->where('priority', $priority);
-		}
-
-		if (!empty($states)) {
-			$query->whereIn('current_state', $states);
-		}
-
 		// Récupérer toutes les tâches dont les dates chevauchent la plage demandée
-		$query->groupStart()
+		$query = $this->groupStart()
 			->where("start_date <=", $endDate)
 			->where("end_date >=", $startDate)
 			->groupEnd()
@@ -113,6 +109,7 @@ class TaskModel extends Model
 			->where("end_date", null) // Date de fin non définie
 			->groupEnd();
 
+		$query = $this->getQueryFiltered($priority, $states)->where("id_account", $idAccount);
 
 		$tasks = $query->orderBy($sort, $sortOrder)->findAll();
 		if ($sort == 'current_state') {
