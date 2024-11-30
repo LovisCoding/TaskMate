@@ -1,20 +1,21 @@
-<h1>Récapitulatif des deadlines des tâches</h1>
+<h1>Récapitulatif des tâches</h1>
 
 <?php
-$today = new DateTime(); // Date actuelle
+
+$today = new DateTime(); // Date actuelle (inclut heure et minutes)
 
 foreach ($data as $line_date => $tasks) {
     $lineDate = new DateTime($line_date);
-    $interval = $today->diff($lineDate);
-    $days = (int)$interval->format('%r%a'); // Nombre de jours avec le signe positif/négatif
+    // Comparer uniquement la date (sans heure)
+    $todayDateOnly = $today->format('Y-m-d');
+    $lineDateOnly = $lineDate->format('Y-m-d');
 
-    // Déterminer le texte à afficher
-    if ($days < 0) {
-        $dateText = abs($days) . " jours de retard"; // Retard
-    } elseif ($days > 0) {
-        $dateText = "dans $days jours"; // À venir
+    if ($lineDateOnly < $todayDateOnly) {
+        $dateText = $lineDate->diff($today)->format('%a') . " jours de retard"; // Retard
+    } elseif ($lineDateOnly > $todayDateOnly) {
+        $dateText = "Dans " . ($lineDate->diff($today)->format('%a') + 1) . " jour" . ($lineDate->diff($today)->format('%a') !== "0" ? 's' : ''); // À venir
     } else {
-        $dateText = "aujourd'hui"; // Aujourd'hui
+        $dateText = "Aujourd'hui"; // Exactement aujourd'hui
     }
 ?>
     <h2 style="margin: 1rem 0rem 0.75rem 0rem;"><?= $dateText ?></h2>
