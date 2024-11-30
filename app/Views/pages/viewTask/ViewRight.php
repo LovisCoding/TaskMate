@@ -23,12 +23,15 @@
 			<div>
 				<label for="taskGroup" class="fs-5 mb-2 fw-bold">Groupe de tâches :</label>
 				<select id="taskGroup" name="task_group" class="form-select">
-					<option value="" <?= empty($group['id']) ? 'selected' : '' ?>>Aucun groupe</option>
+					<option value="" <?= empty($groupId) ? 'selected' : '' ?>>Aucun groupe</option>
 					<?php foreach ($groups as $group): ?>
-						<option value="<?= $group['id'] ?>"><?= esc($group['name']) ?></option>
+						<option value="<?= $group['id'] ?>" <?= (!empty($groupId) && $groupId == $group['id']) ? 'selected' : '' ?>>
+							<?= esc($group['name']) ?>
+						</option>
 					<?php endforeach; ?>
 				</select>
 			</div>
+
 			<div class="d-flex flex-column">
 				<span class="mb-2 fs-5 fw-bold">Dépend de :</span>
 				<?= view('pages/viewTask/TaskCheckboxes', [

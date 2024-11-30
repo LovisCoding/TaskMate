@@ -4,7 +4,7 @@
         rows="5"><?= $description ?></textarea>
     
     <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled = <?= "$disabled" ?> name="taskIsStarted" <?= $isChecked ? 'checked' : '' ?> >
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"  <?= $disabled ? 'disabled' : '' ?> name="taskIsStarted" <?= $isChecked ? 'checked' : '' ?> >
         <label class="form-check-label" for="flexSwitchCheckDefault">Tâche commencée</label>
     </div>
     <div class="py-3"></div>

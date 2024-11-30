@@ -40,6 +40,7 @@ class TaskController extends BaseController
 		$commentaries = [];
 		$blockList = [];
 		$isBlockedList = [];
+		$idGroup = null;
 
 		$idAccount = intval(session()->get("id"));
 
@@ -116,6 +117,7 @@ class TaskController extends BaseController
 			$priority = $task["priority"];
 			$state = $task["current_state"];
 			$started = $task["current_state"] == "En cours";
+			$idGroup = $task["id_group"];
 		} else {
 			$date = $this->request->getGet('date');
 		}
@@ -189,7 +191,8 @@ class TaskController extends BaseController
 			'blockList' => $blockList,
 			'isBlockedList' => $isBlockedList,
 			'pager' => $commentModel->pager,
-			'groups' => $groups
+			'groups' => $groups,
+			'groupId' => $idGroup
 		];
 
 		echo view('layout/header');
