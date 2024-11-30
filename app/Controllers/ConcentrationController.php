@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 
 use App\Models\CommentModel;
+use App\Models\GroupModel;
 use App\Models\TaskDependenciesModel;
 use App\Models\TaskModel;
 use App\Models\PreferencesModel;
@@ -17,6 +18,7 @@ class ConcentrationController extends BaseController
             return redirect()->to('/');
         }
 
+        $groupId = null;
 
         $taskModel = new TaskModel();
 
@@ -28,12 +30,12 @@ class ConcentrationController extends BaseController
             return redirect()->to('/');
         }
 
-        if (!$session->get("tasksConcentration")) {
-            $tasksConcentration = $taskModel->getTasksConcentration();
-        } else {
+        if ($session->has("tasksConcentration")) {
             $tasksConcentration = $session->get("tasksConcentration");
+        } else {
+            $tasksConcentration = $taskModel->getTasksConcentration($idAccount);
         }
-
+        
         $commentaries = [];
 
         $preferencesModel = new PreferencesModel();
@@ -43,7 +45,7 @@ class ConcentrationController extends BaseController
         $currentPage = $this->request->getVar('page') ?? 1;
 
         $now = (new DateTime())->format('Y-m-d');
-
+        
         if (count($tasksConcentration) == 0) {
             $session->remove("tasksConcentration");
             return redirect()->to('/home/recap');
@@ -79,6 +81,7 @@ class ConcentrationController extends BaseController
             $description = $task["description"];
             $priority = $task["priority"];
             $state = $task["current_state"];
+            $groupId = $task["id_group"];
         } else {
             $session->remove("tasksConcentration");
             return redirect()->to('/home/recap');
@@ -91,6 +94,10 @@ class ConcentrationController extends BaseController
             'pager' => $commentModel->getPaginatedByTask($perPage, $idTask)
         ];
 
+        $groupModel = new GroupModel();
+		$idAccount = session()->get("id");
+		$groups = $groupModel->where("id_account", $idAccount)->orderBy("name")->findAll();
+
         $data = [
             'id' => $idTask,
             'title' => $title,
@@ -98,7 +105,9 @@ class ConcentrationController extends BaseController
             'priority' => $priority,
             'state' => $state,
             'commentaires' => $comments,
-            'pager' => $commentModel->pager
+            'pager' => $commentModel->pager,
+            'groups' => $groups,
+            'groupId' => $groupId
         ];
 
         $session->remove("tasksConcentration");
@@ -110,6 +119,38 @@ class ConcentrationController extends BaseController
         echo view('layout/footer');
     }
 
+    public function indexWithGroups() 
+    {
+        $idGroup = $this->request->getPost('task_group');
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/');
+        }
+
+        if ($idGroup == null) {
+            return redirect()->to("/concentration");
+        }
+
+        $taskModel = new TaskModel();
+
+        $tasksConcentration = [];
+        $session = session();
+        $idAccount = intval(session()->get("id"));
+
+        if (!$idAccount) {
+            return redirect()->to('/');
+        }
+
+        $tasksConcentration = $taskModel->where("id_account", $idAccount)
+                                        ->where("id_group !=", null)
+                                        ->where("id_group", $idGroup)
+                                        ->findAll();
+
+        $session->remove("tasksConcentration");
+        $session->set("tasksConcentration", $tasksConcentration);
+
+        return redirect()->to("/concentration");
+
+    }
     public function validateConcentration()
     {
         if (!session()->get('isLoggedIn')) {

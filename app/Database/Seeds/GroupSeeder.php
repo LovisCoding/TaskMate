@@ -13,6 +13,8 @@ class GroupSeeder extends Seeder
             ['id_account' => 1, 'name' => 'Projet : Développement de site web'],
             ['id_account' => 1, 'name' => 'Objectifs de fitness'],
             ['id_account' => 1, 'name' => 'Objectifs d\'apprentissage'],
+            ['id_account' => 1, 'name' => 'TaskMate Presentation : Tasks'],
+            ['id_account' => 1, 'name' => 'TaskMate Presentation : Concentration'],
         ];
 
         $this->db->table('group')->insertBatch($groups);

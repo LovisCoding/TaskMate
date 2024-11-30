@@ -57,8 +57,8 @@ for ($i = 0; $i < 4; $i++) {
 		</div>
 	</div>
 	<h5 class="card-title mb-2"><?= $title ?></h5>
-	<p class="card-text text-muted overflow-hidden"><?= $text ?></p>
-	<div class="d-flex align-items-center justify-content-between mt-3">
+	<p class="card-text text-muted overflow-hidden" style="height: fit-content;max-height:3rem;line-height:1.5rem;"><?= $text ?></p>
+	<div class="d-flex align-items-center justify-content-between">
 		<div class="d-flex align-items-center gap-2">
 			<span class="indicator-circle <?= $bubbleClass ?>"></span>
 			<span class="<?= $statusClass ?> small"><?= $status ?></span>

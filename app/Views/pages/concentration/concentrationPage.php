@@ -2,9 +2,30 @@
 
 
 	<div class="concentration-section ms-2">
+
+		<form id="newGroup" method="POST" action='concentration/group'>
+			<div class="d-flex justify-content-center" style="margin-bottom:5px">
+					<?php $groupId = $data["groupId"] ?>
+						<select id="taskGroup" name="task_group" class="form-select" style="width:fit-content;">
+							<option value="" <?= empty($groupId) ? 'selected' : '' ?>>Aucun groupe</option>
+							<?php foreach ($data['groups'] as $group): ?>
+								<option value="<?= $group['id'] ?>" <?= (!empty($groupId) && $groupId == $group['id']) ? 'selected' : '' ?>>
+									<?= esc($group['name']) ?>
+								</option>
+							<?php endforeach; ?>
+						</select>
+						<div class="ms-2">
+								<button type="submit" name="action" value="newConcentration" class="btn btn-success rounded-circle" form="newGroup" title="Démarrer une nouvelle session uniquement avec ce groupe">✓</button>
+						</div>
+			</div>
+		</form>
+
+
 		<form id="submitForm" action="/concentration/validate" method="POST">
 
 			<div class="concentration-section-task shadow">
+
+				
 
 				<div class="d-flex flex-column mb-1 gap-2">
 

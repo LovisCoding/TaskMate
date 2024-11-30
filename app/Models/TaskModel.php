@@ -394,9 +394,10 @@ class TaskModel extends Model
 
 
 
-	public function getTasksConcentration()
+	public function getTasksConcentration($idAccount)
 	{
-		return $this->where("current_state", "Pas commencée")
+		return $this->where("id_account", $idAccount)
+			->where("current_state", "Pas commencée")
 			->orderBy("priority", "DESC")
 			->orderBy("deadline")
 			->findAll();
