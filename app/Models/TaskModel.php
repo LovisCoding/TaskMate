@@ -354,6 +354,7 @@ class TaskModel extends Model
 
 		// Jointure pour récupérer uniquement les groupes ayant des tâches
 		$groupsQuery = $groupModel
+			->where("group.id_account", $idAccount)
 			->select('group.id, group.name') // Sélectionner l'id et le nom du groupe
 			->join('task', 'task.id_group = group.id', 'inner') // Joindre la table des tâches
 			->where('group.id_account', $idAccount) // Filtrer par l'utilisateur (id_account)

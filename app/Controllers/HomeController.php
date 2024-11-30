@@ -13,6 +13,22 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class HomeController extends BaseController
 {
+
+	public function choicePage() {
+		if (!session()->get('isLoggedIn')) {
+			return redirect()->to('/');
+		}
+
+		$type = session()->get("homePage");
+
+		if ($type) {
+			return redirect()->to('/home/'.$type);
+		}
+		else {
+			return redirect()->to('/home/recap');
+		}
+	}
+
 	public function index()
 	{
 		if (!session()->get('isLoggedIn')) {
@@ -60,6 +76,13 @@ class HomeController extends BaseController
 
 	public function getTasks($type)
 	{
+		session()->remove("homePage");
+
+		if ($type == "home")
+			session()->set("homePage", "recap");
+		else 
+			session()->set("homePage", $type);
+
 		if (!session()->get('isLoggedIn')) {
 			return redirect()->to('/');
 		}

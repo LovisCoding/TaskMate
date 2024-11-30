@@ -11,7 +11,8 @@ class APITaskController extends ResourceController
 
     public function index()
     {
-        return $this->respond($this->model->findAll());
+        $idAccount = session()->get("id");
+        return $this->respond($this->model->where("id_account", $idAccount)->findAll());
     }
   
 }

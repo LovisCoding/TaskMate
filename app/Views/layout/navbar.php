@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-white shadow-sm">
 	<div class="d-flex" style="justify-content:space-between; width:100%">
-		<a class="navbar-brand" href="<?= str_contains($_SERVER['REQUEST_URI'], '/home') ? '#' : '/home/recap' ?>" style="margin-left: 20px;">
+		<a class="navbar-brand" href="<?= str_contains($_SERVER['REQUEST_URI'], '/home') ? '#' : '/home' ?>" style="margin-left: 20px;">
 			<img src="/assets/imgs/logo.svg" width="150" height="80" alt="">
 
 		</a>

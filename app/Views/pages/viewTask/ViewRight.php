@@ -1,12 +1,3 @@
-<?php
-$groups = [
-	['id' => 1, 'name' => 'Développement'],
-	['id' => 2, 'name' => 'Marketing'],
-	['id' => 3, 'name' => 'Design'],
-	['id' => 4, 'name' => 'Ventes'],
-];
-?>
-
 <div class="col-sm-12 col-lg-4">
 	<div class="shadow p-5 pt-3 bg-white rounded-2" style="height: fit-content;">
 		<div class="d-flex flex-column gap-4">

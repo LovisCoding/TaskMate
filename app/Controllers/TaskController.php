@@ -6,6 +6,7 @@ use App\Models\CommentModel;
 use App\Models\TaskDependenciesModel;
 use App\Models\TaskModel;
 use App\Models\PreferencesModel;
+use App\Models\GroupModel;
 use DateTime;
 
 class TaskController extends BaseController
@@ -48,7 +49,7 @@ class TaskController extends BaseController
 		$currentPage = $this->request->getVar('page') ?? 1;
 
 		$taskModel = new TaskModel();
-		$task = $taskModel->where("id_task", $idTask)->first();
+		$task = $taskModel->where("id_account", $idAccount)->where("id_task", $idTask)->first();
 
 		if ($idTask != -1 && !$task) {
 			return redirect()->to('/home/recap');
@@ -73,7 +74,7 @@ class TaskController extends BaseController
 				];
 			}, $commentaries);
 
-			$tasks = $taskModel->findAll(); // Récupère toutes les tâches
+			$tasks = $taskModel->where("id_account", $idAccount)->findAll(); // Récupère toutes les tâches
 			$taskDependenciesModel = new TaskDependenciesModel();
 
 			$childTasks = $taskDependenciesModel->where("id_mother_task", $idTask)->findColumn('id_child_task') ?? [];
@@ -120,7 +121,7 @@ class TaskController extends BaseController
 		}
 
 		if (!$blockList) {
-			$tasks = $taskModel->findAll(); // Récupérer toutes les tâches
+			$tasks = $taskModel->where("id_account", $idAccount)->findAll(); // Récupérer toutes les tâches
 
 			$blockList = array_map(function ($task) use ($idTask) {
 				// Exclure la tâche elle-même (idTask)
@@ -139,7 +140,7 @@ class TaskController extends BaseController
 		}
 
 		if (!$isBlockedList) {
-			$tasks = $taskModel->findAll(); // Récupérer toutes les tâches
+			$tasks = $taskModel->where("id_account", $idAccount)->findAll(); // Récupérer toutes les tâches
 
 			// Filtrer les tâches pour exclure celle avec l'idTask spécifié
 			$filteredTasks = array_filter($tasks, function ($task) use ($idTask) {
@@ -172,6 +173,10 @@ class TaskController extends BaseController
 			'pager' => $commentModel->getPaginatedByTask($perPage, $idTask)
 		];
 
+		$groupModel = new GroupModel();
+		$idAccount = session()->get("id");
+		$groups = $groupModel->where("id_account", $idAccount)->orderBy("name")->findAll();
+
 		$data = [
 			'id' => $idTask,
 			'title' => $title,
@@ -183,7 +188,8 @@ class TaskController extends BaseController
 			'started' => $started,
 			'blockList' => $blockList,
 			'isBlockedList' => $isBlockedList,
-			'pager' => $commentModel->pager
+			'pager' => $commentModel->pager,
+			'groups' => $groups
 		];
 
 		echo view('layout/header');
@@ -245,14 +251,14 @@ class TaskController extends BaseController
 				$taskDependenciesModel = new TaskDependenciesModel();
 
 
-				$childTasks = $taskDependenciesModel->where("id_mother_task", $id)->select("id_child_task")->findAll();
+				$childTasks = $taskDependenciesModel->where("id_account", $idAccount)->where("id_mother_task", $id)->select("id_child_task")->findAll();
 
 				// réaffectation de l'ancien state avant d'etre bloquée
 				foreach ($childTasks as $childId) {
 
 					$task = $taskModel->where("id_task", $childId)->first();
 
-					$motherTasks = $taskDependenciesModel->where("id_child_task", $childId)->select("id_mother_task")->findAll();
+					$motherTasks = $taskDependenciesModel->where("id_account", $idAccount)->where("id_child_task", $childId)->select("id_mother_task")->findAll();
 					if (count($motherTasks) == 1) {
 						if ($task['start_date'])
 							$old_state = $task['end_date'] ? "Terminée" : "En cours";
@@ -336,7 +342,7 @@ class TaskController extends BaseController
 			if ($action !== "complete") {
 				$blockList = $this->request->getPost("task_blockList");
 
-				$childTasks = $taskDependenciesModel->where("id_mother_task", $newId)->select("id_child_task")->findAll();
+				$childTasks = $taskDependenciesModel->where("id_account", $idAccount)->where("id_mother_task", $newId)->select("id_child_task")->findAll();
 
 				// réaffectation de l'ancien state avant d'etre bloquée
 				foreach ($childTasks as $childId) {
@@ -414,7 +420,7 @@ class TaskController extends BaseController
 			return redirect()->to('/');
 		}
 		$taskModel = new TaskModel();
-		$tasks = $taskModel->findAll();
+		$tasks = $taskModel->where("id_account", $idAccount)->findAll();
 		return json_encode($tasks);
 	}
 }

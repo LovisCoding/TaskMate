@@ -12,6 +12,7 @@ $routes->get('/', 'ConnectionController::index');
 $routes->get('/concentration', 'ConcentrationController::index');
 $routes->post('/concentration/validate', 'ConcentrationController::validateConcentration');
 
+$routes->get('/home', 'HomeController::choicePage');
 $routes->get('/home/recap', 'HomeController::index');
 $routes->get('/home/priority', 'HomeController::priority');
 $routes->get('/home/state', 'HomeController::state');
