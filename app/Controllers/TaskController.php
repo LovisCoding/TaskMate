@@ -233,8 +233,6 @@ class TaskController extends BaseController
 			$taskGroupId = $this->request->getPost('task_group');
 
 			if ($id == -1) {
-				dd($id);
-
 				$state = "Pas commencée";
 			} else {
 				$task = $taskModel->where("id_task", $id)->first();
