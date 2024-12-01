@@ -65,13 +65,17 @@ Exécutez les migrations pour générer les tables nécessaires :
 php spark migrate
 ```
 
-Si cette étape échoue, vous pouvez importer manuellement le fichier SQL init.sql situé à la racine du projet dans votre base de données.
+**Note** : Pendant le développement, cette étape a causé des problèmes liés à la base de données. Les modifications effectuées dans la migration n'étaient pas prises en compte sans un rafraîchissement de la base. 
+Il est donc fortement recommandé d'utiliser le fichier SQL `init.sql` situé à la racine du projet pour créer manuellement les tables dans votre base de données. 
+Si vous choisissez de ne pas utiliser le fichier SQL, vous devrez tout de même exécuter le trigger présent dans le fichier `init.sql`.
 
-### 7. **Lancer l'application**
-Exécutez la commande suivante pour lancer votre serveur : 
+### 7. **Démarrer l'application**
+Vous pouvez maintenant lancer l'application à l'aide la commande :
 ```bash
 php spark serve
 ```
+
+### 8. **Lancer l'application**
 Accédez à TaskMate via votre navigateur en vous rendant sur :
 ```bash
 http://localhost:8080
