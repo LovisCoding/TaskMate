@@ -68,6 +68,10 @@ php spark migrate
 Si cette étape échoue, vous pouvez importer manuellement le fichier SQL init.sql situé à la racine du projet dans votre base de données.
 
 ### 7. **Lancer l'application**
+Exécutez la commande suivante pour lancer votre serveur : 
+```bash
+php spark serve
+```
 Accédez à TaskMate via votre navigateur en vous rendant sur :
 ```bash
 http://localhost:8080
