@@ -22,7 +22,6 @@ $routes->post('/home/exportData', 'HomeController::exportData');
 $routes->get('/home/groups', 'HomeController::groups');
 
 $routes->get('/task', 'Task::index');
-$routes->get('/viewTask', 'ViewTaskController::index');
 $routes->get('/newGroup', 'ViewGroupController::index');
 $routes->post('/newGroup/create', 'ViewGroupController::create');
 $routes->post('/newGroup/delete', 'ViewGroupController::delete');
